@@ -1,0 +1,8 @@
+<h1>Group <%= @group.name %></h1>
+<h3> Events </h3>
+<ul>
+	<% @events.each do |event| %>
+		<li><%= link_to event.name, [@group,event] %></li>
+	<% end %>
+</ul>
+<%= link_to "Create event", new_group_event_path(@group) %>

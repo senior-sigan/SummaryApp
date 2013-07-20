@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Community::Application.load_tasks
+CommunityApp::Application.load_tasks

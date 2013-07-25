@@ -1,1 +1,2 @@
 <h1>Event <%= @event.name %> in <%=@group.name%></h1>
+<%= link_to "open Driver", driver_group_event_path(@group,@event) %>

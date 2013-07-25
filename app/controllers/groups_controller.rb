@@ -1,3 +1,5 @@
+require "google/api_client"
+
 class GroupsController < ApplicationController
   before_filter :authenticate_user!
   
@@ -13,7 +15,7 @@ class GroupsController < ApplicationController
   def new
   	@group = Group.new
   end
-
+  
   def create
   	#render text: params[:group].inspect
     @group = Group.new(group_params)

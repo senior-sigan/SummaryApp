@@ -1,11 +1,16 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+OMNI = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/omniauth.yml"))[Rails.env]
+
 Devise.setup do |config|
   require "omniauth-google-oauth2"
-  omni = HashWithIndifferentAccess.new(YAML.load_file("#{Rails.root}/config/omniauth.yml"))[Rails.env]
 
-  config.omniauth :google_oauth2, omni[:google][:id], omni[:google][:secret], { access_type: "offline", approval_prompt: "" }
-
+  config.omniauth :google_oauth2, OMNI[:google][:id], OMNI[:google][:secret], { 
+    access_type: "offline", 
+    approval_prompt: "", 
+   # scope: 'userinfo.email, userinfo.profile, https://www.googleapis.com/auth/drive.readonly'
+  }
+  #http(s)://docs.google.com/feeds/
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.

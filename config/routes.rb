@@ -1,7 +1,9 @@
 CommunityApp::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   resources :groups do 
-    resources :events, :except => [:index]
+    resources :events, :except => [:index] do
+      get 'driver', on: :member
+    end
   end
   root  'home#index'
   # The priority is based upon order of creation: first created -> highest priority.

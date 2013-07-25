@@ -1,13 +1,15 @@
 <% provide(:title, 'Home') %>
 <h1>Home</h1>
 <% if user_signed_in? %>
-	<p>You are <%= current_user.email %> </p>
+	<p>Hello <%= current_user.name %> </p>
+	<p><%= link_to "g+" ,current_user.gplus %></p>
+	<p><%= image_tag current_user.image %></p>
       <li>
-        <%= link_to "log out",destroy_user_session_path, :method=>'delete'%>
+      	<%= link_to "Groups", groups_path %>    
       </li>
+      <li><%= link_to "log out",destroy_user_session_path, :method=>'delete'%></li>
   <% else %>
       <li>
-        <%= link_to "log in",new_user_session_path %>
+        <%= link_to "google login",user_omniauth_authorize_path(:google_oauth2)%>
       </li>
   <% end %>
-<%= link_to "Groups", groups_path %>

@@ -1,11 +1,14 @@
-CommunityApp::Application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
-  resources :groups do 
-    resources :events, :except => [:index] do
-      get 'driver', on: :member
+CommunityApp::Application.routes.draw do   
+  get "categories/new"
+  resources :events do
+    member do 
+      get 'import'
+      post 'parse'
     end
   end
-  root  'home#index'
+  resources :categories
+  root 'events#index'
+  #root  'home#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

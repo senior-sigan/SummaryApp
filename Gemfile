@@ -6,9 +6,9 @@ gem 'rails', '4.0.0'
 gem "bootstrap-sass", "~> 2.3.2.1"
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-gem "devise", "~> 3.0.0"
-gem "omniauth-google-oauth2", "~> 0.2.0"
-gem "google-api-client", "~> 0.6.4", :require => 'google/api_client'
+#gem "devise", "~> 3.0.0"
+#gem "omniauth-google-oauth2", "~> 0.2.0"
+#gem "google-api-client", "~> 0.6.4", :require => 'google/api_client'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

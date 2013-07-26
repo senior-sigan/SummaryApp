@@ -1,0 +1,46 @@
+<% provide(:title, 'Events') %>
+<h1>Events</h1>
+<div class="row">
+		<div class="span6">
+			<%= link_to "New event",new_event_path,class: "btn btn-primary" %>
+			<ul>
+			<% @events.each do |event| %>
+				<li><%=link_to event.name,event%></li>
+			<% end %>
+			</ul>
+		</div>
+		
+		<div class="span6">
+			<%= link_to "New category",new_category_path,class: "btn btn-primary"%>
+			<ul>
+			<% @categories.each do |cat| %>
+				<li><%=cat.name%></li>
+			<% end %>
+			</ul>	
+		</div>
+
+		<div class="span12">
+			<table class="table">
+				<thead>
+				    <tr>
+						<th>email</th>
+						<th>commit</th>
+						<th>event</th>
+						<th>category</th>
+						<th>score</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @history.each do |line| %>
+						<tr>
+							<td><%= Participant.find(line.participant_id).email %></td>
+							<td><%= line.commit_id %></td>
+							<td><%= Event.find(line.event_id).name %></td>
+							<td><%= Category.find(line.category_id).name %></td>
+							<td><%= line.score %></td>	
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+</div>

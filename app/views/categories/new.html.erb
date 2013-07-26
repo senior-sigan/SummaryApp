@@ -1,8 +1,8 @@
-<% provide(:title, 'New group') %>
+<% provide(:title, 'New category') %>
 <div class="row">
 	<div class="span6 offset3">
-		<h1>New group</h1>
-		<%= form_for(@group) do |f| %>
+		<h1>New category</h1>
+		<%= form_for @category do |f| %>
 			<%= render 'layouts/error_messages', :object => f.object %>
 
 			<%= f.label :name %>

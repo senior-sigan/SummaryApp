@@ -1,15 +1,15 @@
 <% provide(:title, 'New event') %>
 <div class="row">
 	<div class="span6 offset3">
-		<h1>New event for <%= @group.name %></h1>
-		<%= form_for @event, url:  group_events_path(@group),multipart: true do |f| %>
+		<h1>New event</h1>
+		<%= form_for @event, multipart: true do |f| %>
 			<%= render 'layouts/error_messages', :object => f.object %>
 
 			<%= f.label :name %>
 			<%= f.text_field :name %>
 
-			<%= f.label :file %>
-			<%= f.file_field :file , accept: "text/csv"%>
+			<%= f.label :evdate %>
+			<%= f.date_field :evdate %>
 
 			<%= f.submit "Create", class: "btn btn-primary" %>
 		<% end %>

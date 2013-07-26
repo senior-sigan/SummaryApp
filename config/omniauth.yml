@@ -1,8 +1,0 @@
-development:
-  google:
-    id: 810755029084.apps.googleusercontent.com
-    secret: P8F73pzzPc8jxLngmi4thBGj
-production:
-  google:
-    id: id
-    secret: secret

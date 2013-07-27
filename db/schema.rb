@@ -11,48 +11,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130726092350) do
+ActiveRecord::Schema.define(version: 20130726091800) do
 
   create_table "categories", force: true do |t|
-    t.string   "name"
-    t.boolean  "private"
+    t.string   "name",                      null: false
+    t.boolean  "private",    default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true
 
-  create_table "commits", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "events", force: true do |t|
     t.string   "name",       null: false
-    t.datetime "evdate",     null: false
+    t.datetime "date",       null: false
+    t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "events", ["name"], name: "index_events_on_name", unique: true
 
-  create_table "histories", force: true do |t|
-    t.integer "commit_id",      null: false
+  create_table "participants", force: true do |t|
+    t.string   "uuid",       null: false
+    t.string   "name",       null: false
+    t.string   "surname",    null: false
+    t.string   "avatar"
+    t.string   "meta"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "participants", ["uuid"], name: "index_participants_on_uuid", unique: true
+
+  create_table "records", id: false, force: true do |t|
     t.integer "participant_id", null: false
     t.integer "category_id",    null: false
     t.integer "event_id",       null: false
     t.integer "score",          null: false
   end
 
-  create_table "participants", force: true do |t|
-    t.string   "email"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "stuff"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "participants", ["email"], name: "index_participants_on_email", unique: true
+  add_index "records", ["participant_id", "category_id", "event_id"], name: "index_records_on_participant_id_and_category_id_and_event_id", unique: true
 
 end

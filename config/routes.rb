@@ -1,6 +1,7 @@
 CommunityApp::Application.routes.draw do   
-  get "categories/new"
+  resources :participants, except: [:new]
   resources :events do
+    resources :event_imports, only: [:new,:create]
     member do 
       get 'import'
       post 'parse'

@@ -23,18 +23,16 @@
 			<table class="table">
 				<thead>
 				    <tr>
-						<th>email</th>
-						<th>commit</th>
+						<th>uuid</th>
 						<th>event</th>
 						<th>category</th>
 						<th>score</th>
 					</tr>
 				</thead>
 				<tbody>
-					<% @history.each do |line| %>
+					<% @records.each do |line| %>
 						<tr>
-							<td><%= Participant.find(line.participant_id).email %></td>
-							<td><%= line.commit_id %></td>
+							<td><%= Participant.find(line.participant_id).uuid %></td>
 							<td><%= Event.find(line.event_id).name %></td>
 							<td><%= Category.find(line.category_id).name %></td>
 							<td><%= line.score %></td>	

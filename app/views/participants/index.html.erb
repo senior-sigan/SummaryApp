@@ -1,0 +1,5 @@
+<h1>Participants#index</h1>
+<p>Find me in app/views/participants/index.html.erb</p>
+<% @participants.each do |part| %>
+	<p><%= part.uuid %> <%= part.name%> <%= part.surname%> <%= part.meta%></p>
+<% end %>

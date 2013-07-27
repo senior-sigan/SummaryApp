@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
     @categories = Category.all
-    @history = History.all
+    @records = Record.all
   end
   def new
   	@event = Event.new
@@ -29,7 +29,7 @@ class EventsController < ApplicationController
       file = params[:event][:file]
       score = params[:score]
       category = Category.find(params[:category][:id])
-      History.import(file,@event,category,score)
+      Record.import(file,@event,category,score)
       redirect_to events_path
     else
       render :import
@@ -38,6 +38,6 @@ class EventsController < ApplicationController
 
   private 
   def event_params
-    params.require(:event).permit(:name,:evdate)
+    params.require(:event).permit(:name,:date)
   end
 end

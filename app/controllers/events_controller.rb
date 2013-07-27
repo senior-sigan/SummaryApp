@@ -2,11 +2,11 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
+    @records = @event.records
   end
   def index
     @events = Event.all
     @categories = Category.all
-    @records = Record.all
   end
   def new
   	@event = Event.new

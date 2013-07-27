@@ -10,7 +10,7 @@ class Record < ActiveRecord::Base
   validates_associated :event
   validates :score, presence: true, numericality: true
   validates_presence_of :participant, :category, :event
-  validates :participant,:category, :event, uniqueness: true
+  validates :participant, uniqueness: {scope: [:event, :category]}
 	def self.import(file,event,category,score)
     CSV.foreach(file.path, headers: true) do |row|
     	row = row.to_hash

@@ -1,44 +1,17 @@
 <% provide(:title, 'Events') %>
-<h1>Events</h1>
+<h1>Events <small><%=link_to "new",new_event_path, class: 'btn btn-success' %></small></h1>
 <div class="row">
-		<div class="span6">
-			<%= link_to "New event",new_event_path,class: "btn btn-primary" %>
-			<ul>
-			<% @events.each do |event| %>
-				<li><%=link_to event.name,event%></li>
-			<% end %>
-			</ul>
+	<% @events.each do |event| %>
+		<div class="col-lg-3">
+			<div class="thumbnail">
+				<%= image_tag "blank.jpg"%>
+				<div class="caption">
+					<h3><%= link_to event.name,event %></h3>
+					<p>
+						<%= event.date.strftime("%Y-%m-%d") %>
+					</p>
+				</div>
+			</div>
 		</div>
-		
-		<div class="span6">
-			<%= link_to "New category",new_category_path,class: "btn btn-primary"%>
-			<ul>
-			<% @categories.each do |cat| %>
-				<li><%=cat.name%></li>
-			<% end %>
-			</ul>	
-		</div>
-
-		<div class="span12">
-			<table class="table">
-				<thead>
-				    <tr>
-						<th>uuid</th>
-						<th>event</th>
-						<th>category</th>
-						<th>score</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @records.each do |line| %>
-						<tr>
-							<td><%= Participant.find(line.participant_id).uuid %></td>
-							<td><%= Event.find(line.event_id).name %></td>
-							<td><%= Category.find(line.category_id).name %></td>
-							<td><%= line.score %></td>	
-						</tr>
-					<% end %>
-				</tbody>
-			</table>
-		</div>
+	<% end %>
 </div>

@@ -1,3 +1,26 @@
 <h1>Event <%= @event.name %></h1>
 <p>At : <%= @event.date %></p>
 <%= link_to "Import",import_event_path(@event), class: "btn btn-success" %>
+
+<div class="span12">
+			<table class="table">
+				<thead>
+				    <tr>
+						<th>uuid</th>
+						<th>event</th>
+						<th>category</th>
+						<th>score</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @records.each do |line| %>
+						<tr>
+							<td><%= Participant.find(line.participant_id).uuid %></td>
+							<td><%= Event.find(line.event_id).name %></td>
+							<td><%= Category.find(line.category_id).name %></td>
+							<td><%= line.score %></td>	
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>

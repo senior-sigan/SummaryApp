@@ -1,0 +1,15 @@
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+	<span class="icon-bar"></span>
+</button>
+
+<%= link_to 'Community',root_path, class: 'navbar-brand' %> 
+
+<div class="nav-collapse collapse">
+	<ul class="nav navbar-nav">
+		<li><%= link_to 'Events',events_path%></li>
+		<li><%= link_to 'Participants', participants_path%></li>
+		<li><%= link_to 'Categories', categories_path %></li>
+	</ul>
+</div>

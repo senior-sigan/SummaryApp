@@ -1,15 +1,23 @@
 require 'spec_helper'
 
 describe User do
-  before { @user = User.new(email: "a@aa.a", name: "a", surname: "aa") }
+  before { @user = FactoryGirl.create :user }
 
   subject { @user }
+
 
   it { should respond_to(:email) }
   it { should respond_to(:name) }
   it { should respond_to(:surname) }
+  it { should respond_to(:participations) }
 
-  it { should respond_to(:events) }
+
+
+  it { should have_field(:email).of_type(String)}
+  it { should have_field(:name).of_type(String)}
+  it { should have_field(:surname).of_type(String)}
+
+  it { should have_many(:participations).with_foreign_key(:user_id)}
 
   it { should be_valid }
 
@@ -73,13 +81,13 @@ describe User do
   end
 
   describe "when email is already taken" do
+    let(:user_with_same_email) { @user.dup }
   	before do 
-  	  user_with_same_email = @user.dup
-  	  user_with_same_email.email = @user.email.upcase
+  	  user_with_same_email.email.upcase!
   	  user_with_same_email.save
   	end
 
-  	it { should_not  be_valid }
+  	it { user_with_same_email.should_not  be_valid }
   end
 
   describe "when create dynamic attributes" do

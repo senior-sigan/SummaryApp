@@ -1,16 +1,14 @@
 <div class="row">
-<% @participants.each do |part| %>
+<% @users.each do |user| %>
 	<div class="col-lg-12">
 		<div class="col-lg-2">
 			<%= image_tag "parti.jpg" %>
 		</div>
 		<div class="col-lg-4">
-			<h3><%= part.uuid %></h3>
-			<p><%= "#{part.name} #{part.surname}" %></p>
-			<h4>Score: <%=part.records.sum(:score)%></h4>
-		</div>
-		<div class="col-lg-4">
-			<p><%= part.meta%></p>
+			<% user.attributes.each do |key,value| %>
+				<% next if key.eql?("_id") %>
+				<h4><%= key %>  <small><%= value %></small></h4>
+			<% end %>
 		</div>
 	</div>
 	<br>

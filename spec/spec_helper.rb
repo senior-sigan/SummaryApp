@@ -20,6 +20,8 @@ RSpec.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+  config.include Mongoid::Matchers
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
   end

@@ -1,6 +1,6 @@
 class ParticipantsController < ApplicationController
   def index
-  	@participants = Participant.all
+  	@users = User.all
   end
 
   def show

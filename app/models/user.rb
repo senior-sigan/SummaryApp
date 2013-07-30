@@ -5,8 +5,10 @@ class User
   field :email, type: String
   field :name, type: String
   field :surname, type: String
+  #meta fields wich will be added dynamicaly
   
   has_and_belongs_to_many :events
+  has_many :participations
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, 

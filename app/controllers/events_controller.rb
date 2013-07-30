@@ -2,7 +2,7 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
-    @records = @event.records
+    @participations = @event.participations
   end
   def index
     @events = Event.all

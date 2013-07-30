@@ -5,6 +5,7 @@ class Event
   field :place, type: String
 
   has_and_belongs_to_many :users
+  has_many :participations
 
   validates :name,
   	presence: true,
@@ -13,5 +14,4 @@ class Event
   validates :date,
   	presence: true
 
-  before_save { self.name = name.downcase }
 end

@@ -1,11 +1,13 @@
 require 'spec_helper'
 
 describe Category do
-  before { @category = Category.new(name: "android")}
+  before { @category = FactoryGirl.create :category }
 
   subject { @category }
 
-  it { should respond_to(:name) }
+  it { should have_field(:isPublic).of_type(Boolean).with_default_value_of(false) }
+  it { should have_field(:name).of_type(String)}
+  it { should have_many(:participations).with_foreign_key(:category_id)}
 
   it { should be_valid }
 
@@ -13,22 +15,20 @@ describe Category do
   	before { @category.name = " " }
   	it { should_not be_valid }
   end
+
+  describe "when isPublic is not present" do 
+    before { @category.isPublic = " " }
+    it { should_not be_valid }
+  end
+
   describe "when name is already taken" do
-  	before do 
-  	  category_with_same_name = @category.dup
-  	  category_with_same_name.name = @category.name.upcase
-  	  category_with_same_name.save
-  	end
-
-  	it { should_not  be_valid }
-  end
-  describe "name with mixed case" do
-    let(:mixed_case_name) { "AnDrOiD" }
-
-    it "should be saved as all lower-case" do
-      @category.name = mixed_case_name
-      @category.save
-      expect(@category.reload.name).to eq mixed_case_name.downcase
+    let(:category_with_same_name) { @category.dup }
+    before do 
+      category_with_same_name.name.upcase!
+      category_with_same_name.save
     end
+
+    it { category_with_same_name.should_not  be_valid }
   end
+  
 end

@@ -13,7 +13,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<% @records.each do |line| %>
+					<% @participations.each do |line| %>
 						<tr>
 							<td><%= Participant.find(line.participant_id).uuid %></td>
 							<td><%= Event.find(line.event_id).name %></td>

@@ -3,12 +3,7 @@ ruby '2.0.0'
 #ruby-gemset=community
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
-#gem "bootstrap-sass", "~> 2.3.2.1"
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-#gem "devise", "~> 3.0.0"
-#gem "omniauth-google-oauth2", "~> 0.2.0"
-#gem "google-api-client", "~> 0.6.4", :require => 'google/api_client'
+gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -34,6 +29,19 @@ gem 'jbuilder', '~> 1.2'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
+end
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'cucumber-rails', :require => false
+end
+
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'timecop'
+  gem 'launchy'
 end
 
 # Use ActiveModel has_secure_password

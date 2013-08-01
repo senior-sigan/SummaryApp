@@ -4,7 +4,6 @@ class Event
   field :date, type: DateTime
   field :place, type: String
 
-  has_and_belongs_to_many :users
   has_many :participations
 
   validates :name,
@@ -13,5 +12,8 @@ class Event
   	uniqueness: { case_sensitive: false }
   validates :date,
   	presence: true
-
+  
+  def users
+    User.in(id: participations.map(&:user_id))
+  end
 end

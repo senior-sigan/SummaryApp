@@ -11,6 +11,11 @@ describe ParticipationImport do
 
   it { should be_valid }
 
+  describe "when file not present" do 
+    before { @import.file = nil }
+    it { should_not be_valid }
+  end
+
   describe "when Participation in file is invalid" do
   	before { @import.file = "Some crazy stuff" } # TODO - real csv with crazy rows
   	it { should_not be_valid }

@@ -7,7 +7,6 @@ class User
   field :surname, type: String
   #meta fields wich will be added dynamicaly
   
-  has_and_belongs_to_many :events
   has_many :participations
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -24,4 +23,12 @@ class User
   	presence: true
 
   before_save { self.email = email.downcase }
+
+  def events
+    Event.in(id: participations.map(&:event_id))
+  end
+  def categories
+  end
+  def score
+  end
 end

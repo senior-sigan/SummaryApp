@@ -10,16 +10,51 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:surname) }
   it { should respond_to(:participations) }
+  it { should respond_to(:events) }
+  it { should respond_to(:categories) }
 
+  it { should respond_to(:participate!) }
+  it { should respond_to(:leave!) }
+  it { should respond_to(:score) }
 
-
+##### ONLY FOR MONGOID ##########
   it { should have_field(:email).of_type(String)}
   it { should have_field(:name).of_type(String)}
   it { should have_field(:surname).of_type(String)}
-
   it { should have_many(:participations).with_foreign_key(:user_id)}
-
+#################################
   it { should be_valid }
+
+  describe "participating in event" do
+    let(:event) { FactoryGirl.create :event }
+    let(:category) { FactoryGirl.create :category }
+    let(:score) { 100 }
+    before do
+      @user.save
+      @user.participate(event, category, score)
+    end
+    describe "should set right" do
+      its(:events) { should include(event) }
+    end
+    describe "should set right" do
+      its(:categories) { should include(category) }
+    end
+    describe "should set right" do
+      its(:score) { should eq 100 }
+    end
+    describe "and leaving event" do
+      before { @user.leave!(event) }
+      describe "should minus" do
+        its(:events) { should_not include(event) }
+      end
+      describe "should minus" do
+        its(:score) { should_not eq 100 }
+      end
+      describe "should remove" do
+        its(:categories) { should_not include(category) }
+      end
+    end
+  end
 
   describe "when name is not present" do 
   	before { @user.name = " " }

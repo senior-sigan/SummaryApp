@@ -18,6 +18,10 @@ class ParticipationImport
     #validate each Participation row 
     #on invalid push error and return false
     #else return true
+    if file.nil?
+      errors.add :base, "File can't be blank"
+      return false
+    end
     if imported_users.map(&:valid?).all?
       imported_users.each(&:save)
       imported_users
@@ -44,7 +48,11 @@ class ParticipationImport
   	header = spreadsheet.row(1)
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      user = User.find_by(email: row["email"].downcase) || User.new
+      begin
+        user = User.find_by(email: row["email"].downcase)  
+      rescue Exception => e
+        user = User.new  
+      end
       if user.new_record? 
         user.attributes = row.to_hash 
       end

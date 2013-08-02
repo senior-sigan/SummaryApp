@@ -11,4 +11,11 @@ class Category
   	presence: true
 
   has_many :participations
+
+  def events
+    Event.in(id: participations.map(&:event_id))
+  end
+  def users
+    User.in(id: participations.map(&:user_id))
+  end
 end

@@ -28,7 +28,15 @@ class User
     Event.in(id: participations.map(&:event_id))
   end
   def categories
+    Category.in(id: participations.map(&:category_id))
   end
   def score
+    participations.sum(:score)
+  end
+  def participate!(event, category, score)
+    participations.create!(event: event, category: category, score: score)
+  end
+  def leave!(event)
+    participations.destroy_all(event: event)
   end
 end

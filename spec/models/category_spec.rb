@@ -5,11 +5,31 @@ describe Category do
 
   subject { @category }
 
+  it { should respond_to(:events) }
+  it { should respond_to(:users) }
+
   it { should have_field(:isPublic).of_type(Boolean).with_default_value_of(false) }
   it { should have_field(:name).of_type(String)}
   it { should have_many(:participations).with_foreign_key(:category_id)}
 
   it { should be_valid }
+
+  describe "users for category" do
+    let(:event) { FactoryGirl.create :event }
+    let(:user) { FactoryGirl.create :user }
+    let(:other_event) { FactoryGirl.create :event }
+    let(:other_user) { FactoryGirl.create :user }
+    let(:score) { 100 }
+    before do
+      user.participate!(event, @category, score)
+    end
+
+    its(:users) { should be_include(user) }
+    its(:events) {should be_include(event) }
+
+    its(:users) { should_not be_include(other_user) }
+    its(:events) {should_not be_include(other_event) }
+  end
 
   describe "when name is not present" do 
   	before { @category.name = " " }

@@ -29,23 +29,18 @@ describe Event do
     let(:category) { FactoryGirl.create :category }
     let(:score) { 100 }
     before do
-      @event.save
       @event.invite!(user,category,score)
     end
     describe "should set right" do
-      its(:users) { should include(user) }
+      its(:users) { should be_include(user) }
     end
     describe "should set right" do
-      its(:categories) { should include(category) }
+      its(:categories) { should be_include(category) }
     end
     describe "and excluding user" do
       before { @event.exclude!(user) }
-      describe "should minus" do
-        its(:users) { should_not include(user) }
-      end
-      describe "should minus" do
-        its(:categories) { should_not include(category) }
-      end
+      its(:users) { should_not be_include(user) }
+      its(:categories) { should_not be_include(category) }
     end
   end
 end

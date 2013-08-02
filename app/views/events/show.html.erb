@@ -1,6 +1,6 @@
 <h1>Event <%= @event.name %></h1>
 <p>At : <%= @event.date %></p>
-<%= link_to "Import",import_event_path(@event), class: "btn btn-success" %>
+<%= link_to "Import",new_event_participation_import_path(@event), class: "btn btn-success" %>
 
 <div class="span12">
 			<table class="table">
@@ -15,7 +15,7 @@
 				<tbody>
 					<% @participations.each do |line| %>
 						<tr>
-							<td><%= Participant.find(line.participant_id).uuid %></td>
+							<td><%= User.find(line.user_id).email %></td>
 							<td><%= Event.find(line.event_id).name %></td>
 							<td><%= Category.find(line.category_id).name %></td>
 							<td><%= line.score %></td>	

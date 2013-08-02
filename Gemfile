@@ -4,7 +4,8 @@ ruby '2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
-
+gem 'roo' #for Exel Csv GoogleDocs
+gem "gravatar_image_tag"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 

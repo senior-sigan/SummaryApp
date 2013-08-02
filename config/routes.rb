@@ -1,7 +1,7 @@
 CommunityApp::Application.routes.draw do   
   resources :participants, except: [:new]
   resources :events do
-    resources :event_imports, only: [:new,:create]
+    resources :participation_imports, only: [:new,:create]
     member do 
       get 'import'
       post 'parse'

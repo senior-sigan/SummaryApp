@@ -31,28 +31,26 @@ describe User do
     let(:score) { 100 }
     before do
       @user.save
-      @user.participate(event, category, score)
+      event.save
+      category.save
+      @user.participate!(event, category, score)
+    end
+
+    describe "should set right" do
+      its(:events) { should be_include(event) }
     end
     describe "should set right" do
-      its(:events) { should include(event) }
-    end
-    describe "should set right" do
-      its(:categories) { should include(category) }
+      its(:categories) { should be_include(category) }
     end
     describe "should set right" do
       its(:score) { should eq 100 }
     end
     describe "and leaving event" do
       before { @user.leave!(event) }
-      describe "should minus" do
-        its(:events) { should_not include(event) }
-      end
-      describe "should minus" do
-        its(:score) { should_not eq 100 }
-      end
-      describe "should remove" do
-        its(:categories) { should_not include(category) }
-      end
+
+      its(:events) { should_not be_include(event) }
+      its(:score) { should_not eq 100 }
+      its(:categories) { should_not be_include(category) }
     end
   end
 

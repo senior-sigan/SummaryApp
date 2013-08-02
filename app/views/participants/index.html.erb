@@ -1,15 +1,13 @@
 <div class="row">
 <% @users.each do |user| %>
-	<div class="col-lg-12">
-		<div class="col-lg-2">
-			<%= image_tag "parti.jpg" %>
-		</div>
-		<div class="col-lg-4">
+	<div class="col-lg-12 well">
+		<div class="col-lg-8">
 			<% user.attributes.each do |key,value| %>
 				<% next if key.eql?("_id") %>
 				<h4><%= key %>  <small><%= value %></small></h4>
 			<% end %>
 		</div>
+		<%= gravatar_image_tag user.email, gravatar: {size: 200} %> 
 	</div>
 	<br>
 <% end %>

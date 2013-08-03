@@ -5,7 +5,7 @@ class Event
   field :place, type: String
   field :new_users, type: Integer, default: 0
 
-  has_many :participations
+  has_many :registrations
 
   validates :name,
   	presence: true,
@@ -30,5 +30,11 @@ class Event
   end
   def exclude!(user)
     participations.destroy_all(user: user)
+  end
+  def fake_users
+    registrations.where(was: false)
+  end
+  def real_users
+    registrations.where(was: true)
   end
 end

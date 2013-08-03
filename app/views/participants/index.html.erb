@@ -2,9 +2,12 @@
 	<% @users.each do |user| %>
 	<li class="media well">	
 		<div class="pull-right">
-			<%= gravatar_image_tag user.email, gravatar: {size: 200} , class: "pull-right"%> 
+			<%= link_to participant_path(user) do %>
+				<%= gravatar_image_tag user.email, gravatar: {size: 200} , class: "pull-right"%> 
+			<% end %>
 			<br>
 			<p>Score: <%= user.score%></p>
+			<p>Parts: <%= user.events.count %></p>
 		</div>
 		<% user.attributes.each do |key,value| %>
 			<% next if key.eql?("_id") %>

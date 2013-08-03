@@ -1,2 +1,37 @@
-<h1>Participants#show</h1>
-<p>Find me in app/views/participants/show.html.erb</p>
+<h3><%= "#{@user.name} #{@user.surname}" %> <small><%= @user.email %></small></h3>
+<h4>Events<h4>
+<% @user.events.each do |ev| %>
+	<div class="well">
+		<%= link_to ev.name,ev %> : <%= @user.score_for_event(ev) %>
+	</div>
+<% end %>
+<h4>Categories</h4>
+<% @user.categories.each do |cat| %>
+	<div class="well">
+		<%= link_to cat.name, cat %>
+	</div>
+<% end %>
+<canvas id="myChart" width="400" height="400"></canvas>
+<script type="text/javascript">
+	var ctx = $("#myChart").get(0).getContext("2d");
+	var data = [
+		<% @user.categories.each do |cat| %>
+			{
+				value: <%= @user.score_for_category(cat) %>,
+				color:"#F38630"
+			},
+		<% end %> 		
+	]
+	var options = {
+		//Boolean - If we want to override with a hard coded scale
+		scaleOverride : true,
+		//** Required if scaleOverride is true **
+		//Number - The number of steps in a hard coded scale
+		scaleSteps : 100,
+		//Number - The value jump in the hard coded scale
+		scaleStepWidth : 1,
+		//Number - The centre starting value
+		scaleStartValue : 0,
+	}
+	var myNewChart = new Chart(ctx).Pie(data,options);
+</script>

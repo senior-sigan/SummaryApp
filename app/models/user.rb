@@ -33,6 +33,12 @@ class User
   def score
     participations.sum(:score)
   end
+  def score_for_event(event)
+    participations.where(event: event).sum(:score)
+  end
+  def score_for_category(category)
+    participations.where(category: category).sum(:score)
+  end
   def participate!(event, category, score)
     #raise "HELL" unless self.persisted? 
     if self.persisted?

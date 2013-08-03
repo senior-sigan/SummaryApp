@@ -3,8 +3,10 @@ CommunityApp::Application.routes.draw do
   resources :events do
     resources :participation_imports, only: [:new,:create]
     member do 
-      get 'import'
-      post 'parse'
+      get :statistics
+    end
+    collection do
+      get :stats
     end
   end
   resources :categories

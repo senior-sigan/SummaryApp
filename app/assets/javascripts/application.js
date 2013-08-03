@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap.js
+//= require Chart.min.js

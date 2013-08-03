@@ -3,6 +3,7 @@ class Event
   field :name, type: String
   field :date, type: DateTime
   field :place, type: String
+  field :new_users, type: Integer, default: 0
 
   has_many :participations
 
@@ -12,9 +13,14 @@ class Event
   	uniqueness: { case_sensitive: false }
   validates :date,
   	presence: true
+  validates :new_users,
+    numericality: true
   
   def users
     User.in(id: participations.map(&:user_id))
+  end
+  def anti_users
+    User.not_in(id: participations.map(&:user_id))
   end
   def categories
     Category.in(id: participations.map(&:category_id))

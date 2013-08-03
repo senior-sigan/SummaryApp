@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  respond_to :html, :json
 
   def show
   	@event = Event.find(params[:id])
@@ -20,20 +21,12 @@ class EventsController < ApplicationController
   	  render :new
   	end
   end
-  def import
-    @event = Event.find(params[:id])
+  def statistics #for event
+  
   end
-  def parse
-    @event = Event.find(params[:id])
-    unless params[:event].nil?
-      file = params[:event][:file]
-      score = params[:score]
-      category = Category.find(params[:category][:id])
-      Record.import(file,@event,category,score)
-      redirect_to events_path
-    else
-      render :import
-    end
+  def stats #for all events
+    @events = Event.all
+    @ev = @events.map(&:name)
   end
 
   private 

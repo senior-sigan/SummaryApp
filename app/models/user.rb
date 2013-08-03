@@ -34,7 +34,12 @@ class User
     participations.sum(:score)
   end
   def participate!(event, category, score)
-    participations.create!(event: event, category: category, score: score)
+    #raise "HELL" unless self.persisted? 
+    if self.persisted?
+      participations.create(event: event, category: category, score: score)
+    else
+      raise "Hell #{self.email}"
+    end
   end
   def leave!(event)
     participations.destroy_all(event: event)

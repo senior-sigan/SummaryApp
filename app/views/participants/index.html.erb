@@ -1,14 +1,18 @@
-<div class="row">
-<% @users.each do |user| %>
-	<div class="col-lg-12 well">
-		<div class="col-lg-8">
-			<% user.attributes.each do |key,value| %>
-				<% next if key.eql?("_id") %>
-				<h4><%= key %>  <small><%= value %></small></h4>
-			<% end %>
+<ul class="media-list">
+	<% @users.each do |user| %>
+	<li class="media well">	
+		<div class="pull-right">
+			<%= gravatar_image_tag user.email, gravatar: {size: 200} , class: "pull-right"%> 
+			<br>
+			<p>Score: <%= user.score%></p>
 		</div>
-		<%= gravatar_image_tag user.email, gravatar: {size: 200} %> 
-	</div>
-	<br>
-<% end %>
-</div>
+		<% user.attributes.each do |key,value| %>
+			<% next if key.eql?("_id") %>
+			<div class="media-body">	
+				<h4 class="media-heading"><%= key %></h4>
+				<%= value %>
+			</div>
+		<% end %>
+	</li>
+	<% end %>
+</ul>

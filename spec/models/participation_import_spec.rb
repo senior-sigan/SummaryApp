@@ -28,13 +28,14 @@ describe ParticipationImport do
 
   describe "when import new 42 Users" do
     let(:file) { FactoryGirl.build :good_file }
+    let(:import) { ParticipationImport.new }
     before do 
-      import = ParticipationImport.new
       import.file = file
       import.save 
     end
     subject { User }
     its(:count) { should eq 42 }
+    its(:count) { should eq import.new_users}
 
     describe "and when import again this Users" do
       before do
@@ -48,8 +49,8 @@ describe ParticipationImport do
 
     describe "and when import again 4 new and 6 old" do
       let(:next_file) { FactoryGirl.build :next_good_file }
-      before do
-        new_import = ParticipationImport.new 
+      let(:new_import) { ParticipationImport.new }
+      before do 
         new_import.file = next_file
         new_import.save
       end

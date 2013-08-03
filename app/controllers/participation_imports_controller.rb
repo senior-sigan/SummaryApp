@@ -6,19 +6,21 @@ class ParticipationImportsController < ApplicationController
 	end
 
 	def create
-		render text: params
-		#@file = ParticipationImport.new(import_params)
-		#@category = Category.find(params[:category][:id])
-		#@score = params[:score]
+		#render text: params
+		@file = ParticipationImport.new(import_params)
+		@category = Category.find(params[:category][:id])
+		@score = params[:score]
 
-		#if @users = @file.save
-		#	@users.each do |user|
-		#		user.participate!(@event,@category,@score)
-		#	end
-		#	redirect_to @event
-		#else
-		#    render :new
-		#end
+		if @users = @file.save
+			@event.update_attribute(:new_users,@event.new_users + @file.new_users)
+			@users.each do |user|
+				user.participate!(@event,@category,@score)
+			end
+			#render text: @users.to_json 
+			redirect_to @event
+		else
+		  render :new
+		end
 	end
 
 	private

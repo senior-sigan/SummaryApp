@@ -2,6 +2,12 @@ class ParticipationImport
   include ActiveModel::Model
   attr_accessor :file
   attr_reader :header
+  attr_reader :new_users
+
+  def initialize(attributes = {})
+    attributes.each { |name, value| send("#{name}=", value) }
+    @new_users = 0
+  end
 
   def open
   	if (@spreadsheet ||= open_spreadsheet)
@@ -12,18 +18,30 @@ class ParticipationImport
       return false
     end
   end
-
+  
+  #load imported data
+  #validate each Participation row 
+  #on invalid push error and return false
+  #else return true
   def save
-    #load imported data
-    #validate each Participation row 
-    #on invalid push error and return false
-    #else return true
     if file.nil?
       errors.add :base, "File can't be blank"
       return false
     end
     if imported_users.map(&:valid?).all?
-      imported_users.each(&:save)
+      imported_users.uniq!(&:email)
+      imported_users.each do |u|
+        if u.new_record? 
+          if u.save
+            @new_users += 1
+          else
+            errors.add :base, u.errors.full_messages
+            return false
+          end
+        else
+          u.save
+        end  
+      end
       imported_users
     else
       imported_users.each_with_index do |user, index|

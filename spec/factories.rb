@@ -14,9 +14,13 @@ FactoryGirl.define do
   end
   factory :participation do
     score 100
-    user
     category
-    event
+    registration
+  end
+  factory :registration do
+    user
+    event 
+    was true
   end
   factory :good_file, class: ActionDispatch::Http::UploadedFile do
     ignore do

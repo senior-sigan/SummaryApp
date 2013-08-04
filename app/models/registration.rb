@@ -20,4 +20,8 @@ class Registration
   def score
   	participations.sum(:score)
   end
+  def participate!(category, score)
+    participations.create!(category: category, score: score)
+  end
 end
+

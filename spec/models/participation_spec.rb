@@ -4,7 +4,8 @@ describe Participation do
   let(:user) { FactoryGirl.create :user }
   let(:event) { FactoryGirl.create :event }
   let(:category) { FactoryGirl.create :category }
-  let(:participation) { FactoryGirl.create :participation, user: user, event: event, category: category }
+  let(:registration) { FactoryGirl.create :registration, user: user, event: event }
+  let(:participation) { FactoryGirl.create :participation, registration: registration, category: category, score: 10 }
 
   subject { participation }
 
@@ -12,17 +13,11 @@ describe Participation do
 
   it { should validate_presence_of :score }
   it { should validate_numericality_of :score }
-  it { should belong_to(:user).of_type(User) }
-  it { should belong_to(:event).of_type(Event) }
+  it { should belong_to(:registration).of_type(Registration) }
   it { should belong_to(:category).of_type(Category) }
 
-  describe "when user_id is not present" do
-    before { participation.user_id = nil }
-    it { should_not be_valid }
-  end
-
-  describe "when event_id is not present" do
-    before { participation.event_id = nil }
+  describe "when registration_id is not present" do
+    before { participation.registration_id = nil }
     it { should_not be_valid }
   end
 

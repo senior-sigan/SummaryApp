@@ -48,24 +48,55 @@ class User
   def participations_for_category(category)
     Participation.in(registration: real_registrations.where(category: category).map(&:id))
   end
-  #def participate!(event, category, score)
-  #  #raise "HELL" unless self.persisted? 
-  #  if self.persisted?
-  #    participations.create(event: event, category: category, score: score)
-  #  else
-  #    raise "Hell #{self.email}"
-  #  end
-  #end
-  #def leave!(event)
-  #  participations.destroy_all(event: event)
-  #end
+  def participate!(event, category, score)
+    if reg = Registration.find_or_create_by(event: event, user: user, was: true)
+      if part = reg.participate!(category, score)
+        true
+      else
+        errors.add :base, part.errors.full_messages
+        false
+      end
+    else
+      errors.add :base, reg.errors.full_messages
+      false
+    end
+  end
   def registrate_to!(event)
     registrations.create!(event: event, was: true)
+  end
+  def unregistrate_from(event)
+    registrations.delete(event)
+  end
+  def set_real_for(event)
+    begin
+      registrations.find_by(event: event).update_attributes(:was, true)
+      true  
+    rescue Exception => e
+      errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
+      false
+    end
+  end
+  def set_fake_for(event)
+    begin
+      registrations.find_by(event: event).update_attributes(:was, false)
+      true  
+    rescue Exception => e
+      errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
+      false
+    end
   end
   def fake_registrations
     registrations.where(was: false)
   end
   def real_registrations
     registrations.where(was: true)
+  end
+  def real_registration_for(event)
+    begin
+      registrations.where(was: true).find_by(event: event)
+    rescue Exception => e
+      errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
+      nil  
+    end
   end
 end

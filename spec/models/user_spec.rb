@@ -21,7 +21,7 @@ describe User do
   it { should have_field(:email).of_type(String)}
   it { should have_field(:name).of_type(String)}
   it { should have_field(:surname).of_type(String)}
-  it { should have_many(:participations).with_foreign_key(:user_id)}
+  it { should have_many(:registrations).with_foreign_key(:user_id)}
 #################################
   it { should be_valid }
 

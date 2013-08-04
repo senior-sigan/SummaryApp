@@ -29,7 +29,6 @@ class ParticipationImport
       return false
     end
     if imported_users.map(&:valid?).all?
-      imported_users.uniq!(&:email)
       imported_users.each do |u|
         if u.new_record? 
           if u.save
@@ -58,7 +57,7 @@ class ParticipationImport
   end
 
   def imported_users
-    @imported_users ||= load_users
+    @imported_users ||= load_users.uniq!(&:email)
   end
 
   def load_users

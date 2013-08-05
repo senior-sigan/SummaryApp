@@ -12,7 +12,6 @@ class ParticipationImportsController < ApplicationController
 		@score = params[:score]
 
 		if @users = @file.save
-			@event.update_attribute(:new_users,@event.new_users + @file.new_users)
 			@users.each do |user|
 				user.participate!(@event,@category,@score)
 			end

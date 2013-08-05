@@ -7,7 +7,11 @@
 			<% end %>
 			<br>
 			<p>Score: <%= user.score%></p>
-			<p>Parts: <%= user.events.count %></p>
+			<p>Parts: <%= user.real_registrations.count %> / <%= user.fake_registrations.count %></p>
+			<div class="progress">
+					<div class="progress-bar progress-bar-success" style="width: <%=user.goodness%>%"></div>
+  				<div class="progress-bar progress-bar-danger" style="width: <%=100-user.goodness%>%"></div>	
+			</div>
 		</div>
 		<% user.attributes.each do |key,value| %>
 			<% next if key.eql?("_id") %>

@@ -2,24 +2,30 @@
 <p>At : <%= @event.date %></p>
 <%= link_to "Import",new_event_participation_import_path(@event), class: "btn btn-success" %>
 <%= link_to "Statistics", statistics_event_path(@event), class: "btn btn-default" %>
+<%= link_to "Change registration", event_registrations_path(@event) %>
 <h4>Count of users <small><%= @event.users.count %> </h4>
+<h4>Categories <small>
+	<% @event.categories.each do |cat| %>
+		<%= cat.name %>
+	<% end %>
+</small></h4>
 <div class="span12">
 			<table class="table">
 				<thead>
 				    <tr>
-						<th>uuid</th>
-						<th>event</th>
+				    <th>was?</th>
+						<th>email</th>
 						<th>category</th>
 						<th>score</th>
 					</tr>
 				</thead>
 				<tbody>
-					<% @participations.each do |line| %>
+					<% @participations.each do |part| %>
 						<tr>
-							<td><%= User.find(line.user_id).email %></td>
-							<td><%= Event.find(line.event_id).name %></td>
-							<td><%= Category.find(line.category_id).name %></td>
-							<td><%= line.score %></td>	
+							<td><%= part.registration.was ? '+' : ' '%></td>
+							<td><%= part.user.email %></td>
+							<td><%= part.category.name %></td>
+							<td><%= part.score %></td>	
 						</tr>
 					<% end %>
 				</tbody>

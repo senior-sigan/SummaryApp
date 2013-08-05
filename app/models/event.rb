@@ -14,7 +14,7 @@ class Event
   	presence: true
   
   def users
-    User.in(id: real_registrations.map(&:user_id))
+    User.in(id: registrations.map(&:user_id))
   end
   def real_users
     User.in(id: real_registrations.map(&:user_id))
@@ -26,7 +26,7 @@ class Event
     Category.in(id: participations.map(&:category_id))
   end
   def participations
-    Participation.in(registration: real_registrations.map(&:id))  
+    Participation.in(registration: registrations.map(&:id))  
   end
  # def invite!(user, category, score)
  #   participations.create!(user: user, category: category, score: score)

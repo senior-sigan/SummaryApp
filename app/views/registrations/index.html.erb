@@ -1,0 +1,9 @@
+<%= form_for "registrations[]", url: set_event_registrations_path(@event), method: :patch do |f|%>
+	<% for reg in @registrations %>
+		<div>
+			<%= check_box_tag "registrations[was][]", reg.id, reg.was %>
+			<%= "#{reg.user.name} #{reg.user.surname} #{reg.user.email}" %>
+		</div>
+	<% end %>
+	<%= f.submit "Save",class: "btn btn-success" %>
+<% end %>

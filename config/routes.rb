@@ -2,6 +2,9 @@ CommunityApp::Application.routes.draw do
   resources :participants, except: [:new]
   resources :events do
     resources :participation_imports, only: [:new,:create]
+    resources :registrations, only: [:index, :update] do
+      collection { patch :set }
+    end
     member do 
       get :statistics
     end

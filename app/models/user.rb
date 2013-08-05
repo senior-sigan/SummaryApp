@@ -40,13 +40,13 @@ class User
     participations_for_category(category).sum(:score)
   end
   def participations
-    Participation.in(registration: real_registrations.map(&:id))  
+    Participation.in(registration_id: real_registrations.map(&:id))  
   end
   def participations_for_event(event)
-    Participation.in(registration: real_registrations.where(event: event).map(&:id))
+    Participation.in(registration_id: real_registrations.where(event: event).map(&:id))
   end
   def participations_for_category(category)
-    Participation.in(registration: real_registrations.where(category: category).map(&:id))
+    participations.where(category: category)
   end
   def participate!(event, category, score)
     if reg = Registration.find_or_create_by(event: event, user: self, was: true)
@@ -101,6 +101,16 @@ class User
   end
   def real_registrations
     registrations.where(was: true)
+  end
+  def goodness
+    fakes = fake_registrations.count
+    reals = real_registrations.count
+    all = fakes + reals
+    if all.zero?
+      100
+    else
+      (reals.to_f / all.to_f) * 100
+    end
   end
   def real_registration_for(event)
     begin

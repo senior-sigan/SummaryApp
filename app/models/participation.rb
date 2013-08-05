@@ -10,4 +10,13 @@ class Participation
   	numericality: true
   validates :category,
   	presence: true
+  validates :registration,
+  	presence: true
+
+  def user
+  	registration.user
+  end
+  def event
+  	registration.event
+  end
 end

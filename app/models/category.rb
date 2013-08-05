@@ -13,9 +13,9 @@ class Category
   has_many :participations
 
   def events
-    Event.in(id: participations.map(&:event_id))
+    Event.in(id: participations.map(&:event))
   end
   def users
-    User.in(id: participations.map(&:user_id))
+    User.in(id: participations.map(&:user))
   end
 end

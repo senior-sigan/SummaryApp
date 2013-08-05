@@ -1,14 +1,19 @@
 <% provide(:title, 'New category') %>
 <div class="row">
-	<div class="span6 offset3">
-		<h1>New category</h1>
+	<div class="col-lg-6 col-offset-3">
 		<%= form_for @category do |f| %>
 			<%= render 'layouts/error_messages', :object => f.object %>
-
-			<%= f.label :name %>
-			<%= f.text_field :name %>
-
-			<%= f.submit "Create", class: "btn btn-primary" %>
+			<fieldset>
+				<legend>New category</legend>
+				<div class="form-group">
+					<%= f.label :name, class: "col-lg-2 control-label" %>
+					<div class="col-lg-10">
+						<%= f.text_field :name,class: 'form-control' %>
+						<br>
+						<%= f.submit "Create", class: "btn btn-primary" %>
+					</div>
+				</div>
+			</fieldset>
 		<% end %>
 	</div>
 </div>

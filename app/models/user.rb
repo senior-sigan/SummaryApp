@@ -28,7 +28,7 @@ class User
     Event.in(id: real_registrations.map(&:event_id))
   end
   def categories
-    Category.in(category: participations.map(&:category_id))
+    Category.in(id: participations.map(&:category_id))
   end
   def score
     participations.sum(:score)
@@ -49,7 +49,7 @@ class User
     Participation.in(registration: real_registrations.where(category: category).map(&:id))
   end
   def participate!(event, category, score)
-    if reg = Registration.find_or_create_by(event: event, user: user, was: true)
+    if reg = Registration.find_or_create_by(event: event, user: self, was: true)
       if part = reg.participate!(category, score)
         true
       else
@@ -58,6 +58,17 @@ class User
       end
     else
       errors.add :base, reg.errors.full_messages
+      false
+    end
+  end
+  def leave!(event)
+    begin
+      reg = Registration.find_by(event: event, user: self)
+      reg.unparticipate!
+      reg.delete
+      true
+    rescue Exception => e
+      errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
       false
     end
   end

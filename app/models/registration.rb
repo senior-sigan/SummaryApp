@@ -7,6 +7,10 @@ class Registration
 
   validates :was,
   	presence: true
+  validates :user,
+    presence: true
+  validates :event,
+    presence: true
 
   def self.fakes 
   	Registration.where(was: false)
@@ -22,6 +26,9 @@ class Registration
   end
   def participate!(category, score)
     participations.create!(category: category, score: score)
+  end
+  def unparticipate!
+    participations.delete_all
   end
 end
 

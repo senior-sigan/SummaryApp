@@ -38,18 +38,14 @@ describe User do
 
     describe "should set right" do
       its(:events) { should be_include(event) }
-    end
-    describe "should set right" do
       its(:categories) { should be_include(category) }
-    end
-    describe "should set right" do
       its(:score) { should eq 100 }
     end
     describe "and leaving event" do
       before { @user.leave!(event) }
 
-      its(:events) { should_not be_include(event) }
       its(:score) { should_not eq 100 }
+      its(:events) { should_not be_include(event) }
       its(:categories) { should_not be_include(category) }
     end
   end

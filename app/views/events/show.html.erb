@@ -10,24 +10,24 @@
 	<% end %>
 </small></h4>
 <div class="span12">
-			<table class="table">
-				<thead>
-				    <tr>
-				    <th>was?</th>
-						<th>email</th>
-						<th>category</th>
-						<th>score</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @participations.each do |part| %>
-						<tr>
-							<td><%= part.registration.was ? '+' : ' '%></td>
-							<td><%= part.user.email %></td>
-							<td><%= part.category.name %></td>
-							<td><%= part.score %></td>	
-						</tr>
-					<% end %>
-				</tbody>
-			</table>
-		</div>
+	<table class="table">
+		<thead>
+		    <tr>
+		    <th>was?</th>
+				<th>email</th>
+				<th>category</th>
+				<th>score</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @participations.each do |part| %>
+				<tr>
+					<td><%= part.registration.was ? '+' : ' '%></td>
+					<td><%= part.user.email %></td>
+					<td><%= part.category.name %></td>
+					<td><%= part.score %></td>	
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

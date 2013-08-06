@@ -2,18 +2,20 @@ class ParticipationImportsController < ApplicationController
 	before_filter :find_event
 	
 	def new
-		@file = ParticipationImport.new
+		@import = ParticipationImport.new
+		@import.event = @event
 	end
 
 	def create
 		#render text: params
-		@file = ParticipationImport.new(import_params)
+		@import = ParticipationImport.new(import_params)
+		@import.event = @event
 		@category = Category.find(params[:category][:id])
 		@score = params[:score]
 
-		if @users = @file.save
-			@users.each do |user|
-				user.participate!(@event,@category,@score)
+		if @registrations = @import.save
+			@registrations.each do |reg|
+				reg.participate!(@category,@score)
 			end
 			#render text: @users.to_json 
 			redirect_to @event

@@ -1,4 +1,4 @@
-<%= form_for "registrations[]", url: set_event_registrations_path(@event), method: :patch do |f|%>
+<%= form_for "registrations[]", url: set_was_event_registrations_path(@event), method: :patch do |f|%>
 	<% for reg in @registrations %>
 		<div>
 			<%= check_box_tag "registrations[was][]", reg.id, reg.was %>

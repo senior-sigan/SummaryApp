@@ -3,7 +3,11 @@ CommunityApp::Application.routes.draw do
   resources :events do
     resources :participation_imports, only: [:new,:create]
     resources :registrations, only: [:index, :update] do
-      collection { patch :set }
+      collection do 
+        patch :set_was
+        patch :set_categories
+        get :categorize
+      end
     end
     member do 
       get :statistics

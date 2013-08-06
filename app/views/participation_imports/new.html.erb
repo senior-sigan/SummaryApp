@@ -4,19 +4,7 @@
 	<%= form_for [@event,@import], html: {class: "form-horizontal"} do |f| %>
 		<%= render 'layouts/error_messages', :object => f.object %>
 		<fieldset>
-			<legend>New event</legend>
-			<div class="form-group">
-				<%= label_tag :category, nil, class: "col-lg-2 control-label" %>
-				<div class="col-lg-10">
-					<%= collection_select :category, :id, Category.all, :id, :name,{} ,{class: 'form-control'} %> 
-				</div>
-			</div>
-			<div class="form-group">
-				<%= label_tag :score, nil, class: "col-lg-2 control-label" %>
-				<div class="col-lg-10">
-					<%= number_field_tag :score,nil, class: 'form-control' %>
-				</div>
-			</div>
+			<legend>Import registrations</legend>
 			<div class="form-group">
 				<%= f.label :file, class: "col-lg-2 control-label" %>
 				<div class="col-lg-10">

@@ -10,14 +10,15 @@ class ParticipationImportsController < ApplicationController
 		#render text: params
 		@import = ParticipationImport.new(import_params)
 		@import.event = @event
-		@category = Category.find(params[:category][:id])
-		@score = params[:score]
+#		@category = Category.find(params[:category][:id])
+#		@score = params[:score]
 
 		if @registrations = @import.save
-			@registrations.each do |reg|
-				reg.participate!(@category,@score)
-			end
+			#@registrations.each do |reg|
+			#	reg.participate!(@category,@score)
+			#end
 			#render text: @users.to_json 
+			flash[:success] = "Saved #{@registrations.count} registrations"
 			redirect_to @event
 		else
 		  render :new

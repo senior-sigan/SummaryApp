@@ -1,5 +1,6 @@
 class RegistrationsController < ApplicationController
 	before_filter :find_event
+	respond_to :html, :json
 
 	def index
 		@registrations = @event.registrations
@@ -15,7 +16,7 @@ class RegistrationsController < ApplicationController
 		end
 	end
 
-	def set
+	def set_was
 		params[:registrations] ||= { "was" => [] }
 		reg_ids = params[:registrations]["was"]
 		real_regs = @event.registrations.in(id: reg_ids)
@@ -24,6 +25,26 @@ class RegistrationsController < ApplicationController
 		fake_regs.each{ |f| f.update_attribute(:was,false) }
 		redirect_to event_registrations_path(@event)
 	end
+
+	def categorize
+		@registrations = @event.registrations
+		@cats = Category.all
+	end
+	def set_categories
+		@regs = params[:registrations]
+		bum = []
+		@regs.each do |reg_id,category|
+			category.each do |category_id,score|
+				category = Category.find category_id
+				registration = Registration.find(reg_id) 
+				registration.participate!(category, score) unless score == "0"
+				# FIX TO MODEL METOD!!! EXCEPTION DANGER
+				# RENDER :categorize IF SOME ERRORS and ROLLBACK
+			end
+		end
+		redirect_to @event
+	end
+
 	private
 	def reg_params
 		params.require(:registration).permit(:was)

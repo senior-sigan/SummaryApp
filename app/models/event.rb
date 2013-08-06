@@ -12,7 +12,9 @@ class Event
   	uniqueness: { case_sensitive: false }
   validates :date,
   	presence: true
-  
+  def newcomers
+    User.in(id: registrations.where(newcomer: true).map(&:user_id))
+  end
   def users
     User.in(id: registrations.map(&:user_id))
   end

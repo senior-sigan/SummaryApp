@@ -1,5 +1,6 @@
-<ul>
+<h1>Categories <small><%= link_to "New", new_category_path, class: "btn btn-success" %></small></h1>
+<ul class="list-group">
 	<% @categories.each do |c| %>
-		<li><%= link_to c.name, c %></li>
+		<li class="list-group-item"><%= link_to c.name, c %></li>
 	<% end %>
 </ul>

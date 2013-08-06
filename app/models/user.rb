@@ -49,7 +49,7 @@ class User
     participations.where(category: category)
   end
   def participate!(event, category, score)
-    if reg = Registration.find_or_create_by(event: event, user: self, was: true)
+    if reg = find_or_create_registration_for(event)
       if part = reg.participate!(category, score)
         true
       else
@@ -72,8 +72,19 @@ class User
       false
     end
   end
+  def find_or_create_registration_for(event)
+    begin
+      Registration.find_by(user: self, event: event)
+    rescue Exception => e
+      registrate_to!(event)
+    end
+  end
   def registrate_to!(event)
-    registrations.create!(event: event, was: true)
+    if events.empty?
+      registrations.create!(event: event, was: true, newcomer: true)
+    else
+      registrations.create!(event: event, was: true, newcomer: false)
+    end
   end
   def unregistrate_from(event)
     registrations.delete(event)

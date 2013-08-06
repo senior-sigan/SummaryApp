@@ -21,6 +21,7 @@ FactoryGirl.define do
     user
     event 
     was true
+    newcomer true
   end
   factory :good_file, class: ActionDispatch::Http::UploadedFile do
     ignore do

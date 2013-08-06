@@ -1,6 +1,8 @@
 class Registration
   include Mongoid::Document
   field :was, type: Boolean, default: true
+  field :newcomer, type: Boolean
+
   belongs_to :event
   belongs_to :user
   has_many :participations
@@ -10,6 +12,8 @@ class Registration
   validates :user,
     presence: true
   validates :event,
+    presence: true
+  validates :newcomer,
     presence: true
 
   def self.fakes 

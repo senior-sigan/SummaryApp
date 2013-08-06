@@ -8,6 +8,7 @@ describe Event do
   it { should respond_to(:name) }
   it { should respond_to(:date) }
   it { should respond_to(:users) }
+  it { should respond_to(:newcomers) }
   it { should respond_to(:categories) }
 
 ##### ONLY FOR MONGOID ##########
@@ -21,4 +22,23 @@ describe Event do
 #################################  
   
   it { should be_valid }
+  
+  describe "when come newcomers they NEW" do
+    let(:first_event) { FactoryGirl.create :event }
+    let(:user) { FactoryGirl.create :user }
+
+    before { user.registrate_to!(first_event) }
+
+    subject { first_event }
+    its(:newcomers) { should be_include(user) }
+
+    describe "when come oldcomers they OLD" do
+      let(:second_event) { FactoryGirl.create :event }
+
+      before { user.registrate_to!(second_event) }
+  
+      subject { second_event }
+      its(:newcomers) { should_not be_include(user) }
+    end
+  end
 end

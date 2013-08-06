@@ -1,0 +1,10 @@
+<h1>Category <%= @category.name %></h1>
+<h3> Users </h3>
+<ul class="list-group">
+	<% @category.users.each do |user| %>
+  		<li class="list-group-item">
+  		  <span class="badge"><%= user.score_for_category(@category) %></span>
+  		  <%= link_to user.name, participant_path(user) %>
+  		</li>
+	<% end %>
+</ul>

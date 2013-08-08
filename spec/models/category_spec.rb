@@ -4,6 +4,7 @@ describe Category do
   before { @category = FactoryGirl.create :category }
 
   subject { @category }
+  it { should be_valid }
 
   it { should respond_to(:events) }
   it { should respond_to(:users) }
@@ -12,7 +13,17 @@ describe Category do
   it { should have_field(:name).of_type(String)}
   it { should have_many(:participations).with_foreign_key(:category_id)}
 
-  it { should be_valid }
+#  describe "users must be sorted by score" do
+#    let(:event) { FactoryGirl.create :event }
+#    let(:users) { FactoryGirl.create_list :user, 20 }
+#    before do 
+#      users.each do |user|
+#        user.participate!(event,@category,rand(1..21))
+#      end
+#    end
+#
+#    its(:users) { should be_sorted }
+#  end
 
   describe "users for category" do
     let(:event) { FactoryGirl.create :event }
@@ -25,10 +36,10 @@ describe Category do
     end
 
     its(:users) { should be_include(user) }
-    its(:events) {should be_include(event) }
+    its(:events) { should be_include(event) }
 
     its(:users) { should_not be_include(other_user) }
-    its(:events) {should_not be_include(other_event) }
+    its(:events) { should_not be_include(other_event) }
   end
 
   describe "when name is not present" do 

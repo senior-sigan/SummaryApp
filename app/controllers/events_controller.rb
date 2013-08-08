@@ -6,7 +6,7 @@ class EventsController < ApplicationController
     @participations = @event.participations
   end
   def index
-    @events = Event.all
+    @events = Event.all.sort_by{ |e| e.date }
     @categories = Category.all
   end
   def new

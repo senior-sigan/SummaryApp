@@ -8,7 +8,7 @@
 <h4>Categories</h4>
 <% @user.categories.each do |cat| %>
 	<div class="well">
-		<%= link_to cat.name, cat %>
+		<%= link_to cat.name, cat %> : <%= @user.score_for_category(cat) %>
 	</div>
 <% end %>
 <canvas id="myChart" width="400" height="400"></canvas>

@@ -12,6 +12,8 @@ class Participation
   	presence: true
   validates :registration,
   	presence: true
+  validates :registration_id,
+    uniqueness: { scope: :category_id }
 
   def user
   	registration.user

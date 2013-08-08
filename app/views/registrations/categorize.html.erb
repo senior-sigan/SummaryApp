@@ -6,9 +6,10 @@
 	<% for reg in @registrations %>
 		<div class="form-group">
 			<%= label_tag :registration,"#{reg.user.name} #{reg.user.surname} #{reg.user.email}", class: "col-lg-2 control-label" %>
+
 			<% @cats.each do |cat| %>
 				<div class="col-lg-2">
-					<%= number_field_tag "registrations[#{reg.id}][#{cat.id}]", 0, class: "form-control" %>
+					<%= number_field_tag "registrations[#{reg.id}][#{cat.id}]", reg.score, class: "form-control" %>
 					<span><%= cat.name %></span>
 				</div>
 			<% end %>

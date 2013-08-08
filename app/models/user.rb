@@ -123,6 +123,16 @@ class User
       (reals.to_f / all.to_f) * 100
     end
   end
+  def quad_goodness
+    fakes = fake_registrations.count.to_f
+    reals = real_registrations.count.to_f
+    all = fakes + reals
+    if all.zero?
+      100
+    else
+      (reals**2 / all)
+    end
+  end  
   def real_registration_for(event)
     begin
       registrations.where(was: true).find_by(event: event)

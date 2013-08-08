@@ -2,7 +2,7 @@ class ParticipantsController < ApplicationController
   respond_to :html, :json
 
   def index
-  	@users = User.all
+  	@users = User.all.sort{ |a,b| b.quad_goodness <=> a.quad_goodness }
   	respond_with(@users)
   end
 

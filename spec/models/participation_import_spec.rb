@@ -35,7 +35,7 @@ describe ParticipationImport do
     before do 
       import.file = file
       import.event = event
-      @returned = import.save 
+      import.save 
     end
 
     subject { User }
@@ -49,7 +49,7 @@ describe ParticipationImport do
       before do
         new_import = ParticipationImport.new
         new_import.file = file 
-        new_import.event = event
+        new_import.event = next_event
         new_import.save 
       end
 

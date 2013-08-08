@@ -6,7 +6,6 @@
 				<%= gravatar_image_tag user.email, gravatar: {size: 200} , class: "pull-right"%> 
 			<% end %>
 			<br>
-			<p>Score: <%= user.score%></p>
 			<p>Parts: <%= user.real_registrations.count %> / <%= user.fake_registrations.count %></p>
 			<div class="progress">
 					<div class="progress-bar progress-bar-success" style="width: <%=user.goodness%>%"></div>

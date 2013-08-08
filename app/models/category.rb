@@ -16,6 +16,6 @@ class Category
     Event.in(id: participations.map(&:event))
   end
   def users
-    User.in(id: participations.map(&:user))
+    User.in(id: participations.map(&:user)).sort{ |a,b| b.score <=> a.score }
   end
 end

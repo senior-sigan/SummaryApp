@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Registration do
-  before { @registration = FactoryGirl.create :registration }
+  let(:user) { FactoryGirl.create :user }
+  let(:event) { FactoryGirl.create :event }
+  before { @registration = FactoryGirl.build :registration, user: user, event: event }
 
   subject { @registration }
 
@@ -15,6 +17,14 @@ describe Registration do
   describe "when user not present" do
   	before { @registration.user_id = nil }
   	it { should_not be_valid }
+  end
+
+  describe "when pair [user_id,event_id] is already taken" do
+    before do
+      user.registrate_to!(event)
+    end
+
+    it { should_not be_valid }
   end
 
   describe "when evetn not present" do
@@ -33,17 +43,17 @@ describe Registration do
   end
 
   describe "create newcomer" do
-    let(:user) { FactoryGirl.create :user }
+    let(:newcomer) { FactoryGirl.create :user }
     let(:first_event) { FactoryGirl.create :event }
     
-    before { @first_registration = user.registrate_to!(first_event) }
+    before { @first_registration = newcomer.registrate_to!(first_event) }
 
     subject { @first_registration }
     its(:newcomer) { should eq true }
 
     describe "create old comer" do
       let(:second_event) { FactoryGirl.create :event }
-      before { @second_registration = user.registrate_to!(second_event)}
+      before { @second_registration = newcomer.registrate_to!(second_event)}
       subject { @second_registration }
       its(:newcomer) { should_not eq true }
     end

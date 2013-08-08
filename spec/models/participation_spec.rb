@@ -5,7 +5,7 @@ describe Participation do
   let(:event) { FactoryGirl.create :event }
   let(:category) { FactoryGirl.create :category }
   let(:registration) { FactoryGirl.create :registration, user: user, event: event }
-  let(:participation) { FactoryGirl.create :participation, registration: registration, category: category, score: 10 }
+  let(:participation) { FactoryGirl.build :participation, registration: registration, category: category, score: 10 }
 
   subject { participation }
 
@@ -15,6 +15,11 @@ describe Participation do
   it { should validate_numericality_of :score }
   it { should belong_to(:registration).of_type(Registration) }
   it { should belong_to(:category).of_type(Category) }
+
+  describe "when pair [registration,category] is already present" do
+    before { registration.participate!(category,100) }
+    it { should_not be_valid }
+  end
 
   describe "when registration_id is not present" do
     before { participation.registration_id = nil }

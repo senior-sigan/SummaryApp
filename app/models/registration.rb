@@ -10,9 +10,11 @@ class Registration
   validates :was,
   	presence: true
   validates :user,
-    presence: true
+    presence: true 
   validates :event,
     presence: true
+  validates :user_id,
+    uniqueness: { scope: :event_id }
   validates :newcomer,
     presence: true
 

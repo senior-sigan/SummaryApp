@@ -96,6 +96,10 @@ function PieChart(data) {
   this.labelY = 30;
   this.kolor = PieChart.BASE_COLOR.clone();
   var n = 0;
+  this.total = 0;
+  for (var i in data) {
+    this.total += data[i];
+  }
   for (var i in data) {
     this.slice(i, data[i], n++);
   }
@@ -103,9 +107,8 @@ function PieChart(data) {
 
 PieChart.prototype = {
   slice: function(name, value, i) {
-
     var start = this.angle,
-        end = start + (Math.PI*2) * value/100,
+        end = start + (Math.PI*2) * value/this.total,
         // Increase hue by .1 with each slice (max of 10 will work)
         kolor = this.kolor = this.kolor.clone().hue(this.kolor.hue()+.1);
 
@@ -178,13 +181,13 @@ PieChart.prototype = {
       cursor: 'pointer'
     });
 
-    var t = new Text(name + ' (' + v + '%)').addTo(g);
+    var t = new Text(name + ' (' + v + ')').addTo(g);
     var r = new Rect(0, 0, 20, 20, 5).fill(fill).addTo(g);
 
     t.attr({
       x: 30,
       y: 17,
-      textFillColor: 'white',
+      textFillColor: 'black',
       fontFamily: 'Arial',
       fontSize: '14'
     });
@@ -200,7 +203,7 @@ PieChart.prototype = {
 
 new PieChart({
 	<% @user.categories.each do |cat| %>
-		<%= cat.name %>: <%= @user.pc_score_for_category(cat) %>,
+		<%= cat.name %>: <%= @user.score_for_category(cat) %>,
 	<% end %>
 })
 

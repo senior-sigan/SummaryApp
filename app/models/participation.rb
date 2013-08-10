@@ -7,7 +7,7 @@ class Participation
 
   validates :score,
   	presence: true,
-  	numericality: true
+  	numericality: { greater_than: 0 }
   validates :category,
   	presence: true
   validates :registration,

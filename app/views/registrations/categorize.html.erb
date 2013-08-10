@@ -3,17 +3,35 @@
 	method: :patch, 
 	html: {class: "form-horizontal"} do |f|
 %>
+	<div class="form-group">
+		<div class="col-lg-3">
+			<%= f.submit "Save",class: "btn btn-success pull-right" %>
+		</div>
+		<% for cat in @cats %>
+			<div class="col-lg-2">
+				<%= cat.name %>
+				<%= number_field_tag "categories[#{cat.id}", nil , class: "form-control"%>
+				<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat.id %>
+			</div> 
+		<% end %>
+	</div>
 	<% for reg in @registrations %>
 		<div class="form-group">
-			<%= label_tag :registration,"#{reg.user.name} #{reg.user.surname} #{reg.user.email}", class: "col-lg-2 control-label" %>
+			<%= label_tag :registration,"#{reg.user.name} #{reg.user.surname} #{reg.user.email}", class: "col-lg-3 control-label" %>
 
 			<% @cats.each do |cat| %>
 				<div class="col-lg-2">
-					<%= number_field_tag "registrations[#{reg.id}][#{cat.id}]", reg.score, class: "form-control" %>
-					<span><%= cat.name %></span>
+					<%= check_box_tag "registrations[#{reg.id}][]", cat.id,false, class: "form-control" %>
 				</div>
 			<% end %>
 		</div>
 	<% end %>
-	<%= f.submit "Save",class: "btn btn-success" %>
 <% end %>
+<script type="text/javascript">
+	(function($){
+		$(".toggle").on("click",function(event){
+			event.preventDefault();
+			$('input[type="checkbox"][value="'+this.id+'"]').click();
+		})
+	})(jQuery)
+</script>

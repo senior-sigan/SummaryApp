@@ -37,7 +37,7 @@ class RegistrationImport
           errors.add :base, u.errors.full_messages
           return false
         end
-        registrations << u.registrate_to!(@event) 
+        registrations << u.find_or_create_registration_for(@event)
       end
       registrations
     else
@@ -63,18 +63,26 @@ class RegistrationImport
   	header = spreadsheet.row(1)
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
-      begin
-        user = User.find_by(email: row["email"].downcase)  
-      rescue Exception => e
-        user = User.new  
+      user = User.find_or_initialize_by(email: row["email"].downcase)
+      if user.new_record?
+        user.name = row["name"]
+        user.surname = row["surname"]
       end
-      if user.new_record? 
-        user.attributes = row.to_hash 
+      row.each do |key,value|
+        next if default?(key)
+        next if empty?(value)
+        user[key] ||= ""
+        user[key] += "\n#{value}" unless user[key].eql?(value)
       end
       user
     end  
   end
-
+  def empty?(value)
+    value.nil? || value.eql?("")
+  end
+  def default?(key)
+    %w(email name surname).include?(key) || key.nil? || key.eql?("")
+  end
   def open_spreadsheet
     unless file.nil?
       case File.extname(file.original_filename)

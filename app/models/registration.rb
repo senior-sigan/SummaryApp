@@ -31,7 +31,9 @@ class Registration
   	participations.sum(:score)
   end
   def participate!(category, score)
-    participations.create!(category: category, score: score)
+    part = participations.find_or_initialize_by(category: category)
+    part.score = score
+    part.save
   end
   def unparticipate!
     participations.delete_all

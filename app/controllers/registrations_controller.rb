@@ -12,21 +12,14 @@ class RegistrationsController < ApplicationController
 	end
 
 	def save_import
-		#render text: params
 		@import = RegistrationImport.new(import_params)
 		@import.event = @event
-#		@category = Category.find(params[:category][:id])
-#		@score = params[:score]
 
 		if @registrations = @import.save
-			#@registrations.each do |reg|
-			#	reg.participate!(@category,@score)
-			#end
-			#render text: @users.to_json 
 			flash[:success] = "Saved #{@registrations.count} registrations"
 			redirect_to @event
 		else
-		  render :new
+		  render :import
 		end
 	end
 
@@ -45,16 +38,18 @@ class RegistrationsController < ApplicationController
 		@cats = Category.all
 	end
 	def set_categories
-		@regs = params[:registrations]
-		bum = []
-		@regs.each do |reg_id,category|
-			category.each do |category_id,score|
-				category = Category.find category_id
-				registration = Registration.find(reg_id) 
-				registration.participate!(category, score) unless score == "0"
+		#render text: params
+		@score = params[:categories]
+		@registrations = params[:registrations] || []
+		@registrations.each do |reg_id,cats|
+			registration = Registration.find reg_id
+			cats.each do |cat_id|
+				unless registration.participate! Category.find(cat_id), @score[cat_id]
+					render :categorize
+				end
 				# FIX TO MODEL METOD!!! EXCEPTION DANGER
 				# RENDER :categorize IF SOME ERRORS and ROLLBACK
-			end
+			end	
 		end
 		redirect_to @event
 	end

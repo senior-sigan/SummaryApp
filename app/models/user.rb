@@ -36,6 +36,10 @@ class User
   def score_for_event(event)
     participations_for_event(event).sum(:score)
   end
+  def pc_score_for_category(category)
+    sc = score.to_f
+    score_for_category(category)*100.0 / sc unless sc.zero?
+  end
   def score_for_category(category)
     participations_for_category(category).sum(:score)
   end

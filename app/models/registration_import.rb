@@ -1,4 +1,4 @@
-class ParticipationImport
+class RegistrationImport
   include ActiveModel::Model
   attr_accessor :file
   attr_reader :header

@@ -12,3 +12,20 @@
  *= require bootstrap.css
  *= require custom.css.scss
  */
+ .user .user-info .user-categories {
+ 	float: left;
+ }
+ .user {
+ 	padding-bottom: 25px;
+ }
+.user-info {
+	margin-left: 5px;
+	overflow-x: hidden;
+	white-space: nowrap; 
+}
+.user-categories a {
+	color: gray;
+}
+.user-avatar {
+
+}

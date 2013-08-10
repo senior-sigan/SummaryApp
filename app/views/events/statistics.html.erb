@@ -1,0 +1,24 @@
+<div class="row">
+	<div class="col-lg-3">
+		<%= image_tag "blank.jpg", class: "img-responsive"%>
+		<div class="event_name"><%= @event.name %></div>
+		<div><%= @event.place %></div>
+		<div><%= @event.date.strftime("%Y-%m-%d") %></div>
+		<div>
+			<%= @event.real_registrations.count %>
+			<%= @event.fake_registrations.count %> 
+		</div>
+	</div>
+	
+	<div class="col-lg-9">
+		<div class="navbar">
+			<ul class="nav navbar-nav">
+		  	<li><%= link_to "Log", @event%></li>
+		  	<li class="active"><%= link_to "Stats", statistics_event_path(@event)%></li>
+			</ul>
+		</div>
+			UNDEFINED
+		<div>
+		</div>
+	</div>
+</div>

@@ -1,14 +1,16 @@
 CommunityApp::Application.routes.draw do   
   resources :participants, except: [:new]
   resources :events do
-    resources :participation_imports, only: [:new,:create]
-    resources :registrations, only: [:index, :update] do
+    resources :registrations, only: [:index] do
       collection do 
         patch :set_was
         patch :set_categories
-        get :categorize
+        get :categorize 
+        get :import
+        post :save_import
       end
     end
+
     member do 
       get :statistics
     end

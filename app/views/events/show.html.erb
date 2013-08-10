@@ -1,34 +1,44 @@
-<h1>Event <%= @event.name %></h1>
-<p>At : <%= @event.date %></p>
-<%= link_to "Import",new_event_participation_import_path(@event), class: "btn btn-success" %>
-<%= link_to "Statistics", statistics_event_path(@event), class: "btn btn-default" %>
-<%= link_to "Change registration", event_registrations_path(@event) %>
-<%= link_to "Set categories", categorize_event_registrations_path(@event) %>
-<h4>Count of users <small><%= @event.users.count %> </h4>
-<h4>Categories <small>
-	<% @event.categories.each do |cat| %>
-		<%= cat.name %>
-	<% end %>
-</small></h4>
-<div class="span12">
-	<table class="table">
-		<thead>
-		    <tr>
-		    <th>was?</th>
-				<th>email</th>
-				<th>category</th>
-				<th>score</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @participations.each do |part| %>
-				<tr>
-					<td><%= part.registration.was ? '+' : ' '%></td>
-					<td><%= part.user.email %></td>
-					<td><%= part.category.name %></td>
-					<td><%= part.score %></td>	
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+<div class="row">
+	<div class="col-lg-3">
+		<%= image_tag "blank.jpg", class: "img-responsive"%>
+		<div class="event_name"><%= @event.name %></div>
+		<div><%= @event.place %></div>
+		<div><%= @event.date.strftime("%Y-%m-%d") %></div>
+		<div>
+			<%= @event.real_registrations.count %>
+			<%= @event.fake_registrations.count %> 
+		</div>
+	</div>
+	
+	<div class="col-lg-9">
+		<div class="navbar">
+			<ul class="nav navbar-nav">
+		  	<li class="active"><%= link_to "Log", @event%></li>
+		  	<li><%= link_to "Stats", statistics_event_path(@event)%></li>
+		  	<li><%= link_to "Registrations", event_registrations_path(@event) %></li>
+			</ul>
+		  <%= link_to "Import",import_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
+		  <%= link_to "Categorize", categorize_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
+		</div>
+			<table class="table table-hover">
+					<thead>
+					  <tr>
+							<th>email</th>
+							<th>category</th>
+							<th>score</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @participations.each do |part| %>
+							<tr <%= 'class=danger' unless part.registration.was  %>>
+								<td><%= part.user.email %></td>
+								<td><%= part.category.name %></td>
+								<td><%= part.score %></td>	
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+		<div>
+		</div>
+	</div>
 </div>

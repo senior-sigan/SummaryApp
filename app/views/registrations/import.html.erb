@@ -1,7 +1,7 @@
 <% provide(:title, 'Import') %>
 <div class="row">
 	<div class="col-lg-6 col-offset-3">
-	<%= form_for [@event,@import], html: {class: "form-horizontal"} do |f| %>
+	<%= form_for @import, url: save_import_event_registrations_path(@event,@import), html: {class: "form-horizontal"} do |f| %>
 		<%= render 'layouts/error_messages', :object => f.object %>
 		<fieldset>
 			<legend>Import registrations</legend>

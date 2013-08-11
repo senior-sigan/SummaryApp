@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap.js
-//= require Chart.min.js
+//= require bootstrap.min
+//= require Chart.min
+//= require bonsai-0.4.1.min

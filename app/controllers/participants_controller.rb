@@ -9,6 +9,7 @@ class ParticipantsController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @events = Event.all
   	respond_with(@user)
   end
 end

@@ -1,0 +1,9 @@
+<legend>Choose columns</legend>
+<% for header in @: %> 
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="<%- header %>">
+      <%= header %>
+    </label>
+  </div>
+<% end %>

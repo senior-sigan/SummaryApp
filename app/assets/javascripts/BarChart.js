@@ -81,5 +81,3 @@ BarChart.prototype = {
 		return g;
 	}
 };
-//var data={"a":1,"b":3,"c":2,"d":7};
-//new BarChart(data);

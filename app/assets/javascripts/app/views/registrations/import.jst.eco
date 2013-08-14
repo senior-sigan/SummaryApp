@@ -1,0 +1,15 @@
+<form>
+	<fieldset>
+		<legend>Import registrations</legend>
+		<div class="form-group">
+			<input id="thefile" type="file"></input>
+			<div id="dropZone">Drop file or Click</div>
+    </div>
+    <div class="form-group">
+      <div id="headers"></div>
+    </div>
+    <div class="form-group">
+			<button type="submit" class="btn btn-success" disabled>Import</button>
+		</div>
+	</fieldset>	
+</form>

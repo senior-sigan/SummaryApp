@@ -12,15 +12,16 @@ class RegistrationsController < ApplicationController
 	end
 
 	def save_import
-		@import = RegistrationImport.new(import_params)
-		@import.event = @event
+		respond_with("hello", status: :created, location: '#')
+	#	@import = RegistrationImport.new(import_params)
+	#	@import.event = @event
 
-		if @registrations = @import.save
-			flash[:success] = "Saved #{@registrations.count} registrations"
-			redirect_to @event
-		else
-		  render :import
-		end
+	#	if @registrations = @import.save
+	#		flash[:success] = "Saved #{@registrations.count} registrations"
+	#		redirect_to @event
+	#	else
+	#	  render :import
+	#	end
 	end
 
 	def set_was

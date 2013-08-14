@@ -16,14 +16,15 @@ class App.RegistrationsImport extends Spine.Controller
 
   constructor: ->
     super
+    throw "event required" unless @event
     @html JST["app/views/registrations/import"]
 
   send: (event) =>
     event.preventDefault()
-    imprt = new App.RegistrationImport()
-    imprt.fields = ( field.value for field in @file_inputs when field.checked is true ) 
-    imprt.data = @data
-    console.log imprt
+    fields = ( field.value for field in @file_inputs when field.checked is true )
+    imprt = new App.RegistrationImport({event_id: @event, file: @data, fields: fields})
+    imprt.send()
+    console.log imprt.ajax()
 
   changed: (event) =>
     console.log event

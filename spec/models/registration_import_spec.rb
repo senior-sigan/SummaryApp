@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe ParticipationImport do
+describe RegistrationImport do
   let(:file) { FactoryGirl.build :good_file }
-  before { @import = ParticipationImport.new(file: file) }
+  before { @import = RegistrationImport.new(file: file) }
 
   subject { @import }
 
@@ -30,7 +30,7 @@ describe ParticipationImport do
   describe "when import new 42 Users" do
     let(:file) { FactoryGirl.build :good_file }
     let(:event) { FactoryGirl.create :event }
-    let(:import) { ParticipationImport.new }
+    let(:import) { RegistrationImport.new }
 
     before do 
       import.file = file
@@ -47,7 +47,7 @@ describe ParticipationImport do
     describe "and when import again this Users" do
       let(:next_event) { FactoryGirl.create :event }
       before do
-        new_import = ParticipationImport.new
+        new_import = RegistrationImport.new
         new_import.file = file 
         new_import.event = next_event
         new_import.save 
@@ -67,7 +67,7 @@ describe ParticipationImport do
     describe "and when import again 4 new and 6 old Users" do
       let(:next_event) { FactoryGirl.create :event }
       let(:next_file) { FactoryGirl.build :next_good_file }
-      let(:new_import) { ParticipationImport.new }
+      let(:new_import) { RegistrationImport.new }
       before do 
         new_import.file = next_file
         new_import.event = next_event

@@ -12,13 +12,17 @@ class RegistrationsController < ApplicationController
 	end
 
 	def save_import
-		@import = RegistrationImport.new(import_params)
+		@import = RegistrationImport.new import_params
 		@import.event = @event
 
 		if @import.save
-			respond_with(@import, status: :created, location: '#')
+			respond_with(@import, status: :created, location: @event)
 		else
-			respond_with(@import.errors, status: :unprocessable_entity)
+			p @import.errors
+			respond_with(
+				@import, 
+				status: :unprocessable_entity,
+				location: import_event_registrations_path(@event))
 		end
 	end
 
@@ -58,9 +62,7 @@ class RegistrationsController < ApplicationController
 		params.require(:registration).permit(:was)
 	end
 	def import_params
-		if params.has_key?(:registration_import)
-			params.require(:registration_import).permit(:file,:fields)
-		end
+		params.permit(:file,:fields)
 	end
 	def find_event
 		@event = Event.find(params[:event_id])

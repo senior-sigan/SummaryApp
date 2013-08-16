@@ -11,6 +11,7 @@
  *= require_self
  *= require bootstrap.min
  *= require custom.css.scss
+ *= require bokeh
  */
  .user .user-info .user-categories {
  	float: left;

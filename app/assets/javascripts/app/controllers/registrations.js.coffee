@@ -5,6 +5,8 @@ class App.RegistrationsImport extends Spine.Controller
     '#thefile': 'file_input'
     '#headers': 'headers'
     '.btn.btn-success': 'btn'
+    '#loading': 'status'
+    '#alert': 'alrt'
 
   events:
     'drop #dropZone': 'dropped'
@@ -16,15 +18,42 @@ class App.RegistrationsImport extends Spine.Controller
 
   constructor: ->
     super
-    throw "event required" unless @event
+    throw "event_id required" unless @event_id
     @html JST["app/views/registrations/import"]
 
   send: (event) =>
     event.preventDefault()
     fields = ( field.value for field in @file_inputs when field.checked is true )
-    imprt = new App.RegistrationImport({event_id: @event, file: @data, fields: fields})
-    imprt.send()
-    console.log imprt.ajax()
+   # imprt = new App.RegistrationImport({event_id: @event_id, file: @data, fields: fields})
+   # imprt.send()
+    form = new FormData()
+    form.append("fields",fields)
+    form.append("file", @file)
+    $(document).ajaxSend @sending
+    req = $.ajax
+      url: "/events/#{@event_id}/registrations/save_import.json"
+      type: "POST"
+      data: form
+      processData: false
+      contentType: false
+    req.fail @fail
+    req.done @done
+    req.always @always
+
+  sending: (ev,req,sets) =>
+    @status.html JST["app/views/loading"]
+
+  fail: (xhr,st,err) =>
+    console.log xhr.responseJSON
+    console.log st
+    console.log err
+
+  done= (xhr,st) ->
+    console.log xhr
+    console.log st  
+
+  always: =>
+    @status.html ""
 
   changed: (event) =>
     console.log event
@@ -33,15 +62,14 @@ class App.RegistrationsImport extends Spine.Controller
     @parse file for file in files
 
   clicked: (event) =>
-    console.log event
     @file_input.trigger 'click'
 
   dropped: (event) =>
-    console.log event
     event.preventDefault()
     @zone.addClass 'drop'
-    files = event.dataTransfer.files
-    @parse file for file in files
+    file = event.dataTransfer.files[0]
+    @parse file
+    #@parse file for file in files
 
   over: (event) =>
     @zone.addClass 'hover'
@@ -50,12 +78,14 @@ class App.RegistrationsImport extends Spine.Controller
     @zone.removeClass 'hover'
 
   parse: (file) =>
-    console.log file
+    @status.html JST["app/views/loading"]
     unless file.type.match('text/*')
       @zone.removeClass 'drop'
       @zone.addClass 'error'
+      @status.html ""
       false
     else
+      @file = file
       reader = new FileReader()
       reader.onload = @loaded
       reader.readAsText file 
@@ -66,6 +96,7 @@ class App.RegistrationsImport extends Spine.Controller
     @data = result
     head = $.csv.toArrays(result)[0]
     @headers.html JST['app/views/registrations/headers'](head) 
+    @status.html ""
     @file_inputs = $("input[type=checkbox]")
     if @file_inputs.length > 0 
       @btn.removeAttr 'disabled'

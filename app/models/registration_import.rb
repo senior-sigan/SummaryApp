@@ -15,7 +15,7 @@ class RegistrationImport
     end
   end
   def valid?
-    if @file.nil?
+    if file.nil?
       false
     else
       true
@@ -26,6 +26,7 @@ class RegistrationImport
   #on invalid push error and return false
   #else return true
   def save
+    @fields ||= []
     registrations = []
     if file.nil?
       errors.add :base, "File can't be blank"
@@ -86,7 +87,7 @@ class RegistrationImport
     %w(email name surname).include?(key) || key.nil? || key.eql?("")
   end
   def ignored?(key)
-    fields.include?(key)
+    !fields.include?(key)
   end
   def open_spreadsheet
     unless file.nil?

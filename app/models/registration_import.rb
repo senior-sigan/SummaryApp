@@ -3,6 +3,7 @@ class RegistrationImport
   attr_accessor :file
   attr_reader :header
   attr_accessor :event
+  attr_accessor :fields
 
   def open
   	if (@spreadsheet ||= open_spreadsheet)
@@ -71,6 +72,7 @@ class RegistrationImport
       row.each do |key,value|
         next if default?(key)
         next if empty?(value)
+        next if ignored?(key)
         user[key] ||= ""
         user[key] += "\n#{value}" unless user[key].eql?(value)
       end
@@ -82,6 +84,9 @@ class RegistrationImport
   end
   def default?(key)
     %w(email name surname).include?(key) || key.nil? || key.eql?("")
+  end
+  def ignored?(key)
+    fields.include?(key)
   end
   def open_spreadsheet
     unless file.nil?

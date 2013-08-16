@@ -23,9 +23,9 @@ class App.RegistrationsImport extends Spine.Controller
 
   send: (event) =>
     event.preventDefault()
+    @alrt.html ""
+    @alrt.removeClass "alert alert-danger alert-success"
     fields = ( field.value for field in @file_inputs when field.checked is true )
-   # imprt = new App.RegistrationImport({event_id: @event_id, file: @data, fields: fields})
-   # imprt.send()
     form = new FormData()
     form.append("fields",fields)
     form.append("file", @file)
@@ -44,11 +44,17 @@ class App.RegistrationsImport extends Spine.Controller
     @status.html JST["app/views/loading"]
 
   fail: (xhr,st,err) =>
-    console.log xhr.responseJSON
+    @alrt.addClass "alert alert-danger"
+    @alrt.html JST["app/views/errors"](xhr.responseJSON.errors.base)
+    console.log xhr
     console.log st
     console.log err
 
-  done= (xhr,st) ->
+  done: (xhr,st) =>
+    @alrt.addClass "alert alert-success"
+    @alrt.html "Success"
+    @headers.html ""
+    #@btn.addAttr 'disabled'
     console.log xhr
     console.log st  
 

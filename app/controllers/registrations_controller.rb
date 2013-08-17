@@ -37,8 +37,7 @@ class RegistrationsController < ApplicationController
 	end
 
 	def categorize
-		@registrations = @event.registrations
-		@cats = Category.all
+		# emty FIX ME
 	end
 	def set_categories
 		#render text: params
@@ -47,9 +46,7 @@ class RegistrationsController < ApplicationController
 		@registrations.each do |reg_id,cats|
 			registration = Registration.find reg_id
 			cats.each do |cat_id|
-				unless registration.participate! Category.find(cat_id), @score[cat_id]
-					render :categorize
-				end
+				registration.participate! Category.find(cat_id), @score[cat_id]
 				# FIX TO MODEL METOD!!! EXCEPTION DANGER
 				# RENDER :categorize IF SOME ERRORS and ROLLBACK
 			end	

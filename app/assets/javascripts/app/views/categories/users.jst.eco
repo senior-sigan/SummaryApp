@@ -1,0 +1,9 @@
+<% for party in @: %>
+  <tr>
+    <td><%= party.score %></dt>
+    <td>
+      <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>" >
+      <a href="<%= party.url() %>"> <%= party.fullName() %> </a>
+    </td>
+  </tr>
+<% end%>

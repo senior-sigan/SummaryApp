@@ -1,13 +1,26 @@
+<% provide(:title, "#{@event.name}") %>
+
 <div class="row">
 	<div class="col-lg-3">
 		<%= image_tag "blank.jpg", class: "img-responsive"%>
 		<div class="event_name"><%= @event.name %></div>
-		<div><%= @event.place %></div>
-		<div><%= @event.date.strftime("%Y-%m-%d") %></div>
-		<div>
-			<%= @event.real_registrations.count %>
-			<%= @event.fake_registrations.count %> 
-		</div>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Place</th>
+					<td><%= @event.place %></td>
+				</tr>
+					<th>Date</th>
+					<td><%= @event.date.strftime("%Y-%m-%d") %></td>
+				<tr>
+				</tr>
+					<th>Reals / Fakes</th>
+					<td>
+						<%= @event.real_registrations.count %> / 
+						<%= @event.fake_registrations.count %>
+					</td>
+			</tbody>
+		</table>
 	</div>
 	
 	<div class="col-lg-9">

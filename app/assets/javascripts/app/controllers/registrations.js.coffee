@@ -68,6 +68,7 @@ class App.RegistrationsImport extends Spine.Controller
     @parse file for file in files
 
   clicked: (event) =>
+    @alrt.removeClass "alert alert-danger alert-success"
     @file_input.trigger 'click'
 
   dropped: (event) =>

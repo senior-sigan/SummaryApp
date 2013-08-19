@@ -1,2 +1,3 @@
-<div class="item">
+<div>
+  <a href="<%= @.url() %>"><%= @.name %></a>
 </div>

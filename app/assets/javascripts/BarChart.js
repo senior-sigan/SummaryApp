@@ -30,7 +30,7 @@ BarChart.prototype = {
     	var y = this.height*1.1;
     	if (value === 0){
     		height = this.height;
-    		kolor = color('white');
+    		kolor = color('#efeff0');
     	}
 
     	var s = new Rect(x,y,width,-height);

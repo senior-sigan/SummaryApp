@@ -13,7 +13,7 @@ class Event
   validates :date,
   	presence: true
   def newcomers
-    User.in(id: registrations.where(newcomer: true).map(&:user_id))
+    User.in(id: real_registrations.where(newcomer: true).map(&:user_id))
   end
   def users
     User.in(id: registrations.map(&:user_id))
@@ -30,12 +30,6 @@ class Event
   def participations
     Participation.in(registration: registrations.map(&:id))  
   end
- # def invite!(user, category, score)
- #   participations.create!(user: user, category: category, score: score)
- # end
- # def exclude!(user)
- #   participations.destroy_all(user: user)
- # end
   def fake_registrations
     registrations.where(was: false)
   end

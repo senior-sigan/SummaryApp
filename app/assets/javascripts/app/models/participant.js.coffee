@@ -3,3 +3,4 @@ class App.Participant extends Spine.Model
   @extend Spine.Model.Ajax
 
   fullName: -> [@name, @surname].join(' ')
+  home_url: -> "/participants/#{@id}"

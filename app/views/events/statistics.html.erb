@@ -24,7 +24,7 @@
 	</div>
 	
 	<div class="col-lg-9">
-		<div class="navbar">
+		<nav class="navbar navbar-default" role="navigation">
 			<ul class="nav navbar-nav">
 		  	<li><%= link_to "Log", @event%></li>
 		  	<li class="active"><%= link_to "Stats", statistics_event_path(@event)%></li>
@@ -32,7 +32,7 @@
 			</ul>
 		  <%= link_to "Import",import_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
 		  <%= link_to "Categorize", categorize_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
-		</div>
+		</nav>
 		<div>
 			UNDEFINED
 		</div>

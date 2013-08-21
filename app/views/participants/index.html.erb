@@ -1,6 +1,6 @@
 <div class="row">
 	<% @users.each do |user| %>
-		<div class="col-3 user">
+		<div class="col-md-3 user">
 			<div class="user-avatar">
 				<%= gravatar_image_tag user.email, gravatar: {size: 50} , class: "pull-left"%>
 			</div>

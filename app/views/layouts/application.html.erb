@@ -8,11 +8,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="navbar navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<%= render 'layouts/header' %>
 	</div>
-</div>
+</nav>
 <div class="container">
     <% flash.each do |key, value| %>
     	<%= content_tag(:div, value, class: "alert alert-#{key}") %>

@@ -66,3 +66,9 @@
     font-family: fantasy;
     font-size: x-large;
 }
+.sized {
+    height: 150px;
+}
+.thumbnail {
+    margin-bottom: 20px;
+}

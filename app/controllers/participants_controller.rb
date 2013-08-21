@@ -12,4 +12,7 @@ class ParticipantsController < ApplicationController
     @events = Event.all
   	respond_with(@user)
   end
+
+  def activity
+  end
 end

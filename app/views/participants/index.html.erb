@@ -1,9 +1,7 @@
 <div class="row">
 	<% @users.each do |user| %>
-		<div class="col-md-3 user">
-			<div class="user-avatar">
-				<%= gravatar_image_tag user.email, gravatar: {size: 50} , class: "pull-left"%>
-			</div>
+		<div class="col-sm-3 user">
+			<%= gravatar_image_tag user.email, gravatar: {size: 50} , class: "pull-left img-responsive"%>
 			<div class="user-info">
 				<%= link_to "#{user.name.capitalize} #{user.surname.capitalize}", participant_path(user) %>
 			</div>

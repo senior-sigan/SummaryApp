@@ -13,11 +13,8 @@
  *= require custom.css.scss
  *= require bokeh
  */
- .user .user-info .user-categories {
- 	float: left;
- }
  .user {
- 	padding-bottom: 25px;
+ 	height: 60px;
  }
 .user-info {
 	margin-left: 5px;
@@ -26,9 +23,6 @@
 }
 .user-categories a {
 	color: gray;
-}
-.user-avatar {
-
 }
 #dropZone {    
     color: #555;

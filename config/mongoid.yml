@@ -78,9 +78,7 @@ test:
 production:
   sessions:
     default:
-      database: community_mongo_production
-      hosts:
-        - localhost:27017
+      uri: <%= ENV['MONGOHQ_URL'] %>
       options:
         safe: true
 

@@ -1,6 +1,6 @@
 <% provide(:title, 'New event') %>
 <div class="row">
-	<div class="col-lg-6 col-offset-3">
+	<div class="col-lg-6 col-lg-offset-3">
 	<%= form_for @event, html: {class: "form-horizontal"} do |f| %>
 		<%= render 'layouts/error_messages', :object => f.object %>
 		<fieldset>
@@ -17,7 +17,7 @@
 				<div class="col-lg-10">
 					<%= f.date_field :date, class: 'form-control' %>
 					<br>
-					<%= f.button "Create", class: "btn btn-default" %>
+					<%= f.button "Create", class: "btn btn-success" %>
 				</div>
 			</div>
 		</fieldset>

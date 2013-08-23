@@ -1,5 +1,5 @@
 <% provide(:title, 'Events') %>
-<h1>Events <small><%=link_to "new",new_event_path, class: 'btn btn-success' %></small></h1>
+<h1>Events <small><%=link_to "create",new_event_path, class: 'btn btn-success' %></small></h1>
 <div class="row">
 	<% @events.each do |event| %>
 		<div class="col-lg-3">

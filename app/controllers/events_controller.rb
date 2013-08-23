@@ -24,6 +24,25 @@ class EventsController < ApplicationController
   	  render :new
   	end
   end
+  def edit
+    @event = Event.find params[:id]
+    respond_with @event
+  end
+  def update
+    @event = Event.find params[:id]
+    if @event.update_attributes event_params
+      respond_with(@event, status: :updated, location: @event) do |format|
+        format.html do
+          flash[:success] = "Event updated" 
+          redirect_to @event 
+        end
+      end
+    else
+      respond_with(@event, status: :unprocessable_entity) do |format|
+        format.html { render :edit }
+      end
+    end
+  end
   def statistics #for event
     @event = Event.find(params[:id])
     respond_with(@event)

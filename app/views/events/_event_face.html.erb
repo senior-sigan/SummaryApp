@@ -1,0 +1,31 @@
+<div class="col-lg-3">
+  <%= image_tag "blank.jpg", class: "img-responsive"%>
+
+  <div class="event_name">
+    <%= event.name %>
+    <%= link_to edit_event_path(event) do%>
+      <span class="glyphicon glyphicon-cog"></span>
+    <% end %>
+  </div>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Place</th>
+        <td><%= event.place %></td>
+      </tr>
+      <tr>
+        <th>Date</th>
+        <td><%= event.date.strftime("%Y-%m-%d") %></td>
+      </tr>
+      <tr>
+        <th>Reals / Fakes</th>
+        <td>
+          <%= event.real_registrations.count %> / 
+          <%= event.fake_registrations.count %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>

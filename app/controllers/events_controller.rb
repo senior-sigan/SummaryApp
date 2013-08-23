@@ -8,7 +8,6 @@ class EventsController < ApplicationController
   end
   def index
     @events = Event.all.sort_by{ |e| e.date }
-    @categories = Category.all
     respond_with(@events)
   end
   def new
@@ -43,6 +42,8 @@ class EventsController < ApplicationController
       end
     end
   end
+  def destroy
+  end
   def statistics #for event
     @event = Event.find(params[:id])
     respond_with(@event)
@@ -54,7 +55,7 @@ class EventsController < ApplicationController
 
   private 
   def event_params
-    params.require(:event).permit(:name,:date)
+    params.require(:event).permit(:name,:date,:photo)
   end
 
   def calculated events

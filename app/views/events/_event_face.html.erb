@@ -1,5 +1,11 @@
 <div class="col-lg-3">
-  <%= image_tag "blank.jpg", class: "img-responsive"%>
+  <% if event.photo.blank? %>
+    <%= image_tag "blank.jpg", class: "img-responsive"%>
+  <% else %>
+    <%= link_to event.photo do %>
+      <%= image_tag event.photo, class: "img-responsive"%>
+    <% end %>
+  <% end %>
 
   <div class="event_name">
     <%= event.name %>

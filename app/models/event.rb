@@ -3,6 +3,7 @@ class Event
   field :name, type: String
   field :date, type: DateTime
   field :place, type: String
+  field :photo, type: String
 
   has_many :registrations
 

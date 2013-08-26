@@ -15,7 +15,11 @@ class Category
   def events
     Event.in(id: participations.map(&:event))
   end
+  def users_sorted
+    # FIX MEE
+    users.sort{ |a,b| b.score <=> a.score }
+  end
   def users
-    User.in(id: participations.map(&:user)).sort{ |a,b| b.score <=> a.score }
+    User.in(id: participations.map(&:user))
   end
 end

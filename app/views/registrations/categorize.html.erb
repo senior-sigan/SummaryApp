@@ -16,6 +16,9 @@
 				<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat.id %>
 			</div> 
 		<% end %>
+		<div class="col-lg-2">
+			<%= link_to "Add category", new_category_path , class: "btn btn-info", target: "_blank"%>
+		</div>
 	</div>
 	<% for reg in @registrations %>
 		<div class="form-group">

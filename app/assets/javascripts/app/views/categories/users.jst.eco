@@ -1,9 +1,13 @@
-<% for party in @: %>
-  <tr>
-    <td><%= party.score %></dt>
-    <td>
-      <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>" >
-      <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
-    </td>
-  </tr>
-<% end%>
+<table class="table table-hover">
+  <tbody >
+    <% for party in @: %>
+      <tr>
+        <td>
+          <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>" >
+          <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
+        </td>
+        <td><%= party.score %></dt>
+      </tr>
+    <% end%>
+  </tbody>
+</table>

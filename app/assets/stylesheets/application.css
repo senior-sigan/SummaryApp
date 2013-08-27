@@ -72,3 +72,18 @@
 .thumbnail {
     margin-bottom: 20px;
 }
+.participants ul {
+    margin: 0;
+    list-style: none;
+}
+.participants ul li{
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0;
+}
+.participant-img {
+    float: left;
+}
+.meta {
+    margin: 4px 22px 4px 0; 
+}

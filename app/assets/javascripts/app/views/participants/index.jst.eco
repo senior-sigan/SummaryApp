@@ -1,13 +1,27 @@
-<% for party in @: %>
-  <div class="col-sm-3 user">
-    <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>" class="pull-left img-responsive">
-    <div class="user-info">
-      <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
-    </div>
-    <div class="user-categories">
-      <% for category in party.categories: %>
-        <%= category.name %>,
-      <% end %>
-    </div>
-  </div>
-<% end %>
+<table class="table table-hover">
+  <thead>
+    <th>
+      <p class="text-success">Reals</p><p class="text-danger">Fakes</p>
+    </th>
+    <th>Participant</th>
+    <th>Categories</th>
+  </thead>
+  <tbody>
+    <% for party in @: %>
+      <tr>
+        <td>
+          <p class="text-success"><strong><%= party.reals %></strong></p><p class="text-danger"><strong><%= party.fakes %></strong></p>
+        </td>
+        <td>
+          <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>">
+          <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
+        </td>
+        <td>
+          <% for category in party.categories: %>
+            <a href="#"><span class="label label-info"><%= category.name %></span></a>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

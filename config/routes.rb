@@ -1,9 +1,5 @@
 CommunityApp::Application.routes.draw do   
-  resources :participants, except: [:new, :create] do
-    collection do
-      get :activity
-    end
-  end
+  resources :participants, except: [:new, :create]
   resources :events do
     resources :registrations, only: [:index] do
       collection do 

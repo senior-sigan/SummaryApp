@@ -23,7 +23,10 @@ class User
   	presence: true
 
   before_save { self.email = email.downcase }
-
+  def gravatar(size)
+    size ||= 50
+    "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?size=#{size}"
+  end
   def events
     Event.in(id: real_registrations.map(&:event_id))
   end
@@ -117,26 +120,17 @@ class User
   def real_registrations
     registrations.where(was: true)
   end
-  def goodness
-    fakes = fake_registrations.count
-    reals = real_registrations.count
-    all = fakes + reals
-    if all.zero?
-      100
-    else
-      (reals.to_f / all.to_f) * 100
-    end
-  end
-  def quad_goodness
+  def activity
     fakes = fake_registrations.count.to_f
     reals = real_registrations.count.to_f
     all = fakes + reals
-    if all.zero?
+    goodness = if all.zero?
       100
     else
       (reals**2 / all)
     end
-  end  
+    {fakes: fakes, reals: reals, goodness: goodness}
+  end 
   def real_registration_for(event)
     begin
       registrations.where(was: true).find_by(event: event)

@@ -22,4 +22,11 @@ class Category
   def users
     User.in(id: participations.map(&:user))
   end
+
+  def as_json
+    {
+      id: id.to_s,
+      name: name
+    }
+  end
 end

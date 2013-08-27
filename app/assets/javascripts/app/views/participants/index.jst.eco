@@ -1,0 +1,13 @@
+<% for party in @: %>
+  <div class="col-sm-3 user">
+    <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>" class="pull-left img-responsive">
+    <div class="user-info">
+      <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
+    </div>
+    <div class="user-categories">
+      <% for category in party.categories: %>
+        <%= category.name %>,
+      <% end %>
+    </div>
+  </div>
+<% end %>

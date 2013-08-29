@@ -1,4 +1,5 @@
 CommunityApp::Application.routes.draw do   
+  devise_for :owners
   resources :participants, except: [:new, :create]
   resources :events do
     resources :registrations, only: [:index] do

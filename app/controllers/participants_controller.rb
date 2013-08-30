@@ -9,9 +9,13 @@ class ParticipantsController < ApplicationController
   end
 
   def index
-    @users = jsoned(User.all)
-    @users.sort! { |a,b| b[:goodness] <=> a[:goodness] }
-    respond_with @users
+    respond_with do |format|
+      format.json do
+        @users = jsoned(User.all)
+        @users.sort! { |a,b| b[:goodness] <=> a[:goodness] }
+        render json: @users
+      end
+    end
   end
 
   private

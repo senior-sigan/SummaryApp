@@ -4,9 +4,8 @@ class CategoriesController < ApplicationController
   before_filter :find_category, only: [:participants]
 
   def index
-    @categories = Category.all
     respond_with do |format|
-      format.json { render json: counted(@categories) }
+      format.json { render json: counted(Category.all) }
     end
   end
   def participants

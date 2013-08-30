@@ -62,7 +62,7 @@ class RegistrationImport
 
   def load_users
   	spreadsheet = open_spreadsheet
-  	header = spreadsheet.row(1).map(&:downcase)
+  	header = spreadsheet.row(1).compact.map(&:downcase)
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       next if row['email'].nil?

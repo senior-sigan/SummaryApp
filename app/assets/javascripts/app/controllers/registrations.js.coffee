@@ -46,7 +46,10 @@ class App.RegistrationsImport extends Spine.Controller
   fail: (xhr,st,err) =>
     console.log [xhr, st, err]
     @alrt.addClass "alert alert-danger"
-    @alrt.html JST["app/views/errors"](xhr.responseJSON.errors.base)
+    try
+      @alrt.html JST["app/views/errors"](xhr.responseJSON.errors.base)
+    catch e
+      @alrt.html JST["app/views/errors"]("Something wents WRONG. May be you have BAD file!!")  
 
   done: (xhr,st) =>
     @alrt.addClass "alert alert-success"

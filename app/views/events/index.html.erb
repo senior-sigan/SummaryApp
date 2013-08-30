@@ -2,7 +2,7 @@
 <h1>Events <small><%=link_to "create",new_event_path, class: 'btn btn-success' %></small></h1>
 <div class="row">
 	<% @events.each do |event| %>
-		<div class="col-lg-3">
+		<div class="col-sm-3">
 			<div class="thumbnail">
 			  <% if event.photo.blank? %>
 	    		<%= image_tag "blank.jpg", class: "img-responsive"%>

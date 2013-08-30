@@ -3,7 +3,7 @@
 <div class="row">
   <%= render "events/event_face", event: @event %>
   
-  <div class="col-lg-9">
+  <div class="col-sm-9">
     <nav class="navbar navbar-default" role="navigation">
       <ul class="nav navbar-nav">
         <li><%= link_to "Log", @event%></li>
@@ -14,7 +14,7 @@
       <%= link_to "Categorize", categorize_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
     </nav>
     <div class="row">
-      <div class="col-lg-6 col-lg-offset-3" id="forma"></div>
+      <div class="col-sm-6 col-sm-offset-3" id="forma"></div>
     </div>
   </div>
 </div>

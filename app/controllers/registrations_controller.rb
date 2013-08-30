@@ -1,4 +1,5 @@
 class RegistrationsController < ApplicationController
+	before_filter :authenticate_owner!
 	before_filter :find_event
 	respond_to :html, :json
 

@@ -125,7 +125,7 @@ class User
     reals = real_registrations.count.to_f
     all = fakes + reals
     goodness = if all.zero?
-      100
+      0
     else
       (reals**2 / all)
     end

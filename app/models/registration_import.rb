@@ -62,7 +62,10 @@ class RegistrationImport
 
   def load_users
   	spreadsheet = open_spreadsheet
-  	header = spreadsheet.row(1).map(&:downcase)
+  	
+    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s} #russian downcase
+    @fields = fields.mb_chars.downcase.to_s
+
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       next if row['email'].nil?
@@ -75,8 +78,8 @@ class RegistrationImport
         next if default?(key)
         next if empty?(value)
         next if ignored?(key)
-        user[key] ||= ""
-        user[key] += "\n#{value}" unless user[key].eql?(value)
+        user[key] ||= ''
+        user[key] += "#{value}\n" unless user[key].include?(value)
       end
       user
     end  

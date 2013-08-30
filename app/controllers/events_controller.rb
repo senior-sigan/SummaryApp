@@ -7,14 +7,17 @@ class EventsController < ApplicationController
     @participations = @event.participations
     respond_with(@event)
   end
+
   def index
     @events = Event.all.sort_by{ |e| e.date }
     respond_with(@events)
   end
+
   def new
   	@event = Event.new
     respond_with(@event)
   end
+
   def create 
   	@event = Event.new(event_params)
 
@@ -24,14 +27,16 @@ class EventsController < ApplicationController
   	  render :new
   	end
   end
+
   def edit
     @event = Event.find params[:id]
     respond_with @event
   end
+
   def update
     @event = Event.find params[:id]
     if @event.update_attributes event_params
-      respond_with(@event, status: :updated, location: @event) do |format|
+      respond_with(@event, status: :updated) do |format|
         format.html do
           flash[:success] = "Event updated" 
           redirect_to @event 
@@ -43,8 +48,23 @@ class EventsController < ApplicationController
       end
     end
   end
+
   def destroy
+    @event = Event.find params[:id]
+    if @event.destroy
+      respond_with(@event, status: :destroyed) do |format|
+        format.html do
+          flash[:success] = "Event #{@event.name} destoroyed caskade"
+          redirect_to events_path
+        end
+      end
+    else
+      respond_with(@event, status: :unprocessable_entity) do |format|
+        format.html { render :edit }
+      end
+    end
   end
+
   def statistics #for event
     @event = Event.find(params[:id])
     respond_with(@event)

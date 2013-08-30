@@ -5,7 +5,7 @@ class Registration
 
   belongs_to :event
   belongs_to :user
-  has_many :participations
+  has_many :participations, dependent: :delete
 
   validates :was,
   	presence: true

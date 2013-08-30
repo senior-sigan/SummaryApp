@@ -5,7 +5,7 @@ class Event
   field :place, type: String
   field :photo, type: String
 
-  has_many :registrations
+  has_many :registrations, dependent: :delete # WARNING!! CASCADE THERE
 
   validates :name,
   	presence: true,

@@ -49,7 +49,7 @@ class App.RegistrationsImport extends Spine.Controller
     try
       @alrt.html JST["app/views/errors"](xhr.responseJSON.errors.base)
     catch e
-      @alrt.html JST["app/views/errors"]("Something wents WRONG. May be you have BAD file!!")  
+      @alrt.html JST["app/views/errors"](["Something wents WRONG. May be you have BAD file!!"])  
 
   done: (xhr,st) =>
     @alrt.addClass "alert alert-success"

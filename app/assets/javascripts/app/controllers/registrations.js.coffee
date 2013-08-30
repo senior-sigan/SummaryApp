@@ -44,11 +44,9 @@ class App.RegistrationsImport extends Spine.Controller
     @status.html JST["app/views/loading"]
 
   fail: (xhr,st,err) =>
+    console.log [xhr, st, err]
     @alrt.addClass "alert alert-danger"
     @alrt.html JST["app/views/errors"](xhr.responseJSON.errors.base)
-    console.log xhr
-    console.log st
-    console.log err
 
   done: (xhr,st) =>
     @alrt.addClass "alert alert-success"

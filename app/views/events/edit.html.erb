@@ -24,7 +24,7 @@
       <div class="form-group">
         <%= f.label :date, class: "col-lg-2 control-label" %>
         <div class="col-md-10">
-          <%= f.date_field :date, class: 'form-control' %>
+          <%= f.text_field :date, class: 'form-control', 'data-behaviour' => 'datepicker', 'data-date-format' => "dd-mm-yyyy" %>
           <br>
           <%= f.button "Update", class: "btn btn-success" %>
         </div>
@@ -43,6 +43,8 @@
 </div>
 <script type="text/javascript">
   (function($){
+    $('[data-behaviour~=datepicker]').datepicker();
+
     $("#event_photo").on("change",function(ev){
       var url = ev.target.value;
       $("#photo").html("<img class='img-responsive' src='"+ url +"'>");

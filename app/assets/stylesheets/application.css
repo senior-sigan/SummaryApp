@@ -12,6 +12,7 @@
  *= require twitter/bootstrap
  *= require custom.css.scss
  *= require bokeh
+ *= require bootstrap-datepicker
  */
  .user {
  	height: 60px;
@@ -86,4 +87,7 @@
 }
 .meta {
     margin: 4px 22px 4px 0; 
+}
+a.no-color {
+    color: black;
 }

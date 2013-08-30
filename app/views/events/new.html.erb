@@ -12,18 +12,19 @@
 				</div>
 			</div>
 
-			<div class="form-group">
-				<%= f.label :photo, class: "col-lg-2 control-label" %>
-				<div class="col-md-10">
-					<%= f.text_field :photo,class: 'form-control' %>
-					<span class="help-block">Just write direct url to photo. We don't save it on our  server</span>
-				</div>	
-			</div>
+      <div class="form-group">
+        <%= f.label :photo, class: "col-lg-2 control-label" %>
+        <div class="col-md-10">
+          <%= f.text_field :photo,class: 'form-control' %>
+          <span class="help-block">Just write direct url to photo. We don't save it on our  server</span>
+          <div id="photo"><%= image_tag @event.photo, class: 'img-responsive' %></div>
+        </div>  
+      </div>
 
 			<div class="form-group">
 				<%= f.label :date, class: "col-lg-2 control-label" %>
 				<div class="col-md-10">
-					<%= f.date_field :date, class: 'form-control' %>
+					<%= f.text_field :date, class: 'form-control', 'data-behaviour' => 'datepicker', 'data-date-format' => "dd-mm-yyyy" %>
 					<br>
 					<%= f.button "Create", class: "btn btn-success" %>
 				</div>
@@ -33,3 +34,14 @@
 	<% end %>
 	</div>
 </div>
+
+<script type="text/javascript">
+  (function($){
+    $('[data-behaviour~=datepicker]').datepicker();
+
+    $("#event_photo").on("change",function(ev){
+      var url = ev.target.value;
+      $("#photo").html("<img class='img-responsive' src='"+ url +"'>");
+    });
+  })(jQuery);
+</script>

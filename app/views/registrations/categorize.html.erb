@@ -5,32 +5,35 @@
 	method: :patch, 
 	html: {class: "form-horizontal"} do |f|
 %>
-	<div class="form-group">
-		<div class="col-sm-3">
-			<%= f.submit "Save",class: "btn btn-success pull-right" %>
-		</div>
-		<% for cat in @cats %>
-			<div class="col-sm-2">
-				<%= cat.name %>
-				<%= number_field_tag "categories[#{cat.id}", nil , class: "form-control"%>
-				<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat.id %>
-			</div> 
-		<% end %>
-		<div class="col-xs-2">
-			<%= link_to "Add category", new_category_path , class: "btn btn-info", target: "_blank"%>
-		</div>
-	</div>
-	<% for reg in @registrations %>
-		<div class="form-group">
-			<%= label_tag :registration,"#{reg.user.name} #{reg.user.surname} #{reg.user.email}", class: "col-lg-3 control-label" %>
-
-			<% @cats.each do |cat| %>
-				<div class="col-sm-2">
-					<%= check_box_tag "registrations[#{reg.id}][]", cat.id,false, class: "form-control" %>
-				</div>
+	<table class="table">
+		<thead>
+			<th>
+				<%= f.submit "Save",class: "btn btn-success pull-right" %>
+			</th>
+			<% for cat in @cats %>
+				<th>
+					<%= cat.name %>
+					<%= number_field_tag "categories[#{cat.id}", nil , class: "form-control"%>
+					<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat.id %>
+				</th> 
 			<% end %>
-		</div>
-	<% end %>
+		</thead>
+		<tbody>
+			<% for reg in @registrations %>
+				<tr>
+					<td>
+						<%= label_tag :registration,"#{reg.user.name} #{reg.user.surname} #{reg.user.email}", class: "col-lg-3 control-label" %>
+					</td>
+						<% @cats.each do |cat| %>
+							<td>
+								<%= check_box_tag "registrations[#{reg.id}][]", cat.id,false, class: "form-control" %>
+							</td>
+						<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	
 <% end %>
 <script type="text/javascript">
 	(function($){

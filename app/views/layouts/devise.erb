@@ -8,15 +8,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<header class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-		<%= render 'layouts/header' %>
-	</div>
-</header>
 <div class="container">
     <% flash.each do |key, value| %>
       <% key = :success if key == :notice %>
-    	<%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% key = :danger if key == :alert %>
+      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
     <% end %>
 
     <%= yield %>

@@ -3,12 +3,17 @@ class Owner
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+  #  :recoverable,
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :rememberable, :trackable, :validatable
 
   ## Database authenticatable
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
+
+  field :approved, :type => Boolean, :default => false
+  validates :approved,
+    presence: true
 
   ## Recoverable
   field :reset_password_token,   :type => String
@@ -37,4 +42,16 @@ class Owner
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+
+  def active_for_authentication? 
+    super && approved? 
+  end 
+
+  def inactive_message 
+    if !approved? 
+      :not_approved 
+    else 
+      super # Use whatever other message 
+    end 
+  end
 end

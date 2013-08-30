@@ -16,7 +16,7 @@
     <li><%= link_to 'Statistic',stats_events_path%></li>
     <li>
       <% if owner_signed_in? %>
-        <%= link_to 'Log out', destroy_owner_session_path %>
+        <%= link_to 'Log out', destroy_owner_session_path, :method => :delete %>
       <% else %>
         <%= link_to 'Sign in', new_owner_session_path %>
       <% end %>

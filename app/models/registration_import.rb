@@ -62,9 +62,10 @@ class RegistrationImport
 
   def load_users
   	spreadsheet = open_spreadsheet
-  	header = spreadsheet.row(1)
+  	header = spreadsheet.row(1).map(&:downcase)
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
+      next if row['email'].nil?
       user = User.find_or_initialize_by(email: row["email"].downcase)
       if user.new_record?
         user.name = row["name"]

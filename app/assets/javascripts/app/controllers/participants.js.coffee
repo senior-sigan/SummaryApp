@@ -21,7 +21,7 @@ class App.ParticipantsActivity extends Spine.Controller
     console.log parties
     @el.html JST["app/views/participants/activity"](parties)
 
-class App.ParticipantsActivity extends Spine.Controller
+class App.ParticipantsTop extends Spine.Controller
   constructor: ->
     super
     App.Participant.url = App.Participant.url('top')

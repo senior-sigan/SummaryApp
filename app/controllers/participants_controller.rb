@@ -3,16 +3,16 @@ class ParticipantsController < ApplicationController
   respond_to :html, :json
 
   def show
-  	@user = User.find(params[:id])
+  	@participants = User.find(params[:id])
     @events = Event.all
-  	respond_with(@user)
+  	respond_with(@participants)
   end
 
   def index
     respond_with do |format|
       format.json do
-        @users = jsoned(User.all)
-        render json: @users
+        @participants = jsoned(User.all)
+        render json: @participants
       end
     end
   end
@@ -20,9 +20,19 @@ class ParticipantsController < ApplicationController
   def activity
     respond_with do |format|
       format.json do
-        @users = jsoned_regs(User.all)
-        @users.sort! { |a,b| b[:goodness] <=> a[:goodness] }
-        render json: @users
+        @participants = jsoned_regs(User.all)
+        @participants.sort! { |a,b| b[:goodness] <=> a[:goodness] }
+        render json: @participants
+      end
+    end
+  end
+
+  def top
+    respond_with do |format|
+      format.json do
+        @participants = jsoned_score(User.all)
+        @participants.sort! { |a,b| b[:score] <=> a[:score] }
+        render json: @participants
       end
     end
   end
@@ -39,6 +49,20 @@ class ParticipantsController < ApplicationController
       }
     end
   end
+
+  def jsoned_score participants
+    list = participants.map do |party|
+      {
+        id: party.id.to_s,
+        name: party.name.capitalize,
+        surname: party.surname.capitalize,
+        gravatar: party.gravatar(50),
+        score: party.score,
+        categories: party.categories.map{ |cat| cat.as_json }
+      }
+    end
+  end
+
   def jsoned_regs participants
     list = participants.map do |party|
       activity = party.activity
@@ -54,4 +78,5 @@ class ParticipantsController < ApplicationController
       }
     end
   end
+
 end

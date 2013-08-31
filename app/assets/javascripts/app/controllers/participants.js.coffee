@@ -20,3 +20,15 @@ class App.ParticipantsActivity extends Spine.Controller
   addAll: (parties) =>
     console.log parties
     @el.html JST["app/views/participants/activity"](parties)
+
+class App.ParticipantsActivity extends Spine.Controller
+  constructor: ->
+    super
+    App.Participant.url = App.Participant.url('top')
+    App.Participant.bind 'refresh', @addAll
+    @el.html JST["app/views/loading"]
+    App.Participant.fetch()
+
+  addAll: (parties) =>
+    console.log parties
+    @el.html JST["app/views/participants/top"](parties)

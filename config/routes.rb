@@ -3,6 +3,7 @@ CommunityApp::Application.routes.draw do
   resources :participants, except: [:new, :create] do
     collection do 
       get :activity
+      get :top
     end
   end
   resources :events do

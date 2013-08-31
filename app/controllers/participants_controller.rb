@@ -3,9 +3,9 @@ class ParticipantsController < ApplicationController
   respond_to :html, :json
 
   def show
-  	@participants = User.find(params[:id])
+  	@participant = User.find(params[:id])
     @events = Event.all
-  	respond_with(@participants)
+  	respond_with(@participant)
   end
 
   def index

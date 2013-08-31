@@ -1,12 +1,12 @@
-<h3><%= "#{@user.name.capitalize} #{@user.surname.capitalize}" %> <small><%= @user.email %></small></h3>
+<h3><%= "#{@participant.name.capitalize} #{@participant.surname.capitalize}" %> <small><%= @participant.email %></small></h3>
 
 <div class="row">
 	<div class="col-lg-3">
-	<%= gravatar_image_tag @user.email, gravatar: {size: 200}%>
+	<%= gravatar_image_tag @participant.email, gravatar: {size: 200}%>
 	</div>
 	<div class="col-lg-9">
     <form class="form-horizontal user-page">
-		  <% @user.attributes.each do |key,value| %>
+		  <% @participant.attributes.each do |key,value| %>
         <% next if key.eql?("_id") || key.empty? || key.eql?("was") %>	
         <div class="form-group">
           <label class="col-sm-3 control-label user-label"><%= key %></label>
@@ -32,8 +32,8 @@
     url: '/assets/PieChart.js',
     code: function(){
       new PieChart({
-        <% @user.categories.each do |cat| %>
-          <%= cat.name %>: <%= @user.score_for_category(cat) %>,
+        <% @participant.categories.each do |cat| %>
+          <%= cat.name %>: <%= @participant.score_for_category(cat) %>,
         <% end %>
       })},
     height: 400,
@@ -46,7 +46,7 @@
     code: function(){
       new BarChart(80,20,{
         <% @events.each do |ev| %>
-          '<%= "#{ev.name} #{ev.date.strftime("%Y-%m-%d")}" %>': <%= @user.score_for_event(ev) %>,
+          '<%= "#{ev.name} #{ev.date.strftime("%Y-%m-%d")}" %>': <%= @participant.score_for_event(ev) %>,
         <% end %>
       });
     },

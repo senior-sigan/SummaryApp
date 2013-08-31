@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all.sort_by{ |e| e.date }
+    @events = Event.order_by(:date.asc).all
     respond_with(@events)
   end
 
@@ -65,10 +65,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def statistics #for event
-    @event = Event.find(params[:id])
-    respond_with(@event)
-  end
   def stats #for all events
     @events = Event.order_by(:date.asc).all
     respond_with calculated @events

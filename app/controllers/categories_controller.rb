@@ -9,9 +9,12 @@ class CategoriesController < ApplicationController
     end
   end
   def participants
-    @participants = @category.users_sorted
     respond_with do |format|
-      format.json { render json: scored(@participants, @category) }
+      format.json do 
+        @participants = scored_participants_for @category
+        @participants.sort! { |a,b| b[:score] <=> a[:score] }
+        render json: @participants 
+      end
     end
   end
   def new
@@ -56,18 +59,20 @@ class CategoriesController < ApplicationController
   def find_category
     @category = Category.find params[:id]
   end
-  def scored participants, category
-    list = participants.map do |user|
+
+  def scored_participants_for(category)
+    list = category.users.map do |user|
       {
         id: user.id.to_s,
         name: user.name,
         surname: user.surname,
-        gravatar: "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email)}?size=50",
+        gravatar: user.gravatar(50),
         score: user.score_for_category(category)
-      }  
+      }
     end
   end
-  def counted categories
+
+  def counted(categories)
     list = categories.map do |cat|
       {
         id: cat.id.to_s,

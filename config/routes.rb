@@ -1,6 +1,10 @@
 CommunityApp::Application.routes.draw do   
   devise_for :owners
-  resources :participants, except: [:new, :create]
+  resources :participants, except: [:new, :create] do
+    collection do 
+      get :activity
+    end
+  end
   resources :events do
     resources :registrations, only: [:index] do
       collection do 
@@ -12,9 +16,6 @@ CommunityApp::Application.routes.draw do
       end
     end
 
-    member do 
-      get :statistics
-    end
     collection do
       get :stats
     end

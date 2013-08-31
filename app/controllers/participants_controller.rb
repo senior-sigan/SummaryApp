@@ -12,6 +12,15 @@ class ParticipantsController < ApplicationController
     respond_with do |format|
       format.json do
         @users = jsoned(User.all)
+        render json: @users
+      end
+    end
+  end
+
+  def activity
+    respond_with do |format|
+      format.json do
+        @users = jsoned_regs(User.all)
         @users.sort! { |a,b| b[:goodness] <=> a[:goodness] }
         render json: @users
       end
@@ -20,6 +29,17 @@ class ParticipantsController < ApplicationController
 
   private
   def jsoned participants
+    list = participants.map do |party|
+      {
+        id: party.id.to_s,
+        name: party.name.capitalize,
+        surname: party.surname.capitalize,
+        gravatar: party.gravatar(50),
+        categories: party.categories.map{ |cat| cat.as_json }
+      }
+    end
+  end
+  def jsoned_regs participants
     list = participants.map do |party|
       activity = party.activity
       {

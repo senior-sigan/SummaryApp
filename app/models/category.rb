@@ -3,6 +3,8 @@ class Category
   field :name, type: String
   field :isPublic, type: Boolean, default: false
 
+  index({name: 1}, {unique: true})
+
   validates :name,
   	presence: true,
   	length: { maximum: 50 }, 

@@ -5,6 +5,8 @@ class Participation
   belongs_to :category
   belongs_to :registration
 
+  index({category: 1, registration: 1}, {unique: true})
+
   validates :score,
   	presence: true,
   	numericality: { greater_than: 0 }

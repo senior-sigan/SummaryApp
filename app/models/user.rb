@@ -9,6 +9,8 @@ class User
   
   has_many :registrations
 
+  index({ email: 1}, {unique: true})
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, 
     presence: true,

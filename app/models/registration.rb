@@ -7,6 +7,8 @@ class Registration
   belongs_to :user
   has_many :participations, dependent: :delete
 
+  index({user: 1, event: 1}, {unique: true})
+
   validates :was,
   	presence: true
   validates :user,

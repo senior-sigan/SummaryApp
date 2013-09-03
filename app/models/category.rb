@@ -21,16 +21,9 @@ class Category
     User.in(id: user_ids)
   end
   def user_ids
-    Registration.in(id: participations.distinct(:registration_id)).distinct(:user_id)
+    Registration.in(id: participations.distinct(:registration_id)).where(was: true).distinct(:user_id)
   end
   def event_ids
-    Registration.in(id: participations.distinct(:registration_id)).distinct(:event_id)
-  end
-
-  def as_json
-    {
-      id: id.to_s,
-      name: name
-    }
+    Registration.in(id: participations.distinct(:registration_id)).where(was: true).distinct(:event_id)
   end
 end

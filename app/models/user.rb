@@ -30,10 +30,16 @@ class User
     "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?size=#{size}"
   end
   def events
-    Event.in(id: real_registrations.map(&:event_id))
+    Event.in(id: event_ids)
   end
   def categories
-    Category.in(id: participations.map(&:category_id))
+    Category.in(id: category_ids)
+  end
+  def category_ids
+    Participation.in(registration_id: real_registrations.distinct(:id)).distinct(:category_id)
+  end
+  def event_ids
+    registrations.distinct(:event_id)
   end
   def score
     participations.sum(:score)
@@ -49,10 +55,10 @@ class User
     participations_for_category(category).sum(:score)
   end
   def participations
-    Participation.in(registration_id: real_registrations.map(&:id))  
+    Participation.in(registration_id: real_registrations.distinct(:id))
   end
   def participations_for_event(event)
-    Participation.in(registration_id: real_registrations.where(event: event).map(&:id))
+    Participation.in(registration_id: real_registrations.where(event: event).distinct(:id))
   end
   def participations_for_category(category)
     participations.where(category: category)

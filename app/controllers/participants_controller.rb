@@ -45,7 +45,7 @@ class ParticipantsController < ApplicationController
         name: party.name.capitalize,
         surname: party.surname.capitalize,
         gravatar: party.gravatar(50),
-        categories: party.categories.map{ |cat| cat.as_json }
+        categories: party.categories.only(:id,:name)
       }
     end
   end

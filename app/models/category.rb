@@ -15,10 +15,16 @@ class Category
   has_many :participations
 
   def events
-    Event.in(id: participations.map(&:event))
+    Event.in(id: event_ids)
   end
   def users
-    User.in(id: participations.map(&:user))
+    User.in(id: user_ids)
+  end
+  def user_ids
+    Registration.in(id: participations.distinct(:registration_id)).distinct(:user_id)
+  end
+  def event_ids
+    Registration.in(id: participations.distinct(:registration_id)).distinct(:event_id)
   end
 
   def as_json

@@ -9,6 +9,9 @@ class Registration
 
   index({user: 1, event: 1}, {unique: true})
 
+  scope :fakes, where(was: false)
+  scope :reals, where(was: true)
+
   validates :was,
   	presence: true
   validates :user,
@@ -20,12 +23,6 @@ class Registration
   validates :newcomer,
     presence: true
 
-  def self.fakes 
-  	Registration.where(was: false)
-  end
-  def self.reals
-  	Registration.where(was: true)
-  end
   def categories
   	Category.in(id: participations.map(&:category_id))
   end

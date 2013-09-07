@@ -33,7 +33,7 @@
     code: function(){
       new PieChart({
         <% @participant.categories.each do |cat| %>
-          <%= cat.name %>: <%= @participant.score_for_category(cat) %>,
+          '<%= cat.name %>': <%= @participant.score_for_category(cat) %>,
         <% end %>
       })},
     height: 400,

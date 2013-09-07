@@ -20,19 +20,19 @@ class Event
     User.in(id: real_registrations.where(newcomer: true).map(&:user_id))
   end
   def users
-    User.in(id: registrations.map(&:user_id))
+    User.in(id: registrations.distinct(:user_id))
   end
   def real_users
-    User.in(id: real_registrations.map(&:user_id))
+    User.in(id: real_registrations.distinct(:user_id))
   end
   def fake_users
-    User.in(id: fake_registrations.map(&:user_id))
+    User.in(id: fake_registrations.distinct(:user_id))
   end
   def categories
-    Category.in(id: participations.map(&:category_id))
+    Category.in(id: participations.distinct(:category_id))
   end
   def participations
-    Participation.in(registration: registrations.map(&:id))  
+    Participation.in(registration: registrations.distinct(:id))
   end
   def fake_registrations
     registrations.where(was: false)

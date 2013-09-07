@@ -24,10 +24,24 @@ class Registration
     presence: true
 
   def categories
-  	Category.in(id: participations.map(&:category_id))
+  	Category.in(id: participations.distinct(:category_id))
   end
   def score
   	participations.sum(:score)
+  end
+  def self.score
+    #Map reduce - вычислить сразу все. автоматически сгруппировать по user_ids посчитать score и отсортировать
+    map = '
+      function(){
+        emit(this.user.id,this.score);
+      }
+    '
+    reduce = '
+      function(key, values){
+        return Array.sum(values);
+      }
+    '
+    Participation.map_reduce(map, reduce).out(inline: true).find()
   end
   def participate!(category, score)
     part = participations.find_or_initialize_by(category: category)

@@ -43,6 +43,39 @@ class Registration
     '
     Participation.map_reduce(map, reduce).out(inline: true).find()
   end
+  def self.activity
+    map = %Q{
+      function(){
+        if (this.was){
+          emit(this.user_id,{was: 1, skip: 0});
+        } else {
+          emit(this.user_id,{was: 0, skip: 1});
+        }
+      }
+    }
+    reduce = %Q{
+      function(key,values){
+        var res = {was: 0, skip: 0};
+        values.forEach(function(v){
+          res.was += v.was;
+          res.skip += v.skip;
+        });
+        return res;
+      }
+    }
+    finalize = %Q{
+      function(key,value){
+        var all = value.was + value.skip;
+        if (all == 0){
+          value.goodness = 0;
+          return value;
+        }
+        value.goodness = value.was*value.was / all;
+        return value;
+      }
+    }
+    Registration.map_reduce(map, reduce).out(inline: true).finalize(finalize)
+  end
   def participate!(category, score)
     part = participations.find_or_initialize_by(category: category)
     part.score = score

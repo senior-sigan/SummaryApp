@@ -44,23 +44,21 @@ class Registration
     Participation.map_reduce(map, reduce).out(inline: true).find()
   end
   def self.activity
-    map = %Q{
+    map_active = %Q{
       function(){
+        var res = {was: 0, skip: 0, email: '', name: '', surname: ''};
         if (this.was){
-          emit(this.user_id,{was: 1, skip: 0});
+          res.was = 1;
         } else {
-          emit(this.user_id,{was: 0, skip: 1});
+          res.skip = 1;
         }
+        emit(this.user_id, res);
       }
     }
-    reduce = %Q{
-      function(key,values){
-        var res = {was: 0, skip: 0};
-        values.forEach(function(v){
-          res.was += v.was;
-          res.skip += v.skip;
-        });
-        return res;
+    map_user = %Q{
+      function(){
+        var res = {was: 0, skip: 0, email: this.email, name: this.name, surname: this.surname};
+        emit(this._id, res);
       }
     }
     finalize = %Q{
@@ -74,7 +72,22 @@ class Registration
         return value;
       }
     }
-    Registration.map_reduce(map, reduce).out(inline: true).finalize(finalize)
+    reduce = %Q{
+      function(key,values){
+        var res = {name: "", surname: "", email: "", was: 0, skip: 0};
+        values.forEach(function(v){
+          res.name = v.name;
+          res.surname = v.surname;
+          res.email = v.email;
+          res.was += v.was;
+          res.skip += v.skip;
+        });
+        return res;
+      }
+    }
+    #WAIT is it JOIN?? OH SHIT!!!!!!!!!!!!
+    User.map_reduce(map_user, reduce).out(replace: 'activity').to_a
+    Registration.map_reduce(map_active, reduce).out(reduce: 'activity').finalize(finalize).to_a
   end
   def participate!(category, score)
     part = participations.find_or_initialize_by(category: category)

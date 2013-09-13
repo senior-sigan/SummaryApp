@@ -20,7 +20,7 @@ class ParticipantsController < ApplicationController
   def activity
     respond_with do |format|
       format.json do
-        @participants = jsoned_regs(User.all)
+        @participants = jsoned_regs Registration.activity
         @participants.sort! { |a,b| b[:goodness] <=> a[:goodness] }
         render json: @participants
       end
@@ -63,18 +63,17 @@ class ParticipantsController < ApplicationController
     end
   end
 
-  def jsoned_regs participants
-    list = participants.map do |party|
-      activity = party.activity
+  def jsoned_regs(participants)
+    participants.map do |party|
+      value = party['value']
       {
-        id: party.id.to_s,
-        name: party.name.capitalize,
-        surname: party.surname.capitalize,
-        gravatar: party.gravatar(50),
-        categories: party.categories.map{ |cat| cat.as_json },
-        fakes: party.activity[:fakes],
-        reals: party.activity[:reals],
-        goodness: party.activity[:goodness]
+        id: party['_id'].to_s,
+        name: value['name'].capitalize,
+        surname: value['surname'].capitalize,
+        gravatar: "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(value['email'])}?size=50",
+        fakes: value['skip'],
+        reals: value['was'],
+        goodness: value['goodness']
       }
     end
   end

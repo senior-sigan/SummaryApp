@@ -5,7 +5,6 @@
       <p class="text-success">Reals</p><p class="text-danger">Fakes</p>
     </th>
     <th>Participant</th>
-    <th>Categories</th>
   </thead>
   <tbody>
     <% for party in @: %>
@@ -16,11 +15,6 @@
         <td>
           <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>">
           <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
-        </td>
-        <td>
-          <% for category in party.categories: %>
-            <a href="#"><span class="label label-info"><%= category.name %></span></a>
-          <% end %>
         </td>
       </tr>
     <% end %>

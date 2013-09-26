@@ -5,8 +5,10 @@ class Registration
 
   belongs_to :event
   belongs_to :user
-  has_many :participations, dependent: :delete
+  embeds_many :categories
 
+  index "categories.name" => 1
+  index was: 1
   index({user: 1, event: 1}, {unique: true})
 
   scope :fakes, where(was: false)
@@ -23,25 +25,21 @@ class Registration
   validates :newcomer,
     presence: true
 
-  def categories
-  	Category.in(id: participations.distinct(:category_id))
-  end
-  def score
-  	participations.sum(:score)
-  end
   def self.score
     #Map reduce - вычислить сразу все. автоматически сгруппировать по user_ids посчитать score и отсортировать
     map = '
       function(){
-        emit(this.user.id,this.score);
+        var len = this.categories.length;
+        for (var i = 0; i < len; ++i) 
+          emit([this.user_id,this.categories[i].name],this.categories[i].score);
       }
     '
     reduce = '
       function(key, values){
-        return Array.sum(values);
+        return Array.sum( values );
       }
     '
-    Participation.map_reduce(map, reduce).out(inline: true).find()
+    Registration.map_reduce(map, reduce).out(inline: true)
   end
   def self.activity
     map_active = %Q{
@@ -90,12 +88,10 @@ class Registration
     Registration.map_reduce(map_active, reduce).out(reduce: 'activity').finalize(finalize).to_a
   end
   def participate!(category, score)
-    part = participations.find_or_initialize_by(category: category)
-    part.score = score
-    part.save
+    #TODO
   end
   def unparticipate!
-    participations.delete_all
+    #TODO
   end
 end
 

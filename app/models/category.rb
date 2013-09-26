@@ -1,18 +1,13 @@
 class Category
   include Mongoid::Document
   field :name, type: String
-  field :isPublic, type: Boolean, default: false
+  field :score, type: Integer
 
-  index({name: 1}, {unique: true})
+  embedded_in :registration
 
   validates :name,
   	presence: true,
-  	length: { maximum: 50 }, 
-  	uniqueness: { case_sensitive: false }
-  validates :isPublic,
-  	presence: true
-
-  has_many :participations
+  	length: { maximum: 50 }
 
   def events
     Event.in(id: event_ids)

@@ -9,7 +9,6 @@ describe User do
   it { should respond_to(:email) }
   it { should respond_to(:name) }
   it { should respond_to(:surname) }
-  it { should respond_to(:participations) }
   it { should respond_to(:events) }
   it { should respond_to(:categories) }
 
@@ -27,12 +26,11 @@ describe User do
 
   describe "participating in event" do
     let(:event) { FactoryGirl.create :event }
-    let(:category) { FactoryGirl.create :category }
+    let(:category) { 'android' }
     let(:score) { 100 }
     before do
       @user.save
       event.save
-      category.save
       @user.participate!(event, category, score)
     end
 

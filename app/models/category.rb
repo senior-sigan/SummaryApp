@@ -9,6 +9,9 @@ class Category
   	presence: true,
   	length: { maximum: 50 }
 
+  def all
+    Registration.all.distinct('categories.name')
+  end
   def events
     Event.in(id: event_ids)
   end

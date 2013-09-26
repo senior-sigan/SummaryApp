@@ -29,63 +29,47 @@ class User
     size ||= 50
     "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?size=#{size}"
   end
+  
   def events
     Event.in(id: event_ids)
   end
-  def categories
-    Category.in(id: category_ids)
-  end
-  def category_ids
-    Participation.in(registration_id: real_registrations.distinct(:id)).distinct(:category_id)
-  end
+  
   def event_ids
     registrations.distinct(:event_id)
   end
-  def score
-    participations.sum(:score).to_f
+  
+  def categories
+    registrations.real.distinct('categories.name')
   end
-  def score_for_event(event)
-    participations_for_event(event).sum(:score).to_f
+
+  def score_in_categories
+    Registration.score(self).map do |el| 
+      {
+        category: el['_id'][1], 
+        score: el['value']
+      }
+    end
+  end
+
+  def score()
+    map = %Q{
+      function(){
+        for(var i=0,len=this.categories.length; i < len; ++i)
+          emit(this.user_id,this.categories[i].score);          
+      }
+    }
+    reduce = %Q{
+      function(key,values){
+        return Array.sum(values);
+      }
+    }
+    unless events.nil?
+      registrations.real.where(event: events).map_reduce(map, reduce).out(inline: true)
+    else
+      registrations.real.map_reduce(map, reduce).out(inline: true)
+    end
   end
   def pc_score_for_category(category)
-    sc = score.to_f
-    score_for_category(category)*100.0 / sc unless sc.zero?
-  end
-  def score_for_category(category)
-    participations_for_category(category).sum(:score).to_f
-  end
-  def participations
-    Participation.in(registration_id: real_registrations.distinct(:id))
-  end
-  def participations_for_event(event)
-    Participation.in(registration_id: real_registrations.where(event: event).distinct(:id))
-  end
-  def participations_for_category(category)
-    participations.where(category: category)
-  end
-  def participate!(event, category, score)
-    if reg = find_or_create_registration_for(event)
-      if part = reg.participate!(category, score)
-        true
-      else
-        errors.add :base, part.errors.full_messages
-        false
-      end
-    else
-      errors.add :base, reg.errors.full_messages
-      false
-    end
-  end
-  def leave!(event)
-    begin
-      reg = Registration.find_by(event: event, user: self)
-      reg.unparticipate!
-      reg.delete
-      true
-    rescue Exception => e
-      errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
-      false
-    end
   end
   def find_or_create_registration_for(event)
     begin
@@ -121,12 +105,6 @@ class User
       errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
       false
     end
-  end
-  def fake_registrations
-    registrations.where(was: false)
-  end
-  def real_registrations
-    registrations.where(was: true)
   end
   def activity
     fakes = fake_registrations.count.to_f

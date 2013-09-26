@@ -11,8 +11,8 @@ class Registration
   index was: 1
   index({user: 1, event: 1}, {unique: true})
 
-  scope :fakes, where(was: false)
-  scope :reals, where(was: true)
+  scope :fake, where(was: false)
+  scope :real, where(was: true)
 
   validates :was,
   	presence: true
@@ -25,21 +25,25 @@ class Registration
   validates :newcomer,
     presence: true
 
-  def self.score
+  def self.score(user = nil)
     #Map reduce - вычислить сразу все. автоматически сгруппировать по user_ids посчитать score и отсортировать
-    map = '
+    map = %Q{
       function(){
         var len = this.categories.length;
         for (var i = 0; i < len; ++i) 
           emit([this.user_id,this.categories[i].name],this.categories[i].score);
       }
-    '
-    reduce = '
+    }
+    reduce = %Q{
       function(key, values){
         return Array.sum( values );
       }
-    '
-    Registration.map_reduce(map, reduce).out(inline: true)
+    }
+    if user.nil?
+      Registration.map_reduce(map, reduce).out(inline: true)
+    else
+      Registration.where(user: user).map_reduce(map, reduce).out(inline: true)
+    end
   end
   def self.activity
     map_active = %Q{

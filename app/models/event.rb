@@ -17,33 +17,23 @@ class Event
   	presence: true
 
   def newcomers
-    User.in(id: real_registrations.where(newcomer: true).map(&:user_id))
+    User.in(id: registrations.real.where(newcomer: true).map(&:user_id))
   end
+
   def users
     User.in(id: registrations.distinct(:user_id))
   end
+  
   def real_users
-    User.in(id: real_registrations.distinct(:user_id))
+    User.in(id: registrations.real.distinct(:user_id))
   end
+  
   def fake_users
-    User.in(id: fake_registrations.distinct(:user_id))
+    User.in(id: registrations.fake.distinct(:user_id))
   end
+
   def categories
-    Category.in(id: participations.distinct(:category_id))
+    registrations.distinct('categories.name')
   end
-  def participations
-    Participation.in(registration: registrations.distinct(:id))
-  end
-  def fake_registrations
-    registrations.where(was: false)
-  end
-  def real_registrations
-    registrations.where(was: true)
-  end
-  def registrate!(user)
-    registrations.create!(user: user, was: true)
-  end
-  def unregistrate(user)
-    registrations.delete(user)
-  end
+
 end

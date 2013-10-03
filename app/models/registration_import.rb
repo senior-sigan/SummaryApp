@@ -39,7 +39,7 @@ class RegistrationImport
           errors.add :base, u.errors.full_messages
           return false
         end
-        registrations << u.find_or_create_registration_for(@event)
+        registrations << u.registrate_to!(@event)
       end
       registrations
     else
@@ -63,8 +63,8 @@ class RegistrationImport
   def load_users
   	spreadsheet = open_spreadsheet
   	
-    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s} #russian downcase
-    @fields = fields.mb_chars.downcase.to_s
+    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.nil?} #russian downcase
+    @fields = fields.map{|i| i.mb_chars.downcase.to_s unless i.nil? }
 
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]

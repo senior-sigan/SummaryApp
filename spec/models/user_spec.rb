@@ -12,9 +12,12 @@ describe User do
   it { should respond_to(:events) }
   it { should respond_to(:categories) }
 
+  it { should respond_to(:registrate_to!)}
   it { should respond_to(:participate!) }
   it { should respond_to(:leave!) }
   it { should respond_to(:score) }
+  it { should respond_to(:real_registrations) }
+  it { should respond_to(:fake_registrations) }
 
 ##### ONLY FOR MONGOID ##########
   it { should have_field(:email).of_type(String)}
@@ -39,6 +42,17 @@ describe User do
       its(:categories) { should be_include(category) }
       its(:score) { should eq 100 }
     end
+
+    describe "set fake for event" do
+      let(:registration) { @user.registrations.where(event: event).last }
+      before do 
+        @user.set_fake_for(event)
+      end
+
+      its(:real_registrations) { should_not be_include(registration) }
+      its(:fake_registrations) { should be_include(registration) }
+    end
+
     describe "and leaving event" do
       before { @user.leave!(event) }
 

@@ -26,8 +26,10 @@ describe Event do
   describe "when come newcomers they NEW" do
     let(:first_event) { FactoryGirl.create :event }
     let(:user) { FactoryGirl.create :user }
+    let(:category) { 'android' }
+    let(:score) { 100 }
 
-    before { user.registrate_to!(first_event) }
+    before { user.participate!(first_event, category, score) }
 
     subject { first_event }
     its(:newcomers) { should be_include(user) }
@@ -35,10 +37,19 @@ describe Event do
     describe "when come oldcomers they OLD" do
       let(:second_event) { FactoryGirl.create :event }
 
-      before { user.registrate_to!(second_event) }
+      before { user.participate!(second_event, category, score) }
   
       subject { second_event }
       its(:newcomers) { should_not be_include(user) }
+    end
+
+    describe "categories" do
+      let(:category_2) { 'win8' }
+
+      before { user.participate!(first_event, category_2, score) }
+
+      its(:categories) { should be_include(category) }
+      its(:categories) { should be_include(category_2) }
     end
   end
 end

@@ -11,6 +11,7 @@ describe Registration do
   it { should respond_to :event }
   it { should respond_to :was }
   it { should respond_to :newcomer }
+  it { should respond_to :categories }
 
   it { should be_valid }
 
@@ -20,14 +21,17 @@ describe Registration do
   end
 
   describe "when pair [user_id,event_id] is already taken" do
+    let(:category) { 'android' }
+    let(:score) { 100 }
+    
     before do
-      user.registrate_to!(event)
+      user.participate!(event, category, score)
     end
 
     it { should_not be_valid }
   end
 
-  describe "when evetn not present" do
+  describe "when event not present" do
   	before { @registration.event_id = nil }
   	it { should_not be_valid }
   end  	
@@ -45,15 +49,17 @@ describe Registration do
   describe "create newcomer" do
     let(:newcomer) { FactoryGirl.create :user }
     let(:first_event) { FactoryGirl.create :event }
+    let(:category) { 'android' }
+    let(:score) { 100 }
     
-    before { @first_registration = newcomer.registrate_to!(first_event) }
+    before { @first_registration = newcomer.participate!(first_event,category, score ) }
 
     subject { @first_registration }
     its(:newcomer) { should eq true }
 
     describe "create old comer" do
       let(:second_event) { FactoryGirl.create :event }
-      before { @second_registration = newcomer.registrate_to!(second_event)}
+      before { @second_registration = newcomer.participate!(second_event, category, score)}
       subject { @second_registration }
       its(:newcomer) { should_not eq true }
     end

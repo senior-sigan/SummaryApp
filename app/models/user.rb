@@ -51,7 +51,7 @@ class User
     end
   end
 
-  def score()
+  def score
     map = %Q{
       function(){
         for(var i=0,len=this.categories.length; i < len; ++i)
@@ -63,34 +63,52 @@ class User
         return Array.sum(values);
       }
     }
-    unless events.nil?
-      registrations.real.where(event: events).map_reduce(map, reduce).out(inline: true)
+    
+    res = registrations.real.map_reduce(map, reduce).out(inline: true).to_a
+    unless res.empty?
+      res.first['value'].to_i
     else
-      registrations.real.map_reduce(map, reduce).out(inline: true)
+      0
     end
   end
-  def pc_score_for_category(category)
-  end
-  def find_or_create_registration_for(event)
-    begin
-      Registration.find_by(user: self, event: event)
-    rescue Exception => e
-      registrate_to!(event)
-    end
-  end
+
   def registrate_to!(event)
+    @registration = registrations.find_or_initialize_by(event: event)
+
     if events.empty?
-      registrations.create!(event: event, was: true, newcomer: true)
+      @registration.was = true
+      @registration.newcomer = true
     else
-      registrations.create!(event: event, was: true, newcomer: false)
+      @registration.was = true
+      @registration.newcomer = false
     end
+
+    @registration.save
+    @registration
   end
-  def unregistrate_from(event)
-    registrations.delete(event)
+
+  def participate!(event, category, score)
+    @registration = registrate_to! event
+
+    @registration.participate!(category, score)
+    @registration
   end
+
+  def leave!(event)
+    registrations.in(event: event).delete
+  end
+
+  def real_registrations
+    registrations.real
+  end
+
+  def fake_registrations
+    registrations.fake
+  end
+
   def set_real_for(event)
     begin
-      registrations.find_by(event: event).update_attributes(:was, true)
+      registrations.find_by(event: event).update_attribute(:was, true)
       true  
     rescue Exception => e
       errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
@@ -99,30 +117,11 @@ class User
   end
   def set_fake_for(event)
     begin
-      registrations.find_by(event: event).update_attributes(:was, false)
+      registrations.find_by(event: event).update_attribute(:was, false)
       true  
     rescue Exception => e
       errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
       false
-    end
-  end
-  def activity
-    fakes = fake_registrations.count.to_f
-    reals = real_registrations.count.to_f
-    all = fakes + reals
-    goodness = if all.zero?
-      0
-    else
-      (reals**2 / all)
-    end
-    {fakes: fakes, reals: reals, goodness: goodness}
-  end 
-  def real_registration_for(event)
-    begin
-      registrations.where(was: true).find_by(event: event)
-    rescue Exception => e
-      errors.add :base, "Registration for user #{self.email} in event #{event.name} not found"
-      nil  
     end
   end
 end

@@ -91,11 +91,14 @@ class Registration
     User.map_reduce(map_user, reduce).out(replace: 'activity').to_a
     Registration.map_reduce(map_active, reduce).out(reduce: 'activity').finalize(finalize).to_a
   end
-  def participate!(category, score)
-    #TODO
+  def participate!(category_name, score)
+    @category = categories.find_or_initialize_by(name: category_name)
+    @category.score = score
+    @category.save
   end
-  def unparticipate!
-    #TODO
+  def unparticipate!(category_name)
+    @category = categories.find_by(name: category_name)
+    @category.delete
   end
 end
 

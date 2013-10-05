@@ -42,7 +42,7 @@ class App.CategoryItem extends Spine.Controller
 
   click: (ev) =>
     ev.preventDefault()
-    App.Participant.scope = "#{App.Category.url}/#{@item.id}"
+    App.Participant.scope = "#{App.Category.url}/#{@item.name}"
     $("#participants").html JST["app/views/loading"]
     App.Participant.fetch() 
 

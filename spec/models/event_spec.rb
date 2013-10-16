@@ -7,7 +7,7 @@ describe Event do
 
   it { should respond_to(:name) }
   it { should respond_to(:date) }
-  it { should respond_to(:users) }
+  it { should respond_to(:participants) }
   it { should respond_to(:newcomers) }
   it { should respond_to(:categories) }
 
@@ -15,13 +15,34 @@ describe Event do
   it { should have_field(:name).of_type(String)}
   it { should have_field(:date).of_type(DateTime)}
   it { should have_field(:place).of_type(String)}
-  it { should have_many(:registrations).with_foreign_key(:event_id)}
   it { should validate_presence_of :name }
   it { should validate_presence_of :date }
   it { should validate_uniqueness_of(:name).case_insensitive }
 #################################  
   
   it { should be_valid }
+
+  describe "categories method" do
+    let(:participant) { FactoryGirl.build :participant }
+    let(:category_1) { FactoryGirl.build :category, name: 'android' }
+    let(:category_2) { FactoryGirl.build :category, name: 'windows' }
+    let(:category_3) { FactoryGirl.build :category, name: 'ios' }
+    let(:event) { FactoryGirl.build :event }  
+
+    before do
+      participant.categories << category_1
+      participant.categories << category_2
+      event.participants << participant
+      event.save
+    end
+
+    subject { event }
+
+    its(:participants) { should be_include participant }
+    its(:categories) { should be_include category_1 }
+    its(:categories) { should be_include category_2 }
+    its(:categories) { should_not be_include category_3 }
+  end
   
   describe "when come newcomers they NEW" do
     let(:first_event) { FactoryGirl.create :event }

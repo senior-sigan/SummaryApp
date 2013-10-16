@@ -5,7 +5,7 @@ class Event
   field :place, type: String
   field :photo, type: String
 
-  has_many :registrations, dependent: :destroy # WARNING!! CASCADE THERE
+  embeds_many :participants
 
   index({name: 1}, {unique: true})
 
@@ -16,24 +16,7 @@ class Event
   validates :date,
   	presence: true
 
-  def newcomers
-    User.in(id: registrations.real.where(newcomer: true).map(&:user_id))
-  end
-
-  def users
-    User.in(id: registrations.distinct(:user_id))
-  end
-  
-  def real_users
-    User.in(id: registrations.real.distinct(:user_id))
-  end
-  
-  def fake_users
-    User.in(id: registrations.fake.distinct(:user_id))
-  end
-
   def categories
-    registrations.distinct('categories.name')
+    participants.distinct('categories').flatten
   end
-
 end

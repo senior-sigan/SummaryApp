@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe User do
-  before { @user = FactoryGirl.create :user }
+describe Participant do
+  before { @participant = FactoryGirl.create :participant }
 
-  subject { @user }
+  subject { @participant }
 
 
   it { should respond_to(:email) }
@@ -23,7 +23,7 @@ describe User do
   it { should have_field(:email).of_type(String)}
   it { should have_field(:name).of_type(String)}
   it { should have_field(:surname).of_type(String)}
-  it { should have_many(:registrations).with_foreign_key(:user_id)}
+  it { should have_many(:registrations).with_foreign_key(:participant_id)}
 #################################
   it { should be_valid }
 
@@ -32,9 +32,9 @@ describe User do
     let(:category) { 'android' }
     let(:score) { 100 }
     before do
-      @user.save
+      @participant.save
       event.save
-      @user.participate!(event, category, score)
+      @participant.participate!(event, category, score)
     end
 
     describe "should set right" do
@@ -44,9 +44,9 @@ describe User do
     end
 
     describe "set fake for event" do
-      let(:registration) { @user.registrations.where(event: event).last }
+      let(:registration) { @participant.registrations.where(event: event).last }
       before do 
-        @user.set_fake_for(event)
+        @participant.set_fake_for(event)
       end
 
       its(:real_registrations) { should_not be_include(registration) }
@@ -54,7 +54,7 @@ describe User do
     end
 
     describe "and leaving event" do
-      before { @user.leave!(event) }
+      before { @participant.leave!(event) }
 
       its(:score) { should_not eq 100 }
       its(:events) { should_not be_include(event) }
@@ -63,50 +63,50 @@ describe User do
   end
 
   describe "when name is not present" do 
-  	before { @user.name = " " }
+  	before { @participant.name = " " }
   	it { should_not be_valid }
   end
 
   describe "when email is not present" do 
-  	before { @user.email = " " }
+  	before { @participant.email = " " }
   	it { should_not be_valid }
   end
 
   describe "when surname is not present" do 
-  	before { @user.surname = " " }
+  	before { @participant.surname = " " }
   	it { should_not be_valid }
   end
 
   describe "when name is too long" do
-  	before { @user.name = "a"*51 }
+  	before { @participant.name = "a"*51 }
   	it { should_not be_valid }
   end
   describe "when surname is too long" do
-  	before { @user.name = "a"*51 }
+  	before { @participant.name = "a"*51 }
   	it { should_not be_valid }
   end
   describe "when email is too long" do
-  	before { @user.name = "a"*101 }
+  	before { @participant.name = "a"*101 }
   	it { should_not be_valid }
   end
 
   describe "when email format is invalid" do
     it "should be invalid" do
-      addresses = %w[user@foo,com user_at_foo.org example.user@foo.
+      addresses = %w[participant@foo,com participant_at_foo.org example.participant@foo.
                      foo@bar_baz.com foo@bar+baz.com]
       addresses.each do |invalid_address|
-        @user.email = invalid_address
-        expect(@user).not_to be_valid
+        @participant.email = invalid_address
+        expect(@participant).not_to be_valid
       end
     end
   end
 
   describe "when email format is valid" do
     it "should be valid" do
-      addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
+      addresses = %w[participant@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       addresses.each do |valid_address|
-        @user.email = valid_address
-        expect(@user).to be_valid
+        @participant.email = valid_address
+        expect(@participant).to be_valid
       end
     end
   end
@@ -115,26 +115,26 @@ describe User do
     let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
 
     it "should be saved as all lower-case" do
-      @user.email = mixed_case_email
-      @user.save
-      expect(@user.reload.email).to eq mixed_case_email.downcase
+      @participant.email = mixed_case_email
+      @participant.save
+      expect(@participant.reload.email).to eq mixed_case_email.downcase
     end
   end
 
   describe "when email is already taken" do
-    let(:user_with_same_email) { @user.dup }
+    let(:participant_with_same_email) { @participant.dup }
   	before do 
-  	  user_with_same_email.email.upcase!
-  	  user_with_same_email.save
+  	  participant_with_same_email.email.upcase!
+  	  participant_with_same_email.save
   	end
 
-  	it { user_with_same_email.should_not  be_valid }
+  	it { participant_with_same_email.should_not  be_valid }
   end
 
   describe "when create dynamic attributes" do
   	before do
-  	  multy_user = User.new(email: "mu@aa.a", name: "mu", surname: "muatr", some_dynamic_attribute: "attribute")
-  	  multy_user.save
+  	  multy_participant = participant.new(email: "mu@aa.a", name: "mu", surname: "muatr", some_dynamic_attribute: "attribute")
+  	  multy_participant.save
   	end
 
   	it { should be_valid }

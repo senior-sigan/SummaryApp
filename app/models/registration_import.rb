@@ -14,6 +14,7 @@ class RegistrationImport
       return false
     end
   end
+
   def valid?
     if file.nil?
       false
@@ -21,13 +22,14 @@ class RegistrationImport
       true
     end
   end
+
   #load imported data
   #validate each Participation row 
   #on invalid push error and return false
   #else return true
   def save
     @fields ||= []
-    registrations = []
+    
     if file.nil?
       errors.add :base, "File can't be blank"
       return false
@@ -39,12 +41,11 @@ class RegistrationImport
           errors.add :base, u.errors.full_messages
           return false
         end
-        registrations << u.registrate_to!(@event)
       end
-      registrations
+      true
     else
       imported_users.each_with_index do |user, index|
-        user.errors.full_messages.each do |message|
+        participant.errors.full_messages.each do |message|
           errors.add :base, "Row #{index+2}: #{message}"
         end
       end      
@@ -63,36 +64,40 @@ class RegistrationImport
   def load_users
   	spreadsheet = open_spreadsheet
   	
-    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.nil?} #russian downcase
+    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.empty?} #russian downcase
     @fields = fields.map{|i| i.mb_chars.downcase.to_s unless i.nil? }
 
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       next if row['email'].nil?
-      user = User.find_or_initialize_by(email: row["email"].downcase)
-      if user.new_record?
-        user.name = row["name"]
-        user.surname = row["surname"]
+      participant = @event.participants.find_or_initialize_by(email: row["email"].downcase)
+      if participant.new_record?
+        participant.name = row["name"]
+        participant.surname = row["surname"]
       end
       row.each do |key,value|
         next if default?(key)
         next if empty?(value)
         next if ignored?(key)
-        user[key] ||= ''
-        user[key] += "#{value}\n" unless user[key].include?(value)
+        participant[key] ||= ''
+        participant[key] += "#{value}\n" unless participant[key].include?(value)
       end
-      user
+      participant
     end  
   end
+
   def empty?(value)
     value.nil? || value.eql?("")
   end
+  
   def default?(key)
     %w(email name surname).include?(key) || key.nil? || key.eql?("")
   end
+  
   def ignored?(key)
     !fields.include?(key)
   end
+  
   def open_spreadsheet
     unless file.nil?
       case File.extname(file.original_filename)

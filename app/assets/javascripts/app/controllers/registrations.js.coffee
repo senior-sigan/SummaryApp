@@ -27,8 +27,8 @@ class App.RegistrationsImport extends Spine.Controller
     @alrt.removeClass "alert alert-danger alert-success"
     fields = ( field.value for field in @file_inputs when field.checked is true )
     form = new FormData()
-    form.append("fields",fields)
-    form.append("file", @file)
+    form.append "fields",JSON.stringify(fields)
+    form.append "file", @file
     $(document).ajaxSend @sending
     req = $.ajax
       url: "/events/#{@event_id}/registrations/save_import.json"

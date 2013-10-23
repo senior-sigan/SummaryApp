@@ -1,6 +1,4 @@
-<% @cats = Category.all %>
-<% @registrations =  @event.registrations %>
-<%= form_for "registrations[]", 
+<%= form_for "participants[]", 
 	url: set_categories_event_registrations_path(@event), 
 	method: :patch, 
 	html: {class: "form-horizontal"} do |f|
@@ -12,21 +10,21 @@
 			</th>
 			<% for cat in @cats %>
 				<th>
-					<%= cat.name %>
-					<%= number_field_tag "categories[#{cat.id}", nil , class: "form-control"%>
-					<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat.id %>
+					<%= cat %>
+					<%= number_field_tag "categories[#{cat}", nil , class: "form-control"%>
+					<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat %>
 				</th> 
 			<% end %>
 		</thead>
 		<tbody>
-			<% for reg in @registrations %>
+			<% for part in @participants %>
 				<tr>
 					<td>
-						<%= label_tag :registration,"#{reg.user.name} #{reg.user.surname} #{reg.user.email}", class: "col-lg-3 control-label" %>
+						<%= label_tag :participant,"#{part.name} #{part.surname} #{part.email}", class: "col-lg-3 control-label" %>
 					</td>
 						<% @cats.each do |cat| %>
 							<td>
-								<%= check_box_tag "registrations[#{reg.id}][]", cat.id,false, class: "form-control" %>
+								<%= check_box_tag "participants[#{part.id}][]", cat,false, class: "form-control" %>
 							</td>
 						<% end %>
 				</tr>

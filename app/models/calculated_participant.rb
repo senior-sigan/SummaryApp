@@ -1,7 +1,7 @@
 class CalculatedParticipant
   include Mongoid::Document
 
-  field :_id, type: Moped::BSON::ObjectId
+  field :_id, type: String
   field :value, type: Hash
 
   def self.recalculate
@@ -18,7 +18,7 @@ class CalculatedParticipant
         		value.skip = 1;
         		value.was = 0;
         	}
-        	emit(part._id, value);
+        	emit(part.email, value);
         });
       }
     }

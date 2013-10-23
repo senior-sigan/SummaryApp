@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 
   def show
   	@event = Event.find(params[:id])
-    @participations = @event.participations
+    @participants = @event.participants
     respond_with(@event)
   end
 

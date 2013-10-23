@@ -9,4 +9,7 @@ class Category
   	presence: true,
   	length: { maximum: 50 }
 
+  def self.all
+  	Event.distinct('participants.categories.name')
+  end
 end

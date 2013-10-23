@@ -64,8 +64,8 @@ class RegistrationImport
   def load_users
   	spreadsheet = open_spreadsheet
   	
-    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.empty?} #russian downcase
-    @fields = fields.map{|i| i.mb_chars.downcase.to_s unless i.nil? }
+    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.nil? || i.empty?} #russian downcase
+    @fields = JSON.parse(fields).map{|i| i.mb_chars.downcase.to_s unless i.nil? }
 
     (2..spreadsheet.last_row).map do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]

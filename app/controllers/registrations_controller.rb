@@ -19,7 +19,6 @@ class RegistrationsController < ApplicationController
 		if @import.save
 			respond_with(@import, status: :created, location: @event)
 		else
-			p @import.errors
 			respond_with(
 				@import, 
 				status: :unprocessable_entity,
@@ -38,18 +37,19 @@ class RegistrationsController < ApplicationController
 	end
 
 	def categorize
-		# emty FIX ME
+		@cats = Category.all
+		@participants = @event.participants
 	end
 	def set_categories
 		#render text: params
 		@score = params[:categories]
-		@registrations = params[:registrations] || []
-		@registrations.each do |reg_id,cats|
-			registration = Registration.find reg_id
-			cats.each do |cat_id|
-				registration.participate! Category.find(cat_id), @score[cat_id]
-				# FIX TO MODEL METOD!!! EXCEPTION DANGER
-				# RENDER :categorize IF SOME ERRORS and ROLLBACK
+		@participants = params[:participants] || []
+		@participants.each do |part_id,cats|
+			participant = @event.participants.find part_id
+			cats.each do |cat_name|
+				cat = participant.categories.find_or_initialize_by(name: cat_name)
+				cat.score = @score[cat_name]
+				cat.save
 			end	
 		end
 		redirect_to @event

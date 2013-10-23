@@ -9,21 +9,15 @@ describe Participant do
   it { should respond_to(:email) }
   it { should respond_to(:name) }
   it { should respond_to(:surname) }
-  it { should respond_to(:events) }
+  it { should respond_to(:event) }
   it { should respond_to(:categories) }
 
-  it { should respond_to(:registrate_to!)}
-  it { should respond_to(:participate!) }
-  it { should respond_to(:leave!) }
   it { should respond_to(:score) }
-  it { should respond_to(:real_registrations) }
-  it { should respond_to(:fake_registrations) }
 
 ##### ONLY FOR MONGOID ##########
   it { should have_field(:email).of_type(String)}
   it { should have_field(:name).of_type(String)}
   it { should have_field(:surname).of_type(String)}
-  it { should have_many(:registrations).with_foreign_key(:participant_id)}
 #################################
   it { should be_valid }
 

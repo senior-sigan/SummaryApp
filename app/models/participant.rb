@@ -13,6 +13,9 @@ class Participant
 
   index({ email: 1}, {unique: true})
 
+  scope :fake, where(was: false)
+  scope :real, where(was: true) 
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, 
     presence: true,

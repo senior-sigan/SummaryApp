@@ -3,7 +3,7 @@ class ParticipantsController < ApplicationController
   respond_to :html, :json
 
   def show
-  	@participant = User.find(params[:id])
+  	@participant = CalculatedParticipant.find(params[:id])
     @events = Event.all
   	respond_with(@participant)
   end
@@ -11,8 +11,8 @@ class ParticipantsController < ApplicationController
   def index
     respond_with do |format|
       format.json do
-        @participants = jsoned(User.all)
-        render json: @participants
+        @participants = CalculatedParticipant.all
+        render json: jsoned(@participants)
       end
     end
   end
@@ -20,8 +20,8 @@ class ParticipantsController < ApplicationController
   def activity
     respond_with do |format|
       format.json do
-        @participants = jsoned_regs Registration.activity
-        @participants.sort! { |a,b| b[:goodness] <=> a[:goodness] }
+        @participants = CalculatedParticipant.all
+        # sort by goodness
         render json: @participants
       end
     end
@@ -30,8 +30,8 @@ class ParticipantsController < ApplicationController
   def top
     respond_with do |format|
       format.json do
-        @participants = jsoned_score(User.all)
-        @participants.sort! { |a,b| b[:score] <=> a[:score] }
+        @participants = CalculatedParticipant.all
+        #@participants.sort! { |a,b| b[:score] <=> a[:score] }
         render json: @participants
       end
     end
@@ -42,10 +42,10 @@ class ParticipantsController < ApplicationController
     list = participants.map do |party|
       {
         id: party.id.to_s,
-        name: party.name.capitalize,
-        surname: party.surname.capitalize,
+        name: party.value['name'].capitalize,
+        surname: party.value['surname'].capitalize,
         gravatar: party.gravatar(50),
-        categories: party.categories
+        categories: party.value['categories']
       }
     end
   end

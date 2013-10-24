@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
 	respond_to :html, :json
 
 	def index
-		@registrations = @event.registrations
+		@participants = @event.participants
 	end
 
 	def import
@@ -27,12 +27,12 @@ class RegistrationsController < ApplicationController
 	end
 
 	def set_was
-		params[:registrations] ||= { "was" => [] }
-		reg_ids = params[:registrations]["was"]
-		real_regs = @event.registrations.in(id: reg_ids)
-		fake_regs = @event.registrations.not_in(id: reg_ids)
-		real_regs.each{ |r| r.update_attribute(:was,true) }
-		fake_regs.each{ |f| f.update_attribute(:was,false) }
+		params[:participants] ||= { "was" => [] }
+		participant_ids = params[:participants]["was"]
+		real_participants = @event.participants.in(id: participant_ids)
+		fake_participants = @event.participants.not_in(id: participant_ids)
+		real_participants.each{ |r| r.update_attribute(:was,true) }
+		fake_participants.each{ |f| f.update_attribute(:was,false) }
 		redirect_to @event
 	end
 
@@ -40,6 +40,7 @@ class RegistrationsController < ApplicationController
 		@cats = Category.all
 		@participants = @event.participants
 	end
+
 	def set_categories
 		#render text: params
 		@score = params[:categories]
@@ -59,9 +60,11 @@ class RegistrationsController < ApplicationController
 	def reg_params
 		params.require(:registration).permit(:was)
 	end
+	
 	def import_params
 		params.permit(:file,:fields)
 	end
+	
 	def find_event
 		@event = Event.find(params[:event_id])
 	end

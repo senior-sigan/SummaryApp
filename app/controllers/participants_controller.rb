@@ -2,10 +2,15 @@ class ParticipantsController < ApplicationController
   before_filter :authenticate_owner!
   respond_to :html, :json
 
+  def recalculate
+    CalculatedParticipant.recalculate!
+    render json: {status: :recalculated, location: participants_path}
+  end
+
   def show
-  	@participant = CalculatedParticipant.find(params[:id])
+    @participant = CalculatedParticipant.find(params[:id])
     @events = Event.all
-  	respond_with(@participant)
+    respond_with(@participant)
   end
 
   def index
@@ -42,10 +47,10 @@ class ParticipantsController < ApplicationController
     list = participants.map do |party|
       {
         id: party.id.to_s,
-        name: party.value['name'].capitalize,
-        surname: party.value['surname'].capitalize,
+        name: party.name.capitalize,
+        surname: party.surname.capitalize,
         gravatar: party.gravatar(50),
-        categories: party.value['categories']
+        categories: party.categories
       }
     end
   end
@@ -58,7 +63,7 @@ class ParticipantsController < ApplicationController
         surname: party.surname.capitalize,
         gravatar: party.gravatar(50),
         score: party.score,
-        categories: party.categories.map{ |cat| cat.as_json }
+        categories: party.categories
       }
     end
   end

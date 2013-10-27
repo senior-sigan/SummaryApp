@@ -78,9 +78,9 @@ class EventsController < ApplicationController
   def calculated events
     list = events.map do |event|
 
-      real_users_cnt = event.real_users.count.to_f
-      newcomers_cnt = event.newcomers.count.to_f
-      users_cnt = event.users.count.to_f
+      real_users_cnt = event.participants.real.count.to_f
+      newcomers_cnt = event.participants.newcomer.count.to_f
+      users_cnt = event.participants.count.to_f
 
       new_ratio = unless real_users_cnt.zero?
         newcomers_cnt / real_users_cnt

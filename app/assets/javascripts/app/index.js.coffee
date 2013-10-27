@@ -1,5 +1,5 @@
 #= require json2
-#= require jquery
+# require jquery
 #= require spine
 #= require spine/manager
 #= require spine/ajax

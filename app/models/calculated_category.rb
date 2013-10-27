@@ -8,9 +8,11 @@ class CalculatedCategory
     map = %Q{
       function(){
         this.participants.forEach(function(part){
-          part.categories.forEach(function(cat){
-            emit(cat.name,1)
-          });
+          if (part.categories){  
+            part.categories.forEach(function(cat){
+              emit(cat.name,1)
+            });
+          }
         });
       }
     }

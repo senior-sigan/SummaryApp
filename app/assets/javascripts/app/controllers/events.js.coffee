@@ -7,14 +7,14 @@ class App.EventsStats extends Spine.Controller
   constructor: ->
     super
     @html JST["app/views/events/stats"]
-    App.Event.bind 'refresh',@draw
+    App.Event.bind 'refresh', @draw
     App.Event.url = "stats"
     App.Event.fetch()
-    @loading.html JST["app/views/loading"]
+    #@loading.html JST["app/views/loading"]
 
 
   draw: =>
-    @loading.html ""
+    #@loading.html ""
     reals_ctx = @realsGraph.get(0).getContext "2d"
     news_ctx = @newsGraph.get(0).getContext "2d"
     events = App.Event.all()

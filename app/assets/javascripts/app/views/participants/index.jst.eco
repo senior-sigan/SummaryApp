@@ -1,4 +1,5 @@
 <h4>Participants count is <%= @.length %></h4>
+<a href="#" id="recalculate">Recalculate</a>
 <table class="table table-hover">
   <thead>
     <th>Participant</th>
@@ -12,8 +13,8 @@
           <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
         </td>
         <td>
-          <% for category in party.categories: %>
-            <a href="#"><span class="label label-info"><%= category.name %></span></a>
+          <% for cat in party.categories: %>
+            <span class="badge"><%= cat.name %> : <%= cat.score %></span>
           <% end %>
         </td>
       </tr>

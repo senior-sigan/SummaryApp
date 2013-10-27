@@ -1,9 +1,13 @@
 CommunityApp::Application.routes.draw do   
   devise_for :owners
   resources :participants, except: [:new, :create] do
+    member do
+      get :show,  :constraints => { :id => /.*/ }
+    end
     collection do 
       get :activity
       get :top
+      post :recalculate
     end
   end
   resources :events do

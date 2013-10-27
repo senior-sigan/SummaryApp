@@ -19,4 +19,11 @@ class Event
   def categories
     participants.distinct('categories').flatten
   end
+  def score_for_participant(email)
+    begin
+      participants.find_by(email: email).categories.sum(&:score)   
+    rescue Exception => e
+      0  
+    end
+  end
 end

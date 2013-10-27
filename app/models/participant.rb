@@ -15,6 +15,7 @@ class Participant
 
   scope :fake, where(was: false)
   scope :real, where(was: true) 
+  scope :newcomer, where(was: true) #TODO
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, 

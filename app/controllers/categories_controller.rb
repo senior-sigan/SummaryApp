@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
 
   def index
     respond_with do |format|
-      format.json { render json: Category.counted }
+      format.json { render json: CalculatedCategory.all }
     end
   end
 
@@ -16,18 +16,6 @@ class CategoriesController < ApplicationController
         render json: @participants 
       end
     end
-  end
-
-  def new
-  end
-
-  def create
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   private

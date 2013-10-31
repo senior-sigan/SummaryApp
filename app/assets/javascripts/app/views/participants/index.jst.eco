@@ -13,8 +13,8 @@
           <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
         </td>
         <td>
-          <% for cat in party.categories: %>
-            <span class="badge"><%= cat.name %> : <%= cat.score %></span>
+          <% for cat_name of party.categories: %>
+            <span class="badge"><%= cat_name %> : <%= party.categories[cat_name] %></span>
           <% end %>
         </td>
       </tr>

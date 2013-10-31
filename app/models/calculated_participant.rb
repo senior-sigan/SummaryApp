@@ -27,9 +27,12 @@ class CalculatedParticipant
       function(){
         var value = {};
         this.participants.forEach(function(part){
-          value = {categories: [], name: '', surname: '', skip: 0, was: 0};
-          value.name = part.name;
-          value.surname = part.surname;
+          value = {categories: {}, skip: 0, was: 0};
+          for (var key in part) {
+            if ('categories' != key && '_id' != key && 'email' != key){
+              value[key] = part[key];
+            }
+          }
           if (part.was == true){
             value.skip = 0;
             value.was = 1;
@@ -39,7 +42,7 @@ class CalculatedParticipant
           }
           if (part.categories){
             part.categories.forEach(function(cat){
-              value.categories.push({name: cat.name, score: cat.score}); 
+              value.categories[cat.name] = cat.score; 
             });
           }
           emit(part.email, value);
@@ -55,14 +58,23 @@ class CalculatedParticipant
           value.surname = val.surname;
           value.was += val.was;
           value.skip += val.skip;
-          if (val.categories){
-            val.categories.forEach(function(cat){
-              if (!value.categories[cat.name]){
-                value.categories[cat.name] = cat.score;
+          for (var key in val) {
+            if ('name' != key && 'surname' != key && 'was' != key && 'skip' != key && 'categories' != key){
+              if (value[key]){
+                value[key] += val[key];
               } else {
-                value.categories[cat.name] += cat.score;
+                value[key] = val[key];
               }
-            });
+            }
+          }
+          if (val.categories){
+            for (var cat_name in val.categories){
+              if (!value.categories[cat_name]){
+                value.categories[cat_name] = val.categories[cat_name];
+              } else {
+                value.categories[cat_name] += val.categories[cat_name];
+              }
+            }
           }
         });
         return value;

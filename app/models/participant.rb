@@ -8,7 +8,7 @@ class Participant
   #meta fields wich will be added dynamicaly
   
   field :was, type: Boolean, default: true
-  embedded_in :event
+  embedded_in :event, inverse_of: :participants
   embeds_many :categories
 
   index({ email: 1}, {unique: true})

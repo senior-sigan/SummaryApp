@@ -10,7 +10,22 @@ class ParticipantsController < ApplicationController
   def show
     @participant = CalculatedParticipant.find(params[:id])
     @events = Event.all
-    respond_with(@participant)
+    respond_with do |format|
+      format.json do
+        render json: @participant
+      end
+    end
+  end
+
+  def edit
+    email = URI.unescape Base64.decode64(params[:id])
+    @participants = Event.where('participants.email' => email).map do |event|
+      event.participants.where('email' => email)
+    end
+    respond_with(@participants)
+  end
+
+  def update
   end
 
   def index
@@ -46,7 +61,7 @@ class ParticipantsController < ApplicationController
   def jsoned participants
     list = participants.map do |party|
       {
-        id: party.id.to_s,
+        id: party.to_param,
         name: party.name.capitalize,
         surname: party.surname.capitalize,
         gravatar: party.gravatar(50),

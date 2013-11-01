@@ -4,6 +4,15 @@ class CalculatedParticipant
   field :_id, type: String
   field :value, type: Hash
 
+  def to_param
+    URI.escape Base64.encode64(email)
+  end
+
+  def self.find(params)
+    params = URI.unescape Base64.decode64(params)
+    super
+  end
+
   def gravatar(size)
     size ||= 50
     "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(id)}?size=#{size}"

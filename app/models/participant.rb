@@ -37,4 +37,8 @@ class Participant
     "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?size=#{size}"
   end
 
+  def event_id
+    event.id
+  end
+
 end

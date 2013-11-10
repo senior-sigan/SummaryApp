@@ -10,11 +10,11 @@ class Event
   index({name: 1}, {unique: true})
 
   validates :name,
-  	presence: true,
-  	length: { maximum: 50 }, 
-  	uniqueness: { case_sensitive: false }
+    presence: true,
+    length: { maximum: 50 }, 
+    uniqueness: { case_sensitive: false }
   validates :date,
-  	presence: true
+    presence: true
 
   def categories
     participants.distinct('categories').flatten

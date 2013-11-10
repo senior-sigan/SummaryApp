@@ -20,15 +20,15 @@ class Participant
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, 
     presence: true,
-  	format: { with: VALID_EMAIL_REGEX }, 
-  	length: { maximum: 100 }, 
-  	uniqueness: { case_sensitive: false }
+    format: { with: VALID_EMAIL_REGEX }, 
+    length: { maximum: 100 }, 
+    uniqueness: { case_sensitive: false }
   validates :name,
-  	length: { maximum: 50 }, 
-  	presence: true
+    length: { maximum: 50 }, 
+    presence: true
   validates :surname,
-  	length: { maximum: 50 }, 
-  	presence: true
+    length: { maximum: 50 }, 
+    presence: true
 
   before_save { self.email = email.downcase }
 

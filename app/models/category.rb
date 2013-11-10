@@ -14,6 +14,6 @@ class Category
     numericality: {greater_than: 0, less_than: 1000}
 
   def self.all
-  	Event.distinct('participants.categories.name')
+    Event.distinct('participants.categories.name')
   end
 end

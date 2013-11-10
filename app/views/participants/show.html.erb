@@ -3,22 +3,22 @@
 
 <div class="row">
   <div class="col-lg-3">
-  <%= gravatar_image_tag @participant.email, gravatar: {size: 200}%>
+    <%= gravatar_image_tag @participant.email, gravatar: {size: 200}%>
   </div>
   <div class="col-lg-9">
     <form class="form-horizontal user-page">
       <% @participant['value'].each do |key,value| %>
-        <% next if key.eql?('_id') || key.empty? || key.eql?('was') || key.eql?('categories') || key.eql?('skip') || key.eql?('goodness')%>	
-          <div class="form-group">
-            <label class="col-sm-3 control-label user-label"><%= key %></label>
-              <div class="col-sm-9">
-              <p class="form-control-static"><%= value %></p>
-            </div>
-          </div>
-        <% end %>
+      <% next if key.eql?('_id') || key.empty? || key.eql?('was') || key.eql?('categories') || key.eql?('skip') || key.eql?('goodness')%> 
+      <div class="form-group">
+        <label class="col-sm-3 control-label user-label"><%= key %></label>
+        <div class="col-sm-9">
+          <p class="form-control-static"><%= value %></p>
+        </div>
+      </div>
+      <% end %>
     </form>
     <h4>Score in events</h4>
-      <div id="events"></div>
+    <div id="events"></div>
     <h4>Score in categories</h4>
     <div id="categories"></div>
   </div>
@@ -34,20 +34,20 @@
     code: function(){
       new PieChart({
         <% @participant.categories.each_key do |cat_name| %>
-          '<%= cat_name %>': <%= @participant.categories[cat_name] %>,
+        '<%= cat_name %>': <%= @participant.categories[cat_name] %>,
         <% end %>
       })},
-    height: 400,
-    width: 700,
-    framerate: 50
-  });
+      height: 400,
+      width: 700,
+      framerate: 50
+    });
 
   var eb = bonsai.run(events, {
     url: '/assets/BarChart.js',
     code: function(){
       new BarChart(80,20,{
         <% @events.each do |ev| %>
-          '<%= "#{ev.name} #{ev.date.strftime("%Y-%m-%d")}" %>': <%= ev.score_for_participant(@participant.id) %>,
+        '<%= "#{ev.name} #{ev.date.strftime("%Y-%m-%d")}" %>': <%= ev.score_for_participant(@participant.id) %>,
         <% end %>
       });
     },

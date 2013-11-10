@@ -8,16 +8,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="container">
+  <div class="container">
     <% flash.each do |key, value| %>
-      <% key = :success if key == :notice %>
-      <% key = :danger if key == :alert %>
-      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+    <% key = :success if key == :notice %>
+    <% key = :danger if key == :alert %>
+    <%= content_tag(:div, value, class: "alert alert-#{key}") %>
     <% end %>
 
     <%= yield %>
     
-</div>
-<%= debug(params) if Rails.env.development? %>
+  </div>
+  <%= debug(params) if Rails.env.development? %>
 </body>
 </html>

@@ -6,7 +6,7 @@ class RegistrationImport
   attr_accessor :fields
 
   def open
-  	if (@spreadsheet ||= open_spreadsheet)
+    if (@spreadsheet ||= open_spreadsheet)
       @header ||= @spreadsheet.row(1)
       return true
     else
@@ -62,8 +62,8 @@ class RegistrationImport
   end
 
   def load_users
-  	spreadsheet = open_spreadsheet
-  	
+    spreadsheet = open_spreadsheet
+    
     header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.nil? || i.empty?} #russian downcase
     @fields = JSON.parse(fields).map{|i| i.mb_chars.downcase.to_s unless i.nil? }
 

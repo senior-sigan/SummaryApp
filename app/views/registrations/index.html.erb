@@ -1,27 +1,27 @@
 <% provide(:title, 'Registrations') %>
 
 <div class="row">
-	<%= render "events/event_face", event: @event %>
-	
-	<div class="col-sm-9">
-		<nav class="navbar navbar-default" role="navigation">
-			<ul class="nav navbar-nav">
-		  	<li><%= link_to "Log", @event%></li>
-		  	<li class="active"><%= link_to "Registrations", event_registrations_path(@event) %></li>
-			</ul>
-		  <%= link_to "Import",import_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
-		  <%= link_to "Categorize", categorize_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
-		</nav>
-		<div>
-			<%= form_for "participants[]", url: set_was_event_registrations_path(@event), method: :patch do |f|%>
-				<% for part in @participants %>
-					<div>
-						<%= check_box_tag "participants[was][]", part.id, part.was %>
-						<%= "#{part.name} #{part.surname} #{part.email}" %>
-					</div>
-				<% end %>
-				<%= f.submit "Save",class: "btn btn-success" %>
-			<% end %>
-		</div>
-	</div>
+  <%= render "events/event_face", event: @event %>
+  
+  <div class="col-sm-9">
+    <nav class="navbar navbar-default" role="navigation">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "Log", @event%></li>
+        <li class="active"><%= link_to "Registrations", event_registrations_path(@event) %></li>
+      </ul>
+      <%= link_to "Import",import_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
+      <%= link_to "Categorize", categorize_event_registrations_path(@event), class: "btn navbar-btn pull-right" %>
+    </nav>
+    <div>
+      <%= form_for "participants[]", url: set_was_event_registrations_path(@event), method: :patch do |f|%>
+        <% for part in @participants %>
+          <div>
+            <%= check_box_tag "participants[was][]", part.id, part.was %>
+            <%= "#{part.name} #{part.surname} #{part.email}" %>
+          </div>
+        <% end %>
+        <%= f.submit "Save",class: "btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
 </div>

@@ -41,4 +41,8 @@ class Participant
     event.id
   end
 
+  def to_param
+    URI.escape Base64.encode64(email)
+  end
+
 end

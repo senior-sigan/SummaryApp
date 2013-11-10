@@ -12,6 +12,7 @@ gem "gravatar_image_tag"
 gem 'sass-rails', '~> 4.0.0'
 gem "bootstrap-sass-rails", "~> 3.0.0.2"
 gem 'bootstrap-datepicker-rails'
+gem "select2-rails", "~> 3.5.1"
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

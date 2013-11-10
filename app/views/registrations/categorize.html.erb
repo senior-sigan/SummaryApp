@@ -1,43 +1,29 @@
 <%= form_for "participants[]", 
 	url: set_categories_event_registrations_path(@event), 
-	method: :patch, 
-	html: {class: "form-horizontal"} do |f|
+	method: :patch do |f|
 %>
-	<table class="table">
-		<thead>
-			<th>
-				<%= f.submit "Save",class: "btn btn-success pull-right" %>
-			</th>
-			<% for cat in @cats %>
-				<th>
-					<%= cat %>
-					<%= number_field_tag "categories[#{cat}", nil , class: "form-control"%>
-					<%= link_to "Check All", '#', class: "btn btn-default btn-small toggle", id: cat %>
-				</th> 
-			<% end %>
-		</thead>
-		<tbody>
-			<% for part in @participants %>
-				<tr>
-					<td>
-						<%= label_tag :participant,"#{part.name} #{part.surname} #{part.email}", class: "col-lg-3 control-label" %>
-					</td>
-						<% @cats.each do |cat| %>
-							<td>
-								<%= check_box_tag "participants[#{part.id}][]", cat,false, class: "form-control" %>
-							</td>
-						<% end %>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
-	
+	<div class='form-group'>
+		<%= link_to 'Check all', '#', class: 'btn btn-default toggle' %>
+		<%= f.button 'Ok', class: 'btn btn-success' %>
+	</div>
+	<div class='form-group'>	
+		<%= label_tag 'Categories' %>
+		<%= text_field_tag 'categories', nil, class: 'categories-select', 'data-tags' => @categories.to_json %>
+	</div>
+	<div class='form-group'>
+		<%= label_tag 'Score' %>
+		<%= number_field_tag 'score', 0, class: 'form-control' %>
+	</div>
+	<% @participants.each do |part| %>
+		<div class="participant" id=<%= part.id %>>
+			<%= check_box_tag "participants[]", part.id, false, style: 'visibility: hidden'%> 
+			<%= gravatar_image_tag part.email, gravatar: {size: 100} %>
+			<div class="participant-name"><%= "#{part.surname} #{part.name}" %></div>
+		</div>
+	<% end %>	
 <% end %>
 <script type="text/javascript">
 	(function($){
-		$(".toggle").on("click",function(event){
-			event.preventDefault();
-			$('input[type="checkbox"][value="'+this.id+'"]').click();
-		})
+		new App.ParticipantsCategorize({el: $('form')});
 	})(jQuery)
 </script>

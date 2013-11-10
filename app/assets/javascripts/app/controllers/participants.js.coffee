@@ -1,3 +1,29 @@
+class App.ParticipantsCategorize extends Spine.Controller
+  events:
+    'click .participant': 'check'
+    'click .toggle': 'toggle'
+
+  constructor: ->
+    super
+    tags = $('#categories').data 'tags'
+    $('#categories').select2
+      tags: tags
+
+
+  check: (ev) =>
+    checkBox = $(ev.currentTarget).find 'input[type=checkbox]'
+    if checkBox.prop('checked')
+      checkBox.prop 'checked', false
+      $(ev.currentTarget).removeClass 'selected'
+    else
+      checkBox.prop 'checked',true
+      $(ev.currentTarget).addClass 'selected'
+   
+    ev.preventDefault()
+
+  toggle: (ev) =>
+    $(".participant").click()
+
 class App.ParticipantsIndex extends Spine.Controller
   events:
     'click #recalculate': 'recalculate'

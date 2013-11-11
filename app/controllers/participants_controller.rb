@@ -28,7 +28,7 @@ class ParticipantsController < ApplicationController
   def update
    # render text: params
     @event = Event.find params[:participant][:event_id]
-    @participant = @event.participants.find params[:id]
+    @participant = @event.participants.find_by_params params[:id]
 
     if @participant.update_attributes participant_attributes
       respond_with(@participant, status: :updated) do |format|

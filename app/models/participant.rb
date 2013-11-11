@@ -45,4 +45,9 @@ class Participant
     URI.escape Base64.encode64(email)
   end
 
+  def self.find_by_params(params)
+    params = URI.unescape Base64.decode64(params)
+    self.find_by email: params
+  end
+
 end

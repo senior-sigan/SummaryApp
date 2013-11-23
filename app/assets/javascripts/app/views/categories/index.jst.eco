@@ -1,5 +1,5 @@
 <div class="col-md-3">
-  <h3>Categories</h3>
+  <h3>Categories<small><a href="#" id="recalculate">Recalculate</a></small></h3>
   <ul id="cats-list" class="nav nav-pills nav-stacked"></ul>
 </div>
 <div class="col-md-6">

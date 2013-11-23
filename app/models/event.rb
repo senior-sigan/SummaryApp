@@ -16,9 +16,14 @@ class Event
   validates :date,
     presence: true
 
+  def newcomers
+    CalculatedParticipant.where('value.event.id' => self.id)
+  end
+
   def categories
     participants.distinct('categories').flatten
   end
+  
   def score_for_participant(email)
     begin
       participants.find_by(email: email).categories.sum(&:score)   

@@ -53,22 +53,11 @@ class ParticipantsController < ApplicationController
     end
   end
 
-  def activity
-    respond_with do |format|
-      format.json do
-        @participants = CalculatedParticipant.all
-        # sort by goodness
-        render json: @participants
-      end
-    end
-  end
-
   def top
     respond_with do |format|
       format.json do
-        @participants = CalculatedParticipant.all
-        #@participants.sort! { |a,b| b[:score] <=> a[:score] }
-        render json: @participants
+        @participants = CalculatedParticipant.order_by('value.score DESC').all
+        render json: jsoned(@participants)
       end
     end
   end
@@ -81,7 +70,8 @@ class ParticipantsController < ApplicationController
         name: party.name.capitalize,
         surname: party.surname.capitalize,
         gravatar: party.gravatar(50),
-        categories: party.categories
+        categories: party.categories,
+        score: party.score
       }
     end
   end

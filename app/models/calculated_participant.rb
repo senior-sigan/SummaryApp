@@ -21,27 +21,49 @@ class CalculatedParticipant
   def name
     value['name']
   end
+
   def surname
     value['surname']
   end
+  
   def email
     id
   end
+  
   def categories
     value['categories'] || []
+  end
+  
+  def score
+    value['score'] || 0
+  end
+  
+  def event
+    value['event']
+  end
+
+  def was
+    value['was']
+  end
+
+  def skip
+    value['skip']
   end
 
   def self.recalculate!
     map = %Q{
       function(){
-        var value = {};
+        var event = this;
+
         this.participants.forEach(function(part){
-          value = {categories: {}, skip: 0, was: 0};
+          var value = {categories: {}, skip: 0, was: 0, score: 0, event: {id: event._id, date: event.date}};
+
           for (var key in part) {
-            if ('categories' != key && '_id' != key && 'email' != key){
+            if ('categories' != key && '_id' != key && 'email' != key && 'event' != key){
               value[key] = part[key];
             }
           }
+
           if (part.was == true){
             value.skip = 0;
             value.was = 1;
@@ -52,6 +74,7 @@ class CalculatedParticipant
           if (part.categories){
             part.categories.forEach(function(cat){
               value.categories[cat.name] = cat.score; 
+              value.score += cat.score;
             });
           }
           emit(part.email, value);
@@ -61,14 +84,24 @@ class CalculatedParticipant
 
     reduce = %Q{
       function(key, values){
-        var value = {name: '', surname: '', was: 0, skip: 0, goodness: 0, categories: {}};
+        var value = {name: '', surname: '', score: 0, was: 0, skip: 0, goodness: 0, categories: {}, event: {id: null, date: null}};
         values.forEach(function(val){
           value.name = val.name;
           value.surname = val.surname;
           value.was += val.was;
           value.skip += val.skip;
+          value.score += val.score;
+          if ( !value.event.date ) {
+            value.event.id = val.event.id;
+            value.event.date = val.event.date;
+          } else {
+            if ( val.event.date < value.event.date){
+              value.event.id = val.event.id;
+              value.event.date = val.event.date;
+            } 
+          }
           for (var key in val) {
-            if ('name' != key && 'surname' != key && 'was' != key && 'skip' != key && 'categories' != key){
+            if ('name' != key && 'surname' != key && 'was' != key && 'skip' != key && 'categories' != key && 'score' != key && 'event' != key){
               if (value[key]){
                 value[key] += val[key];
               } else {

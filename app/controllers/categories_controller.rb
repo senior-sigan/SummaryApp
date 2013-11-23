@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
 
   def index
     respond_with do |format|
-      format.json { render json: CalculatedCategory.all }
+      format.json { render json: jsoned(CalculatedCategory.all) }
     end
   end
 
@@ -18,7 +18,21 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def recalculate
+    CalculatedCategory.recalculate!
+    render json: {status: :recalculated, location: categories_path}
+  end
+
   private
+
+  def jsoned(categories)
+    list = categories.map do |cat|
+      {
+        id: cat.id,
+        participants_count: cat.participants_count
+      }
+    end
+  end
 
   def scored_participants_for(category)
     list = category.users.map do |user|

@@ -79,7 +79,7 @@ end
     list = events.map do |event|
 
       real_users_cnt = event.participants.real.count.to_f
-      newcomers_cnt = event.participants.newcomer.count.to_f
+      newcomers_cnt = event.newcomers.count.to_f
       users_cnt = event.participants.count.to_f
 
       new_ratio = unless real_users_cnt.zero?

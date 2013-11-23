@@ -38,7 +38,7 @@ class RegistrationsController < ApplicationController
 
   def categorize
     @participants = @event.participants
-    @categories = CalculatedCategory.only('value.name').all.map(&:'value.name')
+    @categories = CalculatedCategory.only('_id').all.map(&:'_id')
   end
 
   def set_categories
@@ -50,7 +50,11 @@ class RegistrationsController < ApplicationController
       participant = @event.participants.find part_id
       categories.map do |cat_name|
         cat = participant.categories.find_or_initialize_by(name: cat_name)
-        cat.score = score
+        if score.zero?
+          cat.delete
+        else
+          cat.score = score
+        end
       end
       participant
     end

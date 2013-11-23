@@ -26,6 +26,10 @@ CommunityApp::Application.routes.draw do
     member do
       get :participants
     end
+    
+    collection do 
+      post :recalculate
+    end
   end
   root  'home#index'
 end

@@ -1,5 +1,8 @@
 $ = jQuery
 class App.Categories extends Spine.Controller
+  events:
+    'click #recalculate': 'recalculate'
+
   elements:
     "#cats-list": 'list'
     "#participants": 'participants'
@@ -17,7 +20,7 @@ class App.Categories extends Spine.Controller
   addAll: =>
     @list.html ""
     console.log App.Category.all()
-    App.Category.each @addOne
+    App.Category.each(@addOne)
 
   addOne: (category) =>
     view = new App.CategoryItem(item: category)
@@ -26,6 +29,14 @@ class App.Categories extends Spine.Controller
   addParticipant: (participants)=>
     @participants.html JST["app/views/categories/users"](participants) 
 
+  recalculate: (ev) =>
+    ev.preventDefault()
+    req = $.ajax
+      url: '/categories/recalculate'
+      type: 'POST'
+      success: (ev) ->
+        App.Category.fetch()
+
 class App.CategoryItem extends Spine.Controller
   tag: "li"
 
@@ -33,12 +44,16 @@ class App.CategoryItem extends Spine.Controller
     super
     throw "@item required" unless @item
     @item.bind("update", @render)
+    @item.bind("destroy", @remove)
   
   render: (item) =>
     @item = item if item
     @replace JST['app/views/categories/item'](@item)
     @el.on("click",@click)
     @
+
+  remove: =>
+    @el.remove()
 
   click: (ev) =>
     ev.preventDefault()

@@ -4,13 +4,13 @@ class CalculatedCategory
   field :_id, type: Moped::BSON::ObjectId
   field :value, type: Hash
 
-  def self.recalculate
+  def self.recalculate!
     map = %Q{
       function(){
         this.participants.forEach(function(part){
           if (part.categories){  
             part.categories.forEach(function(cat){
-              emit(cat.name,1)
+              emit(cat.name,1);
             });
           }
         });
@@ -18,10 +18,13 @@ class CalculatedCategory
     }
     reduce = %Q{
       function(key, values){
-        value = 0;
         return Array.sum(values);
       }
     }
-    Event.map_reduce(map, reduce).out(replace: 'calculated_category').to_a
+    Event.map_reduce(map, reduce).out(replace: 'calculated_categories').to_a
+  end
+
+  def participants_count
+    self['value']
   end
 end

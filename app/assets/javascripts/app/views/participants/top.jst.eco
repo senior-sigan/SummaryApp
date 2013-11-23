@@ -18,7 +18,9 @@
           <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>
         </td>
         <td>
-          <%= party.categories %>
+          <% for cat_name of party.categories: %>
+            <span class="badge"><%= cat_name %> : <%= party.categories[cat_name] %></span>
+          <% end %>
         </td>
       </tr>
     <% end %>

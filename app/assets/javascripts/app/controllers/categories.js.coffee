@@ -27,6 +27,7 @@ class App.Categories extends Spine.Controller
     @list.append(view.render().el)
 
   addParticipant: (participants)=>
+    console.log participants
     @participants.html JST["app/views/categories/users"](participants) 
 
   recalculate: (ev) =>
@@ -57,7 +58,8 @@ class App.CategoryItem extends Spine.Controller
 
   click: (ev) =>
     ev.preventDefault()
-    App.Participant.scope = "#{App.Category.url}/#{@item.name}"
+    App.Participant.scope = "#{App.Category.url}/#{@item.id}"
+    console.log @item.id
     $("#participants").html JST["app/views/loading"]
     App.Participant.fetch() 
 

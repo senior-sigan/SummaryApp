@@ -31,7 +31,7 @@ class App.ParticipantsIndex extends Spine.Controller
   constructor: ->
     super
     App.Participant.bind 'refresh', @addAll
-    #@el.html JST["app/views/loading"]
+    @el.html JST["app/views/loading"]
     App.Participant.fetch()
 
   addAll: (parties) =>

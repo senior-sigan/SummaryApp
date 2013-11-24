@@ -3,6 +3,7 @@ class CalculatedParticipant
 
   field :_id, type: String
   field :value, type: Hash
+  index 'value.categories.name' => 1
 
   def to_param
     URI.escape Base64.encode64(email)
@@ -31,11 +32,18 @@ class CalculatedParticipant
   end
   
   def categories
-    value['categories'] || []
+    value['categories']
   end
   
   def score
     value['score'] || 0
+  end
+
+  def score_for_category(category)
+    categories.each do |cat|
+      return cat['score'] if cat['name'].eql?(category.id)
+    end
+    0
   end
   
   def event
@@ -131,6 +139,11 @@ class CalculatedParticipant
           return value;
         }
         value.goodness = value.was*value.was / all;
+        var temp = [];
+        for (var key in value.categories) {
+          temp.push({name: key, score: value.categories[key]});
+        }
+        value.categories = temp;
         return value;
       }
     }

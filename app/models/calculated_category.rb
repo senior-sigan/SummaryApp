@@ -10,7 +10,7 @@ class CalculatedCategory
         this.participants.forEach(function(part){
           if (part.categories){  
             part.categories.forEach(function(cat){
-              emit(cat.name,1);
+              emit(cat.name,part.email);
             });
           }
         });
@@ -18,13 +18,19 @@ class CalculatedCategory
     }
     reduce = %Q{
       function(key, values){
-        return Array.sum(values);
+        var value = {participants: []};
+        value.participants = values;
+        return value;
       }
     }
     Event.map_reduce(map, reduce).out(replace: 'calculated_categories').to_a
   end
 
   def participants_count
-    self['value']
+    value['participants'].count
+  end
+
+  def participants
+    value['participants']
   end
 end

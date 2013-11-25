@@ -71,7 +71,9 @@ class ParticipantsController < ApplicationController
         surname: party.surname.capitalize,
         gravatar: party.gravatar(50),
         categories: party.categories,
-        score: party.score
+        score: party.score,
+        skip: party.skip,
+        was: party.was
       }
     end
   end

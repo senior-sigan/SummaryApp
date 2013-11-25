@@ -2,12 +2,20 @@
 <a href="#" id="recalculate">Recalculate</a>
 <table class="table table-hover">
   <thead>
+    <th>Real</th>
+    <th>Fakes</th>
     <th>Participant</th>
     <th>Categories</th>
   </thead>
   <tbody>
     <% for party in @: %>
       <tr>
+        <td>
+          <p class="text-success"><strong><%= party.was %></strong></p>
+        </td>
+        <td>
+          <p class="text-warning"><strong><%= party.skip %></strong></p>
+        </td>
         <td>
           <img alt="gravatar" height="50" width="50" src="<%=party.gravatar%>">
           <a href="<%= party.home_url() %>"> <%= party.fullName() %> </a>

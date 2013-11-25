@@ -1,5 +1,5 @@
 class App.Participant extends Spine.Model
-  @configure 'Participant', 'name', 'surname', 'score', 'categories'
+  @configure 'Participant', 'name', 'surname', 'score', 'categories',' was', 'skip'
   @extend Spine.Model.Ajax
 
   fullName: -> [@name, @surname].join(' ')

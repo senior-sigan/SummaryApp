@@ -112,3 +112,7 @@ a.no-color {
 .categories-select {
     width: 100%;
 }
+
+.goodness {
+    display: inline;
+}

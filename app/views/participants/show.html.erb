@@ -8,7 +8,7 @@
   <div class="col-lg-9">
     <form class="form-horizontal user-page">
       <% @participant['value'].each do |key,value| %>
-      <% next if key.eql?('_id') || key.empty? || key.eql?('was') || key.eql?('categories') || key.eql?('skip') || key.eql?('goodness')%> 
+      <% next if key.eql?('_id') || key.empty? || key.eql?('was') || key.eql?('categories') || key.eql?('skip') || key.eql?('goodness') || key.eql?('event')%> 
       <div class="form-group">
         <label class="col-sm-3 control-label user-label"><%= key %></label>
         <div class="col-sm-9">

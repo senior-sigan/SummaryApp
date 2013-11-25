@@ -1,18 +1,16 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 #ruby-gemset=community
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.1'
 gem 'rails_12factor', group: :production
 gem 'devise', '3.0.3'
 gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
 gem 'roo' #for Exel Csv GoogleDocs
-gem "gravatar_image_tag"
-# Use SCSS for stylesheets
+gem 'gravatar_image_tag'
 gem 'sass-rails', '~> 4.0.0'
-gem "bootstrap-sass-rails", "~> 3.0.0.2"
+gem 'bootstrap-sass-rails', '~> 3.0.2.1'
 gem 'bootstrap-datepicker-rails'
-gem "select2-rails", "~> 3.5.1"
+gem 'select2-rails', '~> 3.5.1'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -24,8 +22,8 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 
 #Spine
-gem "spine-rails"
-gem "json2-rails"
+gem 'spine-rails'
+gem 'json2-rails'
 gem 'eco' 
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -44,7 +42,6 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'mongoid-rspec'
   gem 'timecop'
   gem 'launchy'
 end

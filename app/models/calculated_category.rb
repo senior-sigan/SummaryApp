@@ -1,7 +1,7 @@
 class CalculatedCategory
   include Mongoid::Document
 
-  field :_id, type: Moped::BSON::ObjectId
+  field :_id, type: String
   field :value, type: Hash
 
   def self.recalculate!

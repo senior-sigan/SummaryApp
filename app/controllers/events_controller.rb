@@ -67,44 +67,11 @@ end
 
   def stats #for all events
     @events = Event.order_by(:date.asc).all
-    respond_with calculated @events
+    respond_with @events, each_serializer: EventStatsSerializer
   end
 
   private 
   def event_params
     params.require(:event).permit(:name,:date,:photo)
-  end
-
-  def calculated events
-    list = events.map do |event|
-
-      real_users_cnt = event.participants.real.count.to_f
-      newcomers_cnt = event.newcomers.count.to_f
-      users_cnt = event.participants.count.to_f
-
-      new_ratio = unless real_users_cnt.zero?
-        newcomers_cnt / real_users_cnt
-      else
-        0
-      end
-
-      real_ratio = unless users_cnt.zero?
-        real_users_cnt / users_cnt
-      else
-        0
-      end
-
-      {
-        id: event.id.to_s,
-        name: event.name,
-        date: event.date,
-        newcomer_ratio: new_ratio*100.0,
-        real_ratio: real_ratio*100.0,
-        reals: real_users_cnt,
-        newcomers: newcomers_cnt,
-        users: users_cnt
-      }
-    end
-
   end
 end

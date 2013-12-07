@@ -1,22 +1,18 @@
 class CategoriesController < ApplicationController
   before_filter :authenticate_owner!
+  before_filter :find_category, only: [:participants]
   respond_to :html, :json
 
   def index
-    respond_with do |format|
-      format.json { render json: jsoned(CalculatedCategory.all) }
-    end
+    @category = CalculatedCategory.all
+    respond_with @category, each_serializer: CategorySerializer
   end
 
   def participants
-    @category = CalculatedCategory.find params[:id]
-
-    respond_with do |format|
-      format.json do 
-        @participants = scored_participants_for @category
-        render json: @participants 
-      end
-    end
+    @participants =  CalculatedParticipant
+      .where('value.categories.name' => @category.id)
+      .order_by('value.categories.score DESC')
+    respond_with @participants, each_serializer: ParticipantScoreSerializer, scope: @category
   end
 
   def recalculate
@@ -26,28 +22,7 @@ class CategoriesController < ApplicationController
 
   private
 
-  def jsoned(categories)
-    list = categories.map do |cat|
-      {
-        id: cat.id,
-        participants_count: cat.participants_count
-      }
-    end
+  def find_category
+    @category = CalculatedCategory.find params[:id]
   end
-
-  def scored_participants_for(category)
-    CalculatedParticipant
-      .where('value.categories.name' => category.id)
-      .order_by('value.categories.score DESC')
-      .map do |part|
-      {
-        id: part.to_param,
-        name: part.name,
-        surname: part.surname,
-        gravatar: part.gravatar(50),
-        score: part.score_for_category(category)
-      }
-    end
-  end
-
 end

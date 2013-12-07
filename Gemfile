@@ -5,6 +5,7 @@ gem 'rails', '4.0.1'
 gem 'rails_12factor', group: :production
 gem 'devise', '3.0.3'
 gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
+gem "active_model_serializers", "~> 0.8.1"
 gem 'roo' #for Exel Csv GoogleDocs
 gem 'gravatar_image_tag'
 gem 'sass-rails', '~> 4.0.0'

@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.order_by(:date.asc).all
+    @events = Event.all
     respond_with(@events)
   end
 

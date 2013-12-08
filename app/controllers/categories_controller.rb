@@ -9,9 +9,7 @@ class CategoriesController < ApplicationController
   end
 
   def participants
-    @participants =  CalculatedParticipant
-      .where('value.categories.name' => @category.id)
-      .order_by('value.categories.score DESC')
+    @participants =  CalculatedParticipant.for_category(@category)
     respond_with @participants, each_serializer: ParticipantScoreSerializer, scope: @category
   end
 

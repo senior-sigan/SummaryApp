@@ -1,9 +1,7 @@
 <h4>Participants count is <%= @.length %></h4>
 <table class="table table-hover">
   <thead>
-    <th>
-      <p class="text-success">Score</p>
-    </th>
+    <th>Score</th>
     <th>Participant</th>
     <th>Categories</th>
   </thead>

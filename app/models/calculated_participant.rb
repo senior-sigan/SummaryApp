@@ -4,6 +4,10 @@ class CalculatedParticipant
   field :_id, type: String
   field :value, type: Hash
   index 'value.categories.name' => 1
+  
+  scope :for_category, ->(category) { where('value.categories.name' => category.id).order_by('value.categories.score DESC') }
+  scope :order_by_score, -> { order_by('value.score DESC') }
+  scope :order_by_goodness, -> { order_by('value.goodness DESC') }
 
   def to_param
     URI.escape Base64.encode64(email)

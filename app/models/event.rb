@@ -16,6 +16,15 @@ class Event
   validates :date,
     presence: true
 
+  default_scope order_by(:date.asc)
+
+  def self.splitted_participants(email)
+    #TODO - fix this terrible selector
+    Event.where('participants.email' => email).map do |event|
+      event.participants.where('email' => email).to_a
+    end.flatten
+  end
+
   def newcomers
     CalculatedParticipant.where('value.event.id' => self.id)
   end

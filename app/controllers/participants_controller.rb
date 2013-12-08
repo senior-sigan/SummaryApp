@@ -15,9 +15,7 @@ class ParticipantsController < ApplicationController
 
   def edit
     email = URI.unescape Base64.decode64(params[:id])
-    @participants = Event.where('participants.email' => email).map do |event|
-      event.participants.where('email' => email).to_a
-    end.flatten
+    @participants = Event.splitted_participants(email)
     respond_with(@participants)
   end
 
@@ -43,7 +41,7 @@ class ParticipantsController < ApplicationController
   def index
     respond_with do |format|
       format.json do
-        @participants = CalculatedParticipant.order_by('value.goodness DESC').all
+        @participants = CalculatedParticipant.order_by_goodness
         render json: @participants, each_serializer: ParticipantSerializer
       end
     end
@@ -52,7 +50,7 @@ class ParticipantsController < ApplicationController
   def top
     respond_with do |format|
       format.json do
-        @participants = CalculatedParticipant.order_by('value.score DESC').all
+        @participants = CalculatedParticipant.order_by_score
         render json: @participants, each_serializer: ParticipantSerializer
       end
     end

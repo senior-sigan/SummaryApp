@@ -10,11 +10,7 @@ class ParticipantsController < ApplicationController
   def show
     @participant = CalculatedParticipant.find(params[:id])
     @events = Event.all
-    respond_with do |format|
-      format.json do
-        render json: @participant
-      end
-    end
+    respond_with @participant
   end
 
   def edit
@@ -48,7 +44,7 @@ class ParticipantsController < ApplicationController
     respond_with do |format|
       format.json do
         @participants = CalculatedParticipant.order_by('value.goodness DESC').all
-        render json: jsoned(@participants)
+        render json: @participants, each_serializer: ParticipantSerializer
       end
     end
   end
@@ -57,54 +53,12 @@ class ParticipantsController < ApplicationController
     respond_with do |format|
       format.json do
         @participants = CalculatedParticipant.order_by('value.score DESC').all
-        render json: jsoned(@participants)
+        render json: @participants, each_serializer: ParticipantSerializer
       end
     end
   end
 
   private
-  def jsoned participants
-    list = participants.map do |party|
-      {
-        id: party.to_param,
-        name: party.name.capitalize,
-        surname: party.surname.capitalize,
-        gravatar: party.gravatar(50),
-        categories: party.categories,
-        score: party.score,
-        skip: party.skip,
-        was: party.was
-      }
-    end
-  end
-
-  def jsoned_score participants
-    list = participants.map do |party|
-      {
-        id: party.id.to_s,
-        name: party.name.capitalize,
-        surname: party.surname.capitalize,
-        gravatar: party.gravatar(50),
-        score: party.score,
-        categories: party.categories
-      }
-    end
-  end
-
-  def jsoned_regs(participants)
-    participants.map do |party|
-      value = party['value']
-      {
-        id: party['_id'].to_s,
-        name: value['name'].capitalize,
-        surname: value['surname'].capitalize,
-        gravatar: "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(value['email'])}?size=50",
-        fakes: value['skip'],
-        reals: value['was'],
-        goodness: value['goodness']
-      }
-    end
-  end
 
   def participant_attributes
     params.require(:participant).permit(:name,:surname,:email)

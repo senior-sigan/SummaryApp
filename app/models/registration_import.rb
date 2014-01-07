@@ -101,7 +101,7 @@ class RegistrationImport
   def open_spreadsheet
     unless file.nil?
       case File.extname(file.original_filename)
-      when ".csv" then Roo::Csv.new(file.path, nil, :ignore)
+      when ".csv" then Roo::CSV.new(file.path)
       when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
       when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
       when ".ods" then Roo::Openoffice.new(file.path, nil, :ignore)

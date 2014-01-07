@@ -6,7 +6,7 @@ gem 'rails_12factor', group: :production
 gem 'devise', '3.2.2'
 gem 'mongoid', '~> 4.0.0.alpha1'
 gem 'active_model_serializers', '~> 0.8.1'
-gem 'roo' #for Exel Csv GoogleDocs
+gem 'roo', '~> 1.13.2' #for Exel Csv GoogleDocs
 gem 'gravatar_image_tag'
 gem 'sass-rails', '~> 4.0.1'
 gem 'bootstrap-sass-rails', '~> 3.0.3.0'

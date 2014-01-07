@@ -8,7 +8,7 @@ class Event
   embeds_many :participants
 
   index({name: 1}, {unique: true})
-  index({'participants.email' => 1}, {unique: true})
+  index({'participants.email' => 1})
   index({date: 1})
 
   validates :name,

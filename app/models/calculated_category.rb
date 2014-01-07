@@ -7,13 +7,15 @@ class CalculatedCategory
   def self.recalculate!
     map = %Q{
       function(){
-        this.participants.forEach(function(part){
-          if (part.categories){  
-            part.categories.forEach(function(cat){
-              emit(cat.name,part.email);
-            });
-          }
-        });
+        if(this.participants) {
+          this.participants.forEach(function(part){
+            if (part.categories){
+              part.categories.forEach(function(cat){
+                emit(cat.name,part.email);
+              });
+            }
+          });
+        }
       }
     }
     reduce = %Q{

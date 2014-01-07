@@ -11,8 +11,6 @@ class Participant
   embedded_in :event, inverse_of: :participants
   embeds_many :categories
 
-  index({ email: 1}, {unique: true})
-
   scope :fake, where(was: false)
   scope :real, where(was: true) 
   scope :newcomer, where(was: true) #TODO

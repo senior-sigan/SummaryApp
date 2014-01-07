@@ -63,7 +63,6 @@ class App.RegistrationsImport extends Spine.Controller
     @status.html ""
 
   changed: (event) =>
-    console.log event
     @zone.addClass 'drop'
     files = @file_input[0].files
     @parse file for file in files
@@ -86,11 +85,13 @@ class App.RegistrationsImport extends Spine.Controller
     @zone.removeClass 'hover'
 
   parse: (file) =>
+    console.log file
     @status.html JST["app/views/loading"]
     unless file.type.match('text/*')
       @zone.removeClass 'drop'
       @zone.addClass 'error'
       @status.html ""
+      @alrt.html JST["app/views/errors"](["Something wents WRONG. May be you have BAD file!!"])
       false
     else
       @file = file

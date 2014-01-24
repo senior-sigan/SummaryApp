@@ -5,15 +5,14 @@ class Participant
   field :email, type: String
   field :name, type: String
   field :surname, type: String
-  #meta fields wich will be added dynamicaly
+  #meta fields which will be added dynamicaly
   
   field :was, type: Boolean, default: true
   embedded_in :event, inverse_of: :participants
   embeds_many :categories
 
-  scope :fake, where(was: false)
-  scope :real, where(was: true) 
-  scope :newcomer, where(was: true) #TODO
+  scope :fake,-> {where(was: false)}
+  scope :real,-> {where(was: true)}
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, 

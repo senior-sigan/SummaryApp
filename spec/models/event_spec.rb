@@ -11,15 +11,6 @@ describe Event do
   it { should respond_to(:newcomers) }
   it { should respond_to(:categories) }
 
-##### ONLY FOR MONGOID ##########
-  it { should have_field(:name).of_type(String)}
-  it { should have_field(:date).of_type(DateTime)}
-  it { should have_field(:place).of_type(String)}
-  it { should validate_presence_of :name }
-  it { should validate_presence_of :date }
-  it { should validate_uniqueness_of(:name).case_insensitive }
-#################################  
-  
   it { should be_valid }
 
   describe "categories method" do

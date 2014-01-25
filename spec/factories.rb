@@ -1,4 +1,13 @@
 FactoryGirl.define do
+  factory :registration_import do
+    ignore do
+      fields %w(email name surname).to_json
+    end
+    initialize_with {new({
+      fields: fields
+    })}
+  end
+
   factory :participant do
   	sequence(:name)	  { |n| "U_name_#{n}" }
     sequence(:surname) { |n| "U_surname_#{n}" }

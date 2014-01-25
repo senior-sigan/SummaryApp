@@ -7,10 +7,10 @@ class RegistrationImport
   attr_accessor :event
   attr_accessor :fields
 
-  validates :file, presence: true, spreadsheet: true
+  validates :file, presence: true
   validates :fields, presence: true
   validates :event, presence: true
-  validate :participants_must_be_valid
+ # validate :participants_must_be_valid
 
   def initialize(params={})
     params.each do |attr, value|
@@ -43,8 +43,8 @@ class RegistrationImport
   end
 
   def participants_must_be_valid
-    unless imported_users.map(&:valid?).all?
-      imported_users.each_with_index do |user, index|
+    unless @imported_users.map(&:valid?).all?
+      @imported_users.each_with_index do |user, index|
         user.errors.full_messages.each do |message|
           errors.add :base, "Row #{index+2}: #{message}"
         end

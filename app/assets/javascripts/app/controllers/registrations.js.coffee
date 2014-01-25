@@ -87,23 +87,23 @@ class App.RegistrationsImport extends Spine.Controller
   parse: (file) =>
     console.log file
     @status.html JST["app/views/loading"]
-    unless file.type.match('text/*')
-      @zone.removeClass 'drop'
-      @zone.addClass 'error'
-      @status.html ""
-      @alrt.html JST["app/views/errors"](["Something wents WRONG. May be you have BAD file!!"])
-      false
-    else
-      @file = file
-      reader = new FileReader()
-      reader.onload = @loaded
-      reader.readAsText file 
+    @file = file
+    reader = new FileReader()
+    reader.onload = @loaded
+    reader.readAsText file
 
   loaded: (event) =>
     @zone.removeClass 'drop'
-    result = event.target.result
-    @data = result
-    head = $.csv.toArrays(result)[0]
+    try
+      result = event.target.result
+      @data = result
+      head = $.csv.toArrays(result)[0]
+    catch error
+      @zone.removeClass 'drop'
+      @zone.addClass 'error'
+      @status.html ""
+      @alrt.html JST["app/views/errors"](["Something wents WRONG. May be you have BAD file!!\n#{error}"])
+      return false
     @headers.html JST['app/views/registrations/headers'](head) 
     @status.html ""
     @file_inputs = $("input[type=checkbox]")

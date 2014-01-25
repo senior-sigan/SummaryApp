@@ -3,7 +3,7 @@
 		<legend>Import registrations</legend>
     <div id="alert"></div>
 		<div class="form-group">
-			<input id="thefile" type="file"></input>
+			<input id="thefile" type="file" accept=".csv"></input>
 			<div id="dropZone">
         Drop file or Click
         <div id="loading"></div>

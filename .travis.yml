@@ -1,0 +1,9 @@
+lanuage: ruby
+rvm:
+  - 2.1.0
+services:
+  - mongodb
+script:
+  - bundle exec rake db:mongoid:create_indexes
+  - bundle exec rake db:seed
+  - bundle exec rspec spec/

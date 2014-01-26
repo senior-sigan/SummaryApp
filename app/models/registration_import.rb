@@ -1,60 +1,55 @@
 class RegistrationImport
-  include ActiveModel::Model
+  extend ActiveModel::Naming
+  include ActiveModel::Conversion
+  include ActiveModel::Validations
+
   attr_accessor :file
-  attr_reader :header
   attr_accessor :event
   attr_accessor :fields
 
-  def open
-    if (@spreadsheet ||= open_spreadsheet)
-      @header ||= @spreadsheet.row(1)
-      return true
+  validates :file, presence: true
+  validates :fields, presence: true
+  validates :event, presence: true
+ # validate :participants_must_be_valid
+
+  def initialize(params={})
+    params.each do |attr, value|
+      self.public_send "#{attr}=", value
+    end if params
+  end
+
+  def persist?
+    false
+  end
+
+  def save
+    if valid?
+      persist!
+      true
     else
-      errors.add :base, "Undefined type of file"
-      return false
+      false
     end
   end
 
-  def valid?
-    if file.nil?
-      false
-    else
-      true
-    end
-  end
+  private
 
   #load imported data
   #validate each Participation row 
   #on invalid push error and return false
   #else return true
-  def save
+  def persist!
     @fields ||= []
-    
-    if file.nil?
-      errors.add :base, "File can't be blank"
-      return false
-    end
-    if imported_users.map(&:valid?).all?
-      imported_users.uniq!(&:email)
-      imported_users.each do |u|
-        unless u.save
-          errors.add :base, u.errors.full_messages
-          return false
-        end
-      end
-      true
-    else
-      imported_users.each_with_index do |user, index|
-        participant.errors.full_messages.each do |message|
-          errors.add :base, "Row #{index+2}: #{message}"
-        end
-      end      
-      false
-    end
+    imported_users.each(&:save)
   end
 
-  def associate_columns_to_fields(params)
-
+  def participants_must_be_valid
+    unless @imported_users.map(&:valid?).all?
+      @imported_users.each_with_index do |user, index|
+        user.errors.full_messages.each do |message|
+          errors.add :base, "Row #{index+2}: #{message}"
+        end
+      end
+    end
   end
 
   def imported_users
@@ -83,7 +78,7 @@ class RegistrationImport
         participant[key] += "#{value}\n" unless participant[key].include?(value)
       end
       participant
-    end  
+    end.compact
   end
 
   def empty?(value)
@@ -99,17 +94,6 @@ class RegistrationImport
   end
   
   def open_spreadsheet
-    unless file.nil?
-      case File.extname(file.original_filename)
-      when ".csv" then Roo::CSV.new(file.path)
-      when ".xls" then Roo::Excel.new(file.path, nil, :ignore)
-      when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
-      when ".ods" then Roo::Openoffice.new(file.path, nil, :ignore)
-      else raise "Hell"
-      end
-    else
-      errors.add :base, "File can't be blank"
-      raise "Hell" 
-    end
+    Roo::CSV.new(file.path)
   end
 end

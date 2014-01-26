@@ -6,7 +6,7 @@ describe CalculatedParticipant do
 
   it { should respond_to(:value) }
 
-  describe 'recalculate do map reduce on Event'
+  describe 'recalculate do map reduce on Event' do
     let(:event) { FactoryGirl.build :event_with_participants }
 
     before do 

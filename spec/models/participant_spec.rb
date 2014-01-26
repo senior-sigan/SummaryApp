@@ -1,7 +1,12 @@
 require 'spec_helper'
 
 describe Participant do
-  before { @participant = FactoryGirl.create :participant }
+  before do
+    @event = FactoryGirl.create :event
+    @participant = FactoryGirl.build :participant
+    @participant.event = @event
+    @participant.save
+  end
 
   subject { @participant }
 
@@ -12,49 +17,7 @@ describe Participant do
   it { should respond_to(:event) }
   it { should respond_to(:categories) }
 
-  it { should respond_to(:score) }
-
-##### ONLY FOR MONGOID ##########
-  it { should have_field(:email).of_type(String)}
-  it { should have_field(:name).of_type(String)}
-  it { should have_field(:surname).of_type(String)}
-#################################
   it { should be_valid }
-
-  describe "participating in event" do
-    let(:event) { FactoryGirl.create :event }
-    let(:category) { 'android' }
-    let(:score) { 100 }
-    before do
-      @participant.save
-      event.save
-      @participant.participate!(event, category, score)
-    end
-
-    describe "should set right" do
-      its(:events) { should be_include(event) }
-      its(:categories) { should be_include(category) }
-      its(:score) { should eq 100 }
-    end
-
-    describe "set fake for event" do
-      let(:registration) { @participant.registrations.where(event: event).last }
-      before do 
-        @participant.set_fake_for(event)
-      end
-
-      its(:real_registrations) { should_not be_include(registration) }
-      its(:fake_registrations) { should be_include(registration) }
-    end
-
-    describe "and leaving event" do
-      before { @participant.leave!(event) }
-
-      its(:score) { should_not eq 100 }
-      its(:events) { should_not be_include(event) }
-      its(:categories) { should_not be_include(category) }
-    end
-  end
 
   describe "when name is not present" do 
   	before { @participant.name = " " }
@@ -117,20 +80,12 @@ describe Participant do
 
   describe "when email is already taken" do
     let(:participant_with_same_email) { @participant.dup }
-  	before do 
+  	before do
+      participant_with_same_email.event = @event
   	  participant_with_same_email.email.upcase!
   	  participant_with_same_email.save
   	end
 
   	it { participant_with_same_email.should_not  be_valid }
-  end
-
-  describe "when create dynamic attributes" do
-  	before do
-  	  multy_participant = participant.new(email: "mu@aa.a", name: "mu", surname: "muatr", some_dynamic_attribute: "attribute")
-  	  multy_participant.save
-  	end
-
-  	it { should be_valid }
   end
 end

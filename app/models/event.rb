@@ -18,7 +18,7 @@ class Event
   validates :date,
     presence: true
 
-  default_scope order_by(:date.asc)
+  default_scope -> { order(:date.asc) }
 
   def self.splitted_participants(email)
     #TODO - fix this terrible selector

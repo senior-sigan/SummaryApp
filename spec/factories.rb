@@ -1,4 +1,13 @@
 FactoryGirl.define do
+  factory :registration_import do
+    ignore do
+      fields %w(email name surname).to_json
+    end
+    initialize_with {new({
+      fields: fields
+    })}
+  end
+
   factory :participant do
   	sequence(:name)	  { |n| "U_name_#{n}" }
     sequence(:surname) { |n| "U_surname_#{n}" }
@@ -55,6 +64,19 @@ FactoryGirl.define do
       content_type: content_type,
       tempfile: tempfile})
     }
+  end
+
+  factory :bad_file, class: ActionDispatch::Http::UploadedFile do
+    ignore do
+      filename "bad_next_event.csv"
+      content_type "text/csv"
+      tempfile File.new("#{Rails.root}/spec/files/bad_next_event.csv")
+    end
+    initialize_with {new({
+      filename: filename,
+      content_type: content_type,
+      tempfile: tempfile
+    })}
   end
 
 end

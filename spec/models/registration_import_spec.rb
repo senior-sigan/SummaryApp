@@ -3,7 +3,7 @@ require 'spec_helper'
 describe RegistrationImport do
   let(:file) { FactoryGirl.build :good_file }
   let(:event) { FactoryGirl.create :event }
-  before { @import = RegistrationImport.new({file: file, fields: [].to_json, event: event}) }
+  before { @import = RegistrationImport.new({file: file, black_list: [].to_json, attributes_map: {}, event: event}) }
 
   subject { @import }
 
@@ -23,26 +23,21 @@ describe RegistrationImport do
     it { should_not be_valid }
   end
 
-  describe "when fields not present" do
-    before { @import.fields = nil }
-    it { should_not be_valid }
-  end
-
   #describe "when Participation in file is invalid" do
   #	before { @import.file = "Some crazy stuff" } # TODO - real csv with crazy rows
   #	it { should_not be_valid }
   #end
 
-  describe "when Participation in file is valid" do
-    let(:bad_file) { FactoryGirl.build(:bad_file) }
-  	before { @import.file = bad_file } # TODO - real csv with true rows
-  	it { should be_valid }
-  end
+  #describe "when Participation in file is not valid" do
+  #  let(:bad_file) { FactoryGirl.build(:bad_file) }
+  #	before { @import.file = bad_file } # TODO - real csv with true rows
+  #	it { should_not be_valid }
+  #end
 
   describe "when import new 42 Participants" do
     let(:file_2) { FactoryGirl.build :good_file }
     let(:event_2) { FactoryGirl.create :event }
-    let(:import_2) { RegistrationImport.new({fields: %w(email name surname).to_json, event: event_2, file: file_2}) }
+    let(:import_2) { RegistrationImport.new({event: event_2, file: file_2}) }
 
     before do
       import_2.save

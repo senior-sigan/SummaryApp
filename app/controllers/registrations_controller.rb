@@ -10,6 +10,7 @@ class RegistrationsController < ApplicationController
   def import
     @import = RegistrationImport.new
     @import.event = @event
+    @attributes = CalculatedParticipant.attr_names
   end
 
   def save_import
@@ -75,7 +76,10 @@ class RegistrationsController < ApplicationController
   end
   
   def import_params
-    params.permit(:file,:fields)
+    attr = params.permit(:file, :black_list, :attributes_map)
+    attr[:black_list] = JSON.parse attr[:black_list] || [].to_json
+    attr[:attributes_map] = JSON.parse attr[:attributes_map] || {}.to_json
+    attr
   end
   
   def find_event

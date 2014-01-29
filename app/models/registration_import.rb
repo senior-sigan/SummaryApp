@@ -5,12 +5,11 @@ class RegistrationImport
 
   attr_accessor :file
   attr_accessor :event
-  attr_accessor :fields
+  attr_accessor :black_list
+  attr_accessor :attributes_map
 
   validates :file, presence: true
-  validates :fields, presence: true
   validates :event, presence: true
- # validate :participants_must_be_valid
 
   def initialize(params={})
     params.each do |attr, value|
@@ -38,62 +37,34 @@ class RegistrationImport
   #on invalid push error and return false
   #else return true
   def persist!
-    @fields ||= []
-    imported_users.each(&:save)
+    @imported_participants ||= load_participants
+    @imported_participants.each(&:save) if participants_valid?
   end
 
-  def participants_must_be_valid
-    unless @imported_users.map(&:valid?).all?
-      @imported_users.each_with_index do |user, index|
+  def participants_valid?
+    no_error = true
+    unless @imported_participants.map(&:valid?).all?
+      @imported_participants.each_with_index do |user, index|
         user.errors.full_messages.each do |message|
           errors.add :base, "Row #{index+2}: #{message}"
+          no_error = false
         end
       end
     end
+
+    no_error
   end
 
-  def imported_users
-    @imported_users ||= load_users
-  end
+  def load_participants
+    spreadsheet = SpreadsheetParser.new file, black_list, attributes_map
+    participants_attributes = spreadsheet.parse
 
-  def load_users
-    spreadsheet = open_spreadsheet
-    
-    header = spreadsheet.row(1).map{|i| i.mb_chars.downcase.to_s unless i.nil? || i.empty?} #russian downcase
-    @fields = JSON.parse(fields).map{|i| i.mb_chars.downcase.to_s unless i.nil? }
-
-    (2..spreadsheet.last_row).map do |i|
-      row = Hash[[header, spreadsheet.row(i)].transpose]
-      next if row['email'].nil?
-      participant = @event.participants.find_or_initialize_by(email: row["email"].downcase)
-      if participant.new_record?
-        participant.name = row["name"]
-        participant.surname = row["surname"]
-      end
-      row.each do |key,value|
-        next if default?(key)
-        next if empty?(value)
-        next if ignored?(key)
-        participant[key] ||= ''
-        participant[key] += "#{value}\n" unless participant[key].include?(value)
+    participants_attributes.map do |participant_attributes|
+      participant = event.participants.find_or_initialize_by(email: participant_attributes[:email])
+      participant_attributes.each do |key, value|
+        participant[key] = value
       end
       participant
-    end.compact
-  end
-
-  def empty?(value)
-    value.nil? || value.eql?("")
-  end
-  
-  def default?(key)
-    %w(email name surname).include?(key) || key.nil? || key.eql?("")
-  end
-  
-  def ignored?(key)
-    !fields.include?(key)
-  end
-  
-  def open_spreadsheet
-    Roo::CSV.new(file.path)
+    end
   end
 end

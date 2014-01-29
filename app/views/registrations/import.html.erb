@@ -20,6 +20,6 @@
 
 <script type="text/javascript">
   (function($){
-    new App.RegistrationsImport({el: $("#forma"),event_id: '<%= @event.id %>'});
+    new App.RegistrationsImport({el: $("#forma"),event_id: '<%= @event.id %>', attributes: '<%= @attributes.to_json %>'});
   })(jQuery);
 </script>

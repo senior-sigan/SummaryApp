@@ -13,6 +13,10 @@ class CalculatedParticipant
     URI.escape Base64.encode64(email)
   end
 
+  def self.attr_names
+    CalculatedParticipant.last['value'].keys - %w(categories skip was event score)
+  end
+
   def self.find(params)
     params = URI.unescape Base64.decode64(params)
     super

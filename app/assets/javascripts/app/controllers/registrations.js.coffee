@@ -25,9 +25,9 @@ class App.RegistrationsImport extends Spine.Controller
     event.preventDefault()
     @alrt.html ""
     @alrt.removeClass "alert alert-danger alert-success"
-    fields = ( field.value for field in @file_inputs when field.checked is true )
+    black_list = ( field.value for field in @file_inputs when field.checked is true )
     form = new FormData()
-    form.append "fields",JSON.stringify(fields)
+    form.append "black_list",JSON.stringify(black_list)
     form.append "file", @file
     $(document).ajaxSend @sending
     req = $.ajax

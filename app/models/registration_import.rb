@@ -10,6 +10,7 @@ class RegistrationImport
 
   validates :file, presence: true
   validates :event, presence: true
+  validate :check_spreadsheet
 
   def initialize(params={})
     params.each do |attr, value|
@@ -53,6 +54,17 @@ class RegistrationImport
     end
 
     no_error
+  end
+
+  def check_spreadsheet
+    return unless errors.blank?
+
+    sheet = SpreadsheetParser.new file, black_list, attributes_map
+    unless sheet.valid?
+      sheet.errors.each do |error|
+        errors.add :base, error
+      end
+    end
   end
 
   def load_participants

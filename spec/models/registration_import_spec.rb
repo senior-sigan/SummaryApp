@@ -34,6 +34,15 @@ describe RegistrationImport do
   #	it { should_not be_valid }
   #end
 
+  describe 'when csv with wrong row length' do
+    let(:bad_file) { FactoryGirl.build :bad_row_length_file }
+    let(:event) { FactoryGirl.create :event }
+    let(:import) { RegistrationImport.new({event: event, file: bad_file}) }
+
+    subject { import }
+    it { should_not be_valid }
+  end
+
   describe "when import new 42 Participants" do
     let(:file_2) { FactoryGirl.build :good_file }
     let(:event_2) { FactoryGirl.create :event }

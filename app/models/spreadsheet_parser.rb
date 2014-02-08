@@ -5,12 +5,14 @@ class SpreadsheetParser
   attr_reader :attributes_map
   attr_reader :users
   attr_reader :black_list
+  attr_reader :errors
 
   def initialize(file, black_list = [], attributes_map = {})
     @file = file
     @attributes_map = attributes_map || {}
     @black_list = black_list || []
     @users = []
+    @errors = []
   end
 
   def parse
@@ -19,9 +21,7 @@ class SpreadsheetParser
     normalize_attr_names
     apply_attributes_map_to_header
 
-    @users = @spreadsheet.map.with_index do |row, index|
-      raise "bad csv: header and row length does not match: #{index} line" if @header.length != row.length
-
+    @users = @spreadsheet[1..-1].map.with_index do |row, index|
       user = Hash[[@header, row].transpose].delete_if do |key, value|
         key.blank? || value.blank? || ignored?(key)
       end
@@ -30,16 +30,42 @@ class SpreadsheetParser
     users
   end
 
+  def valid?
+    validate
+    errors.empty?
+  end
+
+  private
+
+
+  def validate
+    sheet = open_spreadsheet
+    head = sheet.first
+    index = 1
+
+    sheet.each do |row|
+      if head.length != row.length
+        add_error("bad csv: header and row length does not match: #{index} line")
+        next
+      end
+      index += 1
+    end
+  end
+
+  def add_error(error)
+    @errors << error
+  end
+
   def ignored?(key)
     black_list.include?(key)
   end
 
   def open_spreadsheet
-    @spreadsheet ||= CSV.open(file.path, 'r')
+    @spreadsheet ||= CSV.open(file.path, 'r').readlines
   end
 
   def parse_header
-    @header ||= open_spreadsheet.readline.map do |i|
+    @header ||= open_spreadsheet.first.map do |i|
       next if i.blank?
 
       i.mb_chars.downcase.to_sym #russian downcase

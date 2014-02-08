@@ -23,10 +23,27 @@ describe RegistrationImport do
     it { should_not be_valid }
   end
 
-  #describe "when Participation in file is invalid" do
-  #	before { @import.file = "Some crazy stuff" } # TODO - real csv with crazy rows
-  #	it { should_not be_valid }
-  #end
+  context 'when import with flag do not build new' do
+    let(:file_1) { FactoryGirl.build(:good_file) }
+    let(:file_2) { FactoryGirl.build(:next_good_file) }
+    let(:event) { FactoryGirl.build(:event) }
+    let(:import_1) { RegistrationImport.new({event: event, file: file_1}) }
+    let(:import_2) { RegistrationImport.new({event: event, file: file_2, build_new: false }) }
+
+    before do
+      import_1.save
+      @count = event.participants.count
+    end
+
+    describe 'import second file' do
+      before do
+        import_2.save
+      end
+
+      subject { event.participants }
+      its(:count) { should be_eql @count }
+    end
+  end
 
   describe "when Participation in file is not valid" do
     let(:bad_file) { FactoryGirl.build(:bad_participants_file) }

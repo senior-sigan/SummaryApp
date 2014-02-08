@@ -7,12 +7,15 @@ class RegistrationImport
   attr_accessor :event
   attr_accessor :black_list
   attr_accessor :attributes_map
+  attr_accessor :build_new
 
   validates :file, presence: true
   validates :event, presence: true
   validate :check_spreadsheet
 
   def initialize(params={})
+    @build_new = true
+
     params.each do |attr, value|
       self.public_send "#{attr}=", value
     end if params
@@ -42,7 +45,7 @@ class RegistrationImport
   end
 
   def participants
-    @participants ||= load_participants
+    @participants ||= load_participants.compact
   end
 
   private
@@ -78,6 +81,9 @@ class RegistrationImport
 
     participants_attributes.map do |participant_attributes|
       participant = event.participants.find_or_initialize_by(email: participant_attributes[:email])
+
+      next if !build_new && participant.new_record?
+
       participant_attributes.each do |key, value|
         participant[key] = value
       end

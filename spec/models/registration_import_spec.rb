@@ -3,7 +3,7 @@ require 'spec_helper'
 describe RegistrationImport do
   let(:file) { FactoryGirl.build :good_file }
   let(:event) { FactoryGirl.create :event }
-  before { @import = RegistrationImport.new({file: file, black_list: [].to_json, attributes_map: {}, event: event}) }
+  before { @import = RegistrationImport.new({file: file, black_list: [], attributes_map: {}, event: event}) }
 
   subject { @import }
 
@@ -28,11 +28,14 @@ describe RegistrationImport do
   #	it { should_not be_valid }
   #end
 
-  #describe "when Participation in file is not valid" do
-  #  let(:bad_file) { FactoryGirl.build(:bad_file) }
-  #	before { @import.file = bad_file } # TODO - real csv with true rows
-  #	it { should_not be_valid }
-  #end
+  describe "when Participation in file is not valid" do
+    let(:bad_file) { FactoryGirl.build(:bad_participants_file) }
+    let(:event) { FactoryGirl.create :event }
+    let(:import) { RegistrationImport.new({event: event, file: bad_file}) }
+
+    subject { import }
+  	it { should_not be_valid }
+  end
 
   describe 'when csv with wrong row length' do
     let(:bad_file) { FactoryGirl.build :bad_row_length_file }

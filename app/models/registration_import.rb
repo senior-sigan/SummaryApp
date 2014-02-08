@@ -38,22 +38,25 @@ class RegistrationImport
   #on invalid push error and return false
   #else return true
   def persist!
-    @imported_participants ||= load_participants
-    @imported_participants.each(&:save) if participants_valid?
+    participants.each(&:save)
   end
 
-  def participants_valid?
-    no_error = true
-    unless @imported_participants.map(&:valid?).all?
-      @imported_participants.each_with_index do |user, index|
+  def participants
+    @participants ||= load_participants
+  end
+
+  private
+
+  def participants_validation
+    return unless errors.blank?
+
+    unless participants.map(&:valid?).all?
+      participants.each_with_index do |user, index|
         user.errors.full_messages.each do |message|
           errors.add :base, "Row #{index+2}: #{message}"
-          no_error = false
         end
       end
     end
-
-    no_error
   end
 
   def check_spreadsheet
@@ -65,6 +68,8 @@ class RegistrationImport
         errors.add :base, error
       end
     end
+
+    participants_validation
   end
 
   def load_participants

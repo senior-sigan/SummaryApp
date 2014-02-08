@@ -92,4 +92,17 @@ FactoryGirl.define do
     })}
   end
 
+  factory :bad_participants_file, class: ActionDispatch::Http::UploadedFile do
+    ignore do
+      filename "bad_participants.csv"
+      content_type "text/csv"
+      tempfile File.new("#{Rails.root}/spec/files/bad_participants.csv")
+    end
+    initialize_with {new({
+      filename: filename,
+      content_type: content_type,
+      tempfile: tempfile
+    })}
+  end
+
 end

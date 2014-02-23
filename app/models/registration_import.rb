@@ -82,7 +82,7 @@ class RegistrationImport
     participants_attributes.map do |participant_attributes|
       participant = event.participants.find_or_initialize_by(email: participant_attributes[:email])
 
-      next if !build_new && participant.new_record?
+      next if (build_new != true) && participant.new_record?
 
       participant_attributes.each do |key, value|
         participant[key] = value

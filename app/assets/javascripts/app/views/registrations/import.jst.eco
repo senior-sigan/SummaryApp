@@ -13,7 +13,8 @@
       <div id="headers"></div>
     </div>
     <div class="form-group">
-			 <button type="submit" class="btn btn-success" disabled>Import</button>
+       <button type="submit" class="btn btn-success" disabled>Import</button>
+                    <input type="checkbox" class="build-new">Build new participants</input>
 		</div>
 	</fieldset>	
 </form>

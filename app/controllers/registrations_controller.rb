@@ -77,6 +77,7 @@ class RegistrationsController < ApplicationController
   
   def import_params
     attr = params.permit(:file, :black_list, :attributes_map, :build_new)
+    attr[:build_new] =  attr[:build_new] == 'true'
     attr[:black_list] = JSON.parse attr[:black_list] || [].to_json
     attr[:attributes_map] = JSON.parse attr[:attributes_map] || {}.to_json
     attr

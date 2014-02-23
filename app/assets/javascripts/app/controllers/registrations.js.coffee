@@ -26,9 +26,11 @@ class App.RegistrationsImport extends Spine.Controller
     @alrt.html ""
     @alrt.removeClass "alert alert-danger alert-success"
     black_list = ( field.value for field in @file_inputs when field.checked is true )
+    build_new = @build_new[0].checked
     form = new FormData()
     form.append "black_list",JSON.stringify(black_list)
     form.append "file", @file
+    form.append "build_new", build_new
     $(document).ajaxSend @sending
     req = $.ajax
       url: "/events/#{@event_id}/registrations/save_import.json"
@@ -106,6 +108,7 @@ class App.RegistrationsImport extends Spine.Controller
       return false
     @headers.html JST['app/views/registrations/headers'](head) 
     @status.html ""
-    @file_inputs = $("input[type=checkbox]")
+    @build_new = $("input[type=checkbox][class=build-new]")
+    @file_inputs = $("input[type=checkbox][class=import]")
     if @file_inputs.length > 0 
       @btn.removeAttr 'disabled'

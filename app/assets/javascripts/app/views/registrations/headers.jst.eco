@@ -2,7 +2,7 @@
 <% for header in @: %> 
   <div class="checkbox">
     <label>
-      <input type="checkbox" value="<%- header %>">
+      <input class="import" type="checkbox" value="<%- header %>">
       <%= header %>
     </label>
   </div>

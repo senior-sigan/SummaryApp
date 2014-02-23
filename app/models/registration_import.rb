@@ -90,6 +90,7 @@ class RegistrationImport
       participant_attributes.each do |key, value|
         participant[key] = value
       end
+
       participant
     end
   end

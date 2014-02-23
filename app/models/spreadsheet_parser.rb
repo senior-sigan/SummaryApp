@@ -68,7 +68,7 @@ class SpreadsheetParser
     @header ||= open_spreadsheet.first.map do |i|
       next if i.blank?
 
-      i.mb_chars.downcase.to_sym #russian downcase
+      i.gsub('.', ',').mb_chars.downcase.to_sym #russian downcase
     end
   end
 

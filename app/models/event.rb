@@ -4,6 +4,7 @@ class Event
   field :date, type: DateTime
   field :place, type: String
   field :photo, type: String
+  field :hash_tag, type: String
 
   embeds_many :participants
 

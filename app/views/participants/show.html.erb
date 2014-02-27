@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-lg-3">
-    <%= gravatar_image_tag @participant.email, gravatar: {size: 200}%>
+    <%= image_tag @participant.gravatar(200), height: 200, width: 200 %>
   </div>
   <div class="col-lg-9">
     <form class="form-horizontal user-page">

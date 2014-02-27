@@ -24,7 +24,8 @@ class CalculatedParticipant
 
   def gravatar(size)
     size ||= 50
-    "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(id)}?size=#{size}"
+    email_digest = Digest::MD5.hexdigest(id)
+    "http://www.gravatar.com/avatar/#{email_digest}?size=#{size}&d=https://identicons.github.com/#{email_digest}.png"
   end
 
   def name

@@ -11,7 +11,6 @@ gem 'devise'
 gem 'mongoid', '~> 4.0.0.beta1'
 gem 'active_model_serializers'
 gem 'roo', '~> 1.13.2' #for Exel Csv GoogleDocs
-gem 'gravatar_image_tag'
 gem 'sass-rails'
 gem 'bootstrap-sass-rails'
 gem 'bootstrap-datepicker-rails'

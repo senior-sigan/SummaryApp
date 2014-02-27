@@ -5,6 +5,7 @@ class Event
   field :place, type: String
   field :photo, type: String
   field :hash_tag, type: String
+  field :plus_link, type: String
 
   embeds_many :participants
 

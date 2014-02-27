@@ -17,6 +17,10 @@
   <table class="table">
     <tbody>
       <tr>
+        <th>gplus event</th>
+        <th><%= link_to 'g+', event.plus_link if event.plus_link %></th>
+      </tr>
+      <tr>
         <th>Hash tag</th>
         <td><%= link_to_twitter_hash_tag event.hash_tag %></td>
       </tr>

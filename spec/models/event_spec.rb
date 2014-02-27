@@ -10,6 +10,8 @@ describe Event do
   it { should respond_to(:participants) }
   it { should respond_to(:newcomers) }
   it { should respond_to(:categories) }
+  it { should respond_to(:hash_tag) }
+  it { should respond_to(:plus_link) }
 
   it { should be_valid }
 

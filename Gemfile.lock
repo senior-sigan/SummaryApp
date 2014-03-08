@@ -162,6 +162,7 @@ GEM
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    smart_translitter (0.0.1)
     spine-rails (0.1.2)
       json2-rails (>= 0.0.2)
       rails (>= 3.1.0)
@@ -219,6 +220,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   select2-rails
+  smart_translitter
   spine-rails
   timecop
   travis-lint

@@ -7,6 +7,8 @@ gem 'rails', '4.0.2'
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
 
+gem 'smart_translitter'
+
 gem 'devise'
 gem 'mongoid', '~> 4.0.0.beta1'
 gem 'active_model_serializers'

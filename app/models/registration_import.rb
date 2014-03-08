@@ -83,7 +83,11 @@ class RegistrationImport
     participants_attributes = spreadsheet.parse
 
     participants_attributes.map do |participant_attributes|
-      participant = event.participants.find_or_initialize_by(email: participant_attributes[:email].downcase)
+      participant = event.construct_participant(
+        participant_attributes[:email], 
+        participant_attributes[:name], 
+        participant_attributes[:surname]
+      )
 
       next if (build_new == false) && participant.new_record?
 

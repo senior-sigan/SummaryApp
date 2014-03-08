@@ -44,4 +44,8 @@ class Event
       0  
     end
   end
+
+  def construct_participant(email, name, surname)
+    ParticipantFactory.construct(self, email, name, surname)
+  end
 end

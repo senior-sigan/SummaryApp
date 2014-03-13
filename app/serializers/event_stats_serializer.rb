@@ -1,6 +1,10 @@
 class EventStatsSerializer < ActiveModel::Serializer
   attributes :id, :name, :date, :newcomers, :newcomer_ratio, :real_ratio, :users
 
+  def name
+    object.hash_tag || object.name[0..10]
+  end
+
   def id
     object.id.to_s
   end

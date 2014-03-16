@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @participants = @event.participants
+    @participants = @event.participants.asc(:surname)
   end
 
   def import

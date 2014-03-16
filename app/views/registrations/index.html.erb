@@ -17,7 +17,7 @@
         <% for part in @participants %>
           <div>
             <%= check_box_tag "participants[was][]", part.id, part.was %>
-            <%= "#{part.name} #{part.surname} #{part.email}" %>
+            <%= "#{part.surname} #{part.name} #{part.email}" %>
           </div>
         <% end %>
         <%= f.submit "Save",class: "btn btn-success" %>

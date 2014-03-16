@@ -35,7 +35,6 @@ gem 'json2-rails'
 gem 'eco'
 
 gem 'travis-lint', require: false
-gem 'coveralls', require: false
 
 group :development, :test do
   gem 'rspec-rails'

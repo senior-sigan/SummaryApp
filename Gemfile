@@ -6,10 +6,12 @@ gem 'rails', '4.0.2'
 
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
+gem 'figaro'
 
 gem 'smart_translitter'
 
-gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 gem 'mongoid', '~> 4.0.0.beta1'
 gem 'active_model_serializers'
 gem 'roo', '~> 1.13.2' #for Exel Csv GoogleDocs

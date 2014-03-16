@@ -1,5 +1,4 @@
 class CategoriesController < ApplicationController
-  before_filter :authenticate_owner!
   before_filter :find_category, only: [:participants]
   respond_to :html, :json
 

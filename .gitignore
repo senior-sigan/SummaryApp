@@ -26,3 +26,5 @@ $RECYCLE.BIN/
 
 *.vagrant
 /cookbooks/*
+# Ignore application configuration
+/config/application.yml

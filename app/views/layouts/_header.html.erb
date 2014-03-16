@@ -19,11 +19,11 @@
   <ul class="nav navbar-nav navbar-right">
     <li>
       <% if owner_signed_in? %>
-      <%= link_to destroy_owner_session_path, :method => :delete do%>
+      <%= link_to auth_logout_path, :method => :delete do%>
       <span class="glyphicon glyphicon-off"></span>
       <% end %>
       <% else %>
-      <%= link_to 'Sign in', new_owner_session_path %>
+      <%= link_to 'Sign in', 'auth/google_oauth2' %>
       <% end %>
     </li>
   </ul>

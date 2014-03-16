@@ -1,5 +1,8 @@
-CommunityApp::Application.routes.draw do   
-  devise_for :owners
+CommunityApp::Application.routes.draw do
+  get 'auth/:provider/callback' => 'session#create'
+  delete 'auth/logout' => 'session#destroy'
+
+  #devise_for :owners
   resources :participants, except: [:new, :create] do
     collection do 
       get :activity

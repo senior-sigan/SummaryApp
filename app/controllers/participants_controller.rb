@@ -1,5 +1,4 @@
 class ParticipantsController < ApplicationController
-  before_filter :authenticate_owner!
   respond_to :html, :json
 
   def recalculate

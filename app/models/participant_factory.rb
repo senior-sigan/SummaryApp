@@ -12,9 +12,9 @@ class ParticipantFactory
     Rails.logger.info "EMAIL #{email}"
     return nil if email.blank?
 
-    participant = event.participants.find_or_initialize_by(email: email.mb_chars.downcase.to_s)
-    participant.name = name
-    participant.surname = surname
+    participant = event.participants.find_or_initialize_by(email: email.strip.mb_chars.downcase.to_s)
+    participant.name = name.strip if name
+    participant.surname = surname.strip if surname
 
     participant
   end

@@ -59,7 +59,7 @@ class RegistrationImport
     unless participants.map(&:valid?).all?
       participants.each_with_index do |user, index|
         user.errors.full_messages.each do |message|
-          errors.add :base, "Row #{index+2}: #{message}"
+          errors.add :base, "Row #{index+2}: #{message} #{user.email}"
         end
       end
     end

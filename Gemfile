@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
-#ruby-gemset=summaryapp
+source 'https://rails-assets.org'
 
 gem 'rails', '4.0.4'
+gem 'thin'
 
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
@@ -12,11 +12,13 @@ gem 'smart_translitter'
 
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+
 gem 'mongoid', '~> 4.0.0.beta1'
 gem 'active_model_serializers'
-gem 'roo', '~> 1.13.2' #for Exel Csv GoogleDocs
-gem 'sass-rails'
+
+gem 'sass-rails', '~> 4.0.2'
 gem 'bootstrap-sass'
+
 gem 'bootstrap-datepicker-rails'
 gem 'select2-rails'
 
@@ -35,6 +37,7 @@ gem 'json2-rails'
 gem 'eco'
 
 gem 'travis-lint', require: false
+gem 'coveralls', require: false
 
 group :development, :test do
   gem 'rspec-rails'

@@ -5,7 +5,3 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-owner = Owner.new(email: 'ilya.blan4@gmail.com', approved: true)
-owner.password = 'qwerty'
-owner.password_confirmation = 'qwerty'
-owner.save

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 #ruby-gemset=summaryapp
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.4'
 
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
@@ -16,7 +16,7 @@ gem 'mongoid', '~> 4.0.0.beta1'
 gem 'active_model_serializers'
 gem 'roo', '~> 1.13.2' #for Exel Csv GoogleDocs
 gem 'sass-rails'
-gem 'bootstrap-sass-rails'
+gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem 'select2-rails'
 

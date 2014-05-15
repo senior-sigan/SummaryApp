@@ -1,12 +1,10 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-gem 'rails', '4.0.4'
+gem 'rails', '4.1.1'
 gem 'thin'
 
 gem 'rails_12factor', group: :production
-gem 'newrelic_rpm', group: :production
-gem 'figaro'
 
 gem 'smart_translitter'
 

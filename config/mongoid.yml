@@ -78,7 +78,7 @@ test:
 production:
   sessions:
     default:
-      uri: <%= ENV['MONGOHQ_URL'] %>
+      uri: <%= Rails.application.secrets.mongohq_uri %>
       options:
       #  safe: true
 

@@ -14,7 +14,7 @@ gem 'omniauth-google-oauth2'
 gem 'mongoid', '~> 4.0.0.beta1'
 gem 'active_model_serializers'
 
-gem 'sass-rails', '~> 4.0.2'
+gem 'sass-rails', '~> 4.0.3'
 gem 'bootstrap-sass'
 
 gem 'bootstrap-datepicker-rails'

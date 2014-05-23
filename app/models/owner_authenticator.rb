@@ -1,7 +1,7 @@
 class OwnerAuthenticator
   DEV_EMAIL = 'dev@summaryapp.heroku.com'
 
-  def initializer(auth_hash)
+  def initialize(auth_hash)
     @auth_hash = auth_hash
   end
 

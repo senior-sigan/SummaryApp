@@ -16,6 +16,7 @@ gem 'active_model_serializers'
 
 gem 'sass-rails', '~> 4.0.3'
 gem 'bootstrap-sass'
+gem 'slim-rails'
 
 gem 'bootstrap-datepicker-rails'
 gem 'select2-rails'

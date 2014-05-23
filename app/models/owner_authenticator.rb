@@ -13,7 +13,7 @@ class OwnerAuthenticator
 
   def build_person
     owner = Owner.find_or_create_by(email: @auth_hash.info['email'])
-    owner.update_attributes authentication_token: auth_hash.credentials['token']
+    owner.update_attributes authentication_token: @auth_hash.credentials['token']
     owner
   end
 end

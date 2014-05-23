@@ -2,8 +2,7 @@ class SessionController < ApplicationController
   skip_before_action :authenticate, only: [:create, :destroy]
 
   def create
-    auth_hash = request.env['omniauth.auth']
-    user = Owner.sign_in_by_oauth_hash(auth_hash)
+    user = OwnerAuthenticator.new(request.env['omniauth.auth']).person
 
     if user
       sign_in(user)

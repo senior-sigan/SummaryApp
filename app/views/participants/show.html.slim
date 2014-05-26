@@ -1,0 +1,58 @@
+h3
+  | "#{@participant.name.capitalize} #{@participant.surname.capitalize}"
+  small= @participant.email
+= link_to 'Edit', edit_participant_path(@participant)
+
+.row
+  .col-lg-3= image_tag @participant.gravatar(200), height: 200, width: 200
+  .col-lg-9
+    form.form-horizontal.user-page
+      - @participant['value'].each do |key,value| 
+        - next if key.eql?('_id') || key.empty? || key.eql?('was') || key.eql?('categories') || key.eql?('skip') || key.eql?('goodness') || key.eql?('event') 
+        .form-group
+          label.col-sm-3.control-label.user-label= key
+          .col-sm-9
+            p.form-control-static= value
+    
+    h4 Score in events
+    #events
+    
+    h4 Score in categories
+    #categories
+
+javascript:
+  var categories = document.getElementById('categories');
+  var events = document.getElementById('events');
+
+  var cb = bonsai.run(categories, {
+    url: '/assets/PieChart.js',
+    code: function(){
+      new PieChart({
+        - @participant.categories.each do |cat| 
+        '= cat['name'] ': = cat['score'] ,
+        - end 
+      })},
+      height: 400,
+      width: 700,
+      framerate: 50
+    });
+
+  var eb = bonsai.run(events, {
+    url: '/assets/BarChart.js',
+    code: function(){
+      new BarChart(80,20,{
+        - @events.each do |ev| 
+        '= "#{ev.name} #{ev.date.strftime("%Y-%m-%d")}" ': = ev.score_for_participant(@participant.id) ,
+        - end 
+      });
+    },
+    height: 80,
+    framerate: 50
+  });
+
+  window.onresize = function() {
+    categories.style.left = (window.innerWidth - 202)/2 - 350 + 'px';
+    categories.style.top = window.innerHeight/2 - 200 + 'px';
+  };
+
+  window.onresize();

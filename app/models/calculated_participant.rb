@@ -15,6 +15,9 @@ class CalculatedParticipant
 
   def self.attr_names
     CalculatedParticipant.last['value'].keys - %w(categories skip was event score)
+  # TODO fix this _hell_
+  rescue
+    []
   end
 
   def self.find(params)

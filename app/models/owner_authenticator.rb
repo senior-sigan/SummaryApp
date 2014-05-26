@@ -1,8 +1,12 @@
 class OwnerAuthenticator
   DEV_EMAIL = 'dev@summaryapp.heroku.com'
 
+  attr_reader :auth_hash
+
   def initialize(auth_hash)
-    @auth_hash = auth_hash
+    @auth_hash = Rails.env.production? ? 
+      auth_hash : 
+      Struct.new(:info, :credentials).new({'email' => DEV_EMAIL}, { 'token' => '111111'})
   end
 
   def person

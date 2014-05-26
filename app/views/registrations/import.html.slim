@@ -1,0 +1,20 @@
+- provide(:title, 'Import')
+
+.row
+  == render "events/event_face", event: @event
+  
+  .col-sm-9
+    nav.navbar.navbar-default role="navigation"
+      ul.nav.navbar-nav
+        li= link_to "Log", @event
+        li= link_to "Registrations", event_registrations_path(@event)
+      = link_to "Import",import_event_registrations_path(@event), class: "btn navbar-btn pull-right"
+      = link_to "Categorize", categorize_event_registrations_path(@event), class: "btn navbar-btn pull-right"
+    
+    .row
+      #forma.col-sm-6.col-sm-offset-3
+
+javascript:
+  (function($){
+    new App.RegistrationsImport({el: $("#forma"),event_id: '<%= @event.id %>', attributes: '<%= @attributes.to_json %>'});
+  })(jQuery);

@@ -1,0 +1,29 @@
+.col-sm-3
+  - if event.photo.blank?
+    = image_tag "blank.jpg", class: "img-responsive"
+  - else
+    = link_to event.photo do
+      = image_tag event.photo, class: "img-responsive"
+
+  .event_name
+    = event.name
+    = link_to edit_event_path(event) do
+      span.glyphicon.glyphicon-cog
+
+  table.table
+    tbody
+      tr
+        th gplus event
+        th= link_to 'g+', event.plus_link if event.plus_link
+      tr
+        th Hash tag
+        td= link_to_twitter_hash_tag event.hash_tag
+      tr
+        th Date
+        td= event.date.strftime("%Y-%m-%d")
+      tr
+        th Reals / Fakes
+        td
+          = event.participants.real.count 
+          |  /          
+          = event.participants.fake.count

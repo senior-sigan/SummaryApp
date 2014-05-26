@@ -1,0 +1,23 @@
+= form_for "participants[]", url: set_categories_event_registrations_path(@event), method: :patch do |f|
+  .form-group
+    = link_to 'Check all', '#', class: 'btn btn-default toggle'
+    = f.button 'Ok', class: 'btn btn-success'
+  
+  .form-group
+    = label_tag 'Categories'
+    = text_field_tag 'categories', nil, class: 'categories-select', 'data-tags' => @categories.to_json
+  
+  .form-group
+    = label_tag 'Score'
+    = number_field_tag 'score', 0, class: 'form-control'
+  
+  - @participants.each do |part|
+    .participant id="#{part.id}"
+      = check_box_tag "participants[]", part.id, false, style: 'visibility: hidden'
+      = image_tag part.gravatar(100), height: 100, width: 100
+      .participant-name= "#{part.surname} #{part.name}"
+    
+javascript:
+  (function($){
+    new App.ParticipantsCategorize({el: $('form')});
+  })(jQuery)

@@ -21,9 +21,16 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-     redirect_to @event
-   else
-     render :new
+      respond_with(@event, status: :created) do |format|
+        format.html { 
+          flash[:success] = "Event created" 
+          redirect_to @event
+        }
+      end
+    else
+      respond_with(@event, status: :unprocessable_entity) do |format|
+        format.html { render :new }
+      end
    end
  end
 

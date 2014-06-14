@@ -17,12 +17,9 @@ class RegistrationsController < ApplicationController
     @import.event = @event
 
     if @import.save
-      respond_with(@import, status: :created, location: @event)
+      render json: {event: {id: @event.id}}, status: :created
     else
-      respond_with(
-        @import, 
-        status: :unprocessable_entity,
-        location: import_event_registrations_path(@event))
+      render json: {event: {id: @event.id}, message: @import.errors.messages }, status: :unprocessable_entity
     end
   end
 

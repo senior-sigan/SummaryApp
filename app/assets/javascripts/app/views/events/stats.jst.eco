@@ -1,9 +1,0 @@
-<div id="loading"></div>
-<div>
-  <h3>Real / All users </h3>
-  <canvas id="realsgraph" width="600" height="300"></canvas>
-</div>
-<div>
-  <h3> Newcomers / Real users </h3>
-  <canvas id="newsgraph" width="600" height="300"></canvas>
-</div>

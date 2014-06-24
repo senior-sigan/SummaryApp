@@ -1,17 +1,14 @@
 lanuage: ruby
-rvm:
-- 2.1.0
+rvm: 2.1.0
 services:
-- mongodb
+- postgresql
+before_script:
+- psql -c 'create database SummaryApp_test;' -U postgres
+- cp config/database.travis.yml config/database.yml
+- bundle exec rake db:migrate
+- bundle exec rake db:test:prepare
 script:
-- bundle exec rake db:mongoid:create_indexes
-- bundle exec rake db:seed
 - bundle exec rspec spec/
-deploy:
-  provider: heroku
-  app: summaryapp
-  api_key:
-    secure: ERN2talMT6c2nG9zEO4DEB5jcN7QodKB7xv2b5cXDNvCdv9JpD6PomHUP0zO5uLG0caQamvQXepqL/v0q6RmNvlrtzToJRn2Y9hzt5Rt/qsJAlYZAlS84Iuo+ASG4QDZfxezJo9a62LED10t0H930jjDFTi2deagtihu3S8cyD4=
-  run:
-    - rake db:mongoid:create_indexes
-    - restart
+notifications:
+  email:
+    - ilya.blan4@gmail.com

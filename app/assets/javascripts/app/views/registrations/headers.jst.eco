@@ -1,9 +1,0 @@
-<legend>Excluded columns</legend>
-<% for header in @: %> 
-  <div class="checkbox">
-    <label>
-      <input class="import" type="checkbox" value="<%- header %>">
-      <%= header %>
-    </label>
-  </div>
-<% end %>

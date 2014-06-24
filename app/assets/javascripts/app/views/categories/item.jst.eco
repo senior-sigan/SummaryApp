@@ -1,1 +1,0 @@
-<li class="item"><a href="#"><span class="badge pull-right"><%= @.participants_count %></span><%= @.id %></a></li>

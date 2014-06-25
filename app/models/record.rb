@@ -6,5 +6,5 @@ class Record < ActiveRecord::Base
 
   before_save { self.email = email.downcase }
 
-  belongs_to :event
+  belongs_to :event, counter_cache: true
 end

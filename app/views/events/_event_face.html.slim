@@ -17,7 +17,9 @@
         th= link_to 'g+', event.socila_url if event.social_url
       tr
         th Hash tag
-        td= link_to event.hash_tag, HashTag.new(event.hash_tag).url
+        td
+          - if event.hash_tag
+            = link_to event.hash_tag, HashTag.new(event.hash_tag).url
       tr
         th Date
         td= event.date.strftime("%Y-%m-%d")

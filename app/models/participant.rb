@@ -13,11 +13,11 @@ class Participant < ActiveRecord::Base
   end
 
   def to_param
-    URI.escape Base64.encode64 email
+    EmailHandler.new(email).escape
   end
 
   def self.find(params)
-    params = URI.unescape Base64.decode64 params
+    params = EmailHandler.new(params).unescape
     super
   end
 end

@@ -18,6 +18,6 @@
             th email
           
         tbody
-          - @records.each do |part|
+          - @records.each do |record|
             tr
-              td= link_to part.email, part, class: 'no-color'
+              td= link_to record.email, participant_path(EmailHandler.new(record.email).escape), class: 'no-color'

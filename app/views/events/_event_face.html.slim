@@ -3,7 +3,7 @@
     = image_tag "blank.jpg", class: "img-responsive"
   - else
     = link_to event.photo_url do
-      = image_tag event.photo, class: "img-responsive"
+      = image_tag event.photo_url, class: "img-responsive"
 
   .event_name
     = event.name
@@ -14,7 +14,7 @@
     tbody
       tr
         th gplus event
-        th= link_to 'g+', event.socila_url if event.social_url
+        th= link_to 'g+', event.social_url if event.social_url
       tr
         th Hash tag
         td

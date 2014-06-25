@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root 'home#index'
-  resources :events
+  resources :events do
+    get 'import' => 'imports#new', on: :member
+    post 'import' => 'imports#create', on: :member
+  end
   resources :participants
 
   # The priority is based upon order of creation: first created -> highest priority.

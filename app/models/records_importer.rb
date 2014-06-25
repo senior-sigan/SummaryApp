@@ -3,7 +3,8 @@ class RecordsImporter
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_reader :file
+  attr_accessor :file
+
   attr_reader :event
   attr_reader :sheet
 
@@ -12,10 +13,8 @@ class RecordsImporter
   validate :check_spreadsheet
   validate :records_validation
 
-  def initialize(event, file)
+  def initialize(event)
     @event = event
-    @file = file
-    @sheet = Spreadsheet.new(@file)
   end
 
   def persist?
@@ -43,6 +42,10 @@ class RecordsImporter
 
   def records
     @records ||= load_records
+  end
+
+  def sheet
+    @sheet ||= Spreadsheet.new(@file)
   end
 
   def load_records

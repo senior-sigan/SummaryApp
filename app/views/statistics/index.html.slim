@@ -1,0 +1,15 @@
+table.table
+  thead
+    th id
+    th name
+    th records
+    th newcomers
+    th participants
+  tbody
+    - @statistics.each do |id, event|
+      tr
+        td= id
+        td= event[:name]
+        td= event[:records_count]
+        td= event[:newcomers_count]
+        td= event[:participation_count] 

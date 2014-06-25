@@ -1,0 +1,23 @@
+.col-sm-3
+  - if event.photo_url.blank?
+    = image_tag "blank.jpg", class: "img-responsive"
+  - else
+    = link_to event.photo_url do
+      = image_tag event.photo, class: "img-responsive"
+
+  .event_name
+    = event.name
+    = link_to edit_event_path(event) do
+      span.glyphicon.glyphicon-cog
+
+  table.table
+    tbody
+      tr
+        th gplus event
+        th= link_to 'g+', event.socila_url if event.social_url
+      tr
+        th Hash tag
+        td= link_to event.hash_tag, HashTag.new(event.hash_tag).url
+      tr
+        th Date
+        td= event.date.strftime("%Y-%m-%d")

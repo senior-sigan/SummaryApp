@@ -1,0 +1,19 @@
+- provide(:title, 'Events')
+
+h1 
+  | Events 
+  small=link_to "create",new_event_path, class: 'btn btn-success'
+
+.row
+  - @events.each do |event|
+    .col-sm-3
+      .thumbnail
+        - if event.photo_url.blank?
+          = image_tag "blank.jpg", class: "img-responsive"
+        - else
+          = image_tag event.photo_url, class: "img-responsive"
+
+        .caption
+          h3= link_to event.name, event
+          p= event.date.strftime("%Y-%m-%d")
+          p= event.records.size

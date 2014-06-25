@@ -1,0 +1,52 @@
+- provide(:title, 'New event')
+
+.row
+  .col-md-6.col-md-offset-3
+    = form_for @event, html: { class: 'form-horizontal' } do |f|
+      = render 'layouts/error_messages', :object => f.object
+      fieldset
+        legend= @event.name
+       
+        .form-group
+          = f.label :name, class: 'col-lg-2 control-label'
+          .col-md-10
+            = f.text_field :name, class: 'form-control'
+
+        .form-group
+          = f.label :hash_tag, class: 'col-lg-2 control-label'
+          .col-md-10
+            = f.text_field :hash_tag, class: 'form-control'
+       
+        .form-group
+          = f.label :google_plus_event, class: 'col-lg-2 control-label'
+          .col-md-10
+            = f.text_field :social_url, class: 'form-control'
+
+        .form-group
+          = f.label :photo, class: 'col-lg-2 control-label'
+          .col-md-10
+            = f.text_field :photo_url, class: 'form-control'
+            span.help-block Just write direct url to photo. We don't save it on our  server
+            #photo= image_tag @event.photo_url, class: 'img-responsive'
+
+        .form-group
+          = f.label :date, class: 'col-lg-2 control-label'
+          .col-md-10
+            = f.text_field :date, class: 'form-control', 'data-behaviour' => 'datepicker', 'data-date-format' => 'dd-mm-yyyy'
+            br
+            = f.button 'Update', class: 'btn btn-success'
+
+        .form-group
+          p.text-danger.strong Danger zone
+          .col-sm-10.col-sm-offset-2
+            = link_to 'Destroy', @event, class: 'btn btn-danger', method: :delete, data: { confirm: "You sure? All registrations and participations will be removed by cascade callback! But Participats'll stay alive :)" }
+
+javascript:
+  (function($){
+    $('[data-behaviour~=datepicker]').datepicker();
+
+    $("#event_photo").on("change",function(ev){
+      var url = ev.target.value;
+      $("#photo").html("<img class='img-responsive' src='"+ url +"'>");
+    });
+  })(jQuery);

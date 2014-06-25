@@ -1,0 +1,14 @@
+.navbar-header
+  button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bar"
+    span.sr-only Toggle navigation
+    span.icon-bar
+    span.icon-bar
+    span.icon-bar
+
+  = link_to 'Community',root_path, class: 'navbar-brand'
+
+nav.collapse.navbar-collapse.bar role="navigation"
+  ul.nav.navbar-nav
+    li= link_to 'Events', events_path
+    li= link_to 'Participants', participants_path
+    li= link_to 'Statistic', '#'

@@ -29,7 +29,7 @@ class RecordsImporter
     else
       false
     end
-  rescue Exception => e
+  rescue ActiveRecord::StatementInvalid => e
     errors.add :base, e
     return false
   end

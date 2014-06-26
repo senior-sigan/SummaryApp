@@ -24,5 +24,7 @@ class ImportsController < ApplicationController
 
   def file_params
     params.require(:records_importer).permit(:file)
+  rescue
+    ActionController::Parameters.new(file: nil)
   end
 end

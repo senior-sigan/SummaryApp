@@ -27,3 +27,9 @@ end
 group :test do
   gem 'factory_girl_rails'
 end
+
+# Special gems for Travis integration
+gem 'travis-lint', require: false
+gem 'coveralls', require: false
+
+gem 'codeclimate-test-reporter', group: :test, require: nil

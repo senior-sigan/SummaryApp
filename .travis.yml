@@ -11,6 +11,17 @@ before_script:
 - bundle exec rake db:test:prepare
 script:
 - bundle exec rspec spec/
+deploy:
+  provider: heroku
+  app: summaryapp
+  api_key:
+    secure: HhZkog4+Au73JSLQ2CrdlDNtq1Vzq1WAAx7jZe0+ysr0Ac+WRgfo51LCVcVXVD1ZkKE2vdoQwEaXmGZlE98AQuHkySoUpg1wWCNfGUgAPgFPRPvSMYeUoCz5yJPFNzh8g5CVyXVDLwhc0gF3IerqrO4rREup7H/kzo3SG5Xgd2w=
+  run:
+    - rake db:migrate
+    - restart
+addons:
+  code_climate:
+    repo_token: a477b2ebbc9d921bf33e312fd4f4566aa5ebe7c4c0825c1ee26f1ac8e4ac0465 
 notifications:
   email:
     - ilya.blan4@gmail.com

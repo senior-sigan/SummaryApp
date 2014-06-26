@@ -51,8 +51,8 @@ class RecordsImporter
   end
 
   def load_records
-    sheet.records.map do |record|
-      event.records.build record
+    sheet.records.map do |record_params|
+      RecordBuilder.new(record_params).build_for(event)
     end
   end
 

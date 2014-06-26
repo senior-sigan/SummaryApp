@@ -15,14 +15,21 @@
       table.table.table-hover
         thead
           tr
+            th was?
             th email
             th name
             th surname
+            th
             th
           
         tbody
           - @records.each do |record|
             tr
+              td= link_to toggle_record_path(record), method: :post, class: "#{record.klass} btn" do
+                - if record.presence
+                  span.glyphicon.glyphicon-ok
+                - else
+                  span.glyphicon.glyphicon-remove
               td= link_to record.email, participant_path(EmailHandler.new(record.email).escape), class: 'no-color'
               td= record.name
               td= record.surname

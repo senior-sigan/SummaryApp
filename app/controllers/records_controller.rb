@@ -15,7 +15,8 @@ class RecordsController < ApplicationController
 
   def toggle_presence
     @record = Record.find params[:id]
-    render text: params
+    @record.toggle_presence
+    redirect_to @record.event
   end
 
   def destroy

@@ -17,7 +17,7 @@ class StatisticsFactory
   end
 
   def self.newcomers_rb
-    records = Record.joins(:event).select('records.email','events.date','records.event_id').order('events.date ASC')
+    records = Record.unscoped.joins(:event).select('records.email','events.date','records.event_id').order('events.date ASC')
     newcomers = {}
     records.each do |record|
       if newcomers[record.email].nil? || newcomers[record.email].date > record.date
@@ -34,15 +34,17 @@ class StatisticsFactory
   end
 
   def self.records_per_event
-    Record.joins(:event)
-          .group(:event_id, 'events.name', 'events.date')
-          .order('events.date ASC')
-          .count
-          .map {|k,v| RecordsPerEventStatistics.new(k[0], k[1], k[2], v)}
+    Record.unscoped
+      .joins(:event)
+      .group(:event_id, 'events.name', 'events.date')
+      .order('events.date ASC')
+      .count
+      .map {|k,v| RecordsPerEventStatistics.new(k[0], k[1], k[2], v)}
   end
 
   def self.participation
-    Record.joins(:event)
+    Record.unscoped
+      .joins(:event)
       .group(:event_id, 'events.name', 'events.date', 'records.presence')
       .order('events.date ASC')
       .having(presence: true)

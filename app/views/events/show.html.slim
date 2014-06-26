@@ -16,8 +16,17 @@
         thead
           tr
             th email
+            th name
+            th surname
+            th
           
         tbody
           - @records.each do |record|
             tr
               td= link_to record.email, participant_path(EmailHandler.new(record.email).escape), class: 'no-color'
+              td= record.name
+              td= record.surname
+              td= link_to edit_record_path(record) do
+                span.glyphicon.glyphicon-pencil
+              td= link_to record, method: :delete, data: { confirm: "You sure? Information about #{record.email} will be deleted from #{@event.name} event" } do
+                span.glyphicon.glyphicon-trash

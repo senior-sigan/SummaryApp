@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     post 'import' => 'imports#create', on: :member
   end
   resources :participants
+  resources :records, only: [:new, :create, :edit, :update, :destroy] do
+    post 'toggle' => 'records#toggle_presence', on: :member
+  end
   get 'statistics' => 'statistics#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

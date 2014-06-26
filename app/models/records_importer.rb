@@ -12,6 +12,7 @@ class RecordsImporter
   validates :event, presence: true
   validate :check_spreadsheet
   validate :records_validation
+  validate :records_uniqueness
 
   def initialize(event)
     @event = event
@@ -28,6 +29,9 @@ class RecordsImporter
     else
       false
     end
+  rescue Exception => e
+    errors.add :base, e
+    return false
   end
 
   private
@@ -36,8 +40,6 @@ class RecordsImporter
     Record.transaction do
       records.each(&:save!)
     end
-  rescue
-    records_validation
   end
 
   def records
@@ -69,6 +71,21 @@ class RecordsImporter
           errors.add :base, "Row #{index+2}: #{message} #{record.email}"
         end
       end
+    end
+  end
+
+  def records_uniqueness
+    return unless errors.blank?
+
+    duplicated_emails = records
+      .collect{|r| r[:email]}
+      .compact
+      .inject({}){ |hash, email| hash[email] = (hash[email] || 0 ) + 1; hash }
+      .select { |k,v| v > 1 }
+
+
+    duplicated_emails.each do |email, count|
+      errors.add :base, "Email #{email} duplicated #{count} times"
     end
   end
 end

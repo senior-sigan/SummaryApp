@@ -1,5 +1,7 @@
 lanuage: ruby
 rvm: 2.1.0
+addons:
+  postgresql: 9.3
 services:
 - postgresql
 before_script:

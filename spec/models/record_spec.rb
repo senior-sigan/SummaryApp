@@ -94,7 +94,6 @@ RSpec.describe Record, :type => :model do
   describe "when email is already taken" do
     let(:record_with_same_email) { record.dup }
     before do
-      record_with_same_email.event = @event
       record_with_same_email.email.upcase!
       record_with_same_email.save
     end

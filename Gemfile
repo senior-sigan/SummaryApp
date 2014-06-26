@@ -4,6 +4,9 @@ gem 'rails', '4.1.1'
 gem 'thin'
 gem 'pg'
 
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+
 gem 'rails_12factor', group: :production
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 

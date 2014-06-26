@@ -4,7 +4,11 @@ class Record < ActiveRecord::Base
   validates :name, presence: true, length: {maximum: 50}
   validates :surname, presence: true, length: {maximum: 50}
 
-  before_save { self.email = email.downcase }
+  before_save do
+    self.email = email.downcase
+    self.name = name.downcase
+    self.surname = surname.downcase
+  end
 
   belongs_to :event, counter_cache: true
 end

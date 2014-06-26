@@ -12,3 +12,11 @@ nav.collapse.navbar-collapse.bar role="navigation"
     li= link_to 'Events', events_path
     li= link_to 'Participants', participants_path
     li= link_to 'Statistic', statistics_path
+
+  ul.nav.navbar-nav.navbar-right
+    li
+      - if admin_signed_in?
+        = link_to auth_logout_path, :method => :delete do
+          span.glyphicon.glyphicon-off
+      - else
+        = link_to 'Sign in', 'auth/google_oauth2'

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'auth/:provider/callback' => 'session#create'
+  delete 'auth/logout' => 'session#destroy'
+  
   root 'home#index'
   resources :events do
     get 'import' => 'imports#new', on: :member

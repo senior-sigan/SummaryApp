@@ -2,6 +2,8 @@ lanuage: ruby
 rvm: 2.1.0
 addons:
   postgresql: 9.3
+  code_climate:
+    repo_token: a477b2ebbc9d921bf33e312fd4f4566aa5ebe7c4c0825c1ee26f1ac8e4ac0465 
 services:
 - postgresql
 before_script:
@@ -19,9 +21,6 @@ deploy:
   run:
     - rake db:migrate
     - restart
-addons:
-  code_climate:
-    repo_token: a477b2ebbc9d921bf33e312fd4f4566aa5ebe7c4c0825c1ee26f1ac8e4ac0465 
 notifications:
   email:
     - ilya.blan4@gmail.com

@@ -1,5 +1,5 @@
-- @participants.each do |participant|
-  = form_for participant do |f|
+- @records.each do |record|
+  = form_for record do |f|
     = render 'layouts/error_messages', :object => f.object
 
     = f.hidden_field :event_id

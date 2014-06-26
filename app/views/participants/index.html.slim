@@ -1,6 +1,12 @@
 .row#participants
-
-javascript:
-  (function() {
-    new App.ParticipantsIndex({el: "#participants"});
-  })()
+  h4 Participants count is "#{@participants.count}"
+  table.table.table-hover
+    thead
+      th Participant
+    
+    tbody
+      - @participants.each do |participant|
+        tr
+          td
+            = link_to participant do
+              = image_tag Avatar.new(participant.email).url(50),height: 50, width: 50

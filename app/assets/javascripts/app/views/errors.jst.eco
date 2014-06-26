@@ -1,5 +1,0 @@
-<ul>
-  <% for error in @: %>
-    <li><%= error %></li>
-  <% end %>
-</ul>

@@ -4,12 +4,5 @@ h3
 = link_to 'Edit', edit_participant_path(@participant)
 
 .row
-  .col-lg-3= image_tag @participant.gravatar(200), height: 200, width: 200
+  .col-lg-3= image_tag Avatar.new(@participant.email).url(200), height: 200, width: 200
   .col-lg-9
-    form.form-horizontal.user-page
-      - @participant['value'].each do |key,value| 
-        - next if key.eql?('_id') || key.empty? || key.eql?('was') || key.eql?('categories') || key.eql?('skip') || key.eql?('goodness') || key.eql?('event') 
-        .form-group
-          label.col-sm-3.control-label.user-label= key
-          .col-sm-9
-            p.form-control-static= value

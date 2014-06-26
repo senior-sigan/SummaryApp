@@ -1,9 +1,16 @@
 lanuage: ruby
-rvm:
-- 2.1.0
+rvm: 2.1.0
+addons:
+  postgresql: 9.3
 services:
-- mongodb
+- postgresql
+before_script:
+- psql -c 'create database summaryapp_test;' -U postgres
+- cp config/database.travis.yml config/database.yml
+- bundle exec rake db:migrate
+- bundle exec rake db:test:prepare
 script:
-- bundle exec rake db:mongoid:create_indexes
-- bundle exec rake db:seed
 - bundle exec rspec spec/
+notifications:
+  email:
+    - ilya.blan4@gmail.com

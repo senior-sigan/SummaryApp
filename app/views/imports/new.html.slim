@@ -1,0 +1,11 @@
+- provide(:title, "Import data for #{@event.name}")
+
+.row
+  = render 'events/event_face', event: @event
+
+  .col-sm-9
+    = form_for @ri, url: import_event_path(@ri.event) do |f|
+      = render 'layouts/error_messages', :object => f.object
+      = f.label :file
+      = f.file_field :file
+      = f.submit 'Import'

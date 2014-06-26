@@ -1,9 +1,9 @@
 .col-sm-3
-  - if event.photo.blank?
+  - if event.photo_url.blank?
     = image_tag "blank.jpg", class: "img-responsive"
   - else
-    = link_to event.photo do
-      = image_tag event.photo, class: "img-responsive"
+    = link_to event.photo_url do
+      = image_tag event.photo_url, class: "img-responsive"
 
   .event_name
     = event.name
@@ -14,16 +14,12 @@
     tbody
       tr
         th gplus event
-        th= link_to 'g+', event.plus_link if event.plus_link
+        th= link_to 'g+', event.social_url if event.social_url
       tr
         th Hash tag
-        td= link_to_twitter_hash_tag event.hash_tag
+        td
+          - if event.hash_tag
+            = link_to event.hash_tag, HashTag.new(event.hash_tag).url
       tr
         th Date
         td= event.date.strftime("%Y-%m-%d")
-      tr
-        th Reals / Fakes
-        td
-          = event.participants.real.count 
-          |  /          
-          = event.participants.fake.count

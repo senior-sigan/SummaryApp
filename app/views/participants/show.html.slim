@@ -6,3 +6,5 @@ h3
 .row
   .col-lg-3= image_tag Avatar.new(@participant.email).url(200), height: 200, width: 200
   .col-lg-9
+    - @records.each do |record|
+      = render 'card', {record: record}

@@ -5,6 +5,7 @@ class ParticipantsController < ApplicationController
 
   def show
     @participant = Participant.find params[:id]
+    @records = @participant.records
   end
 
   def edit

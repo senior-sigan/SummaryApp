@@ -1,6 +1,5 @@
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     actionmailer (4.1.1)
       actionpack (= 4.1.1)
@@ -29,6 +28,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    bootstrap-datepicker-rails (1.3.0.2)
+      railties (>= 3.0)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     builder (3.2.2)
@@ -112,12 +113,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.1)
       sprockets-rails (~> 2.0)
-    rails-assets-bootstrap (3.2.0)
-      rails-assets-jquery (>= 1.9.0)
-    rails-assets-bootstrap-datepicker (1.3.0)
-      rails-assets-bootstrap (>= 3.0, < 4.0)
-      rails-assets-jquery (>= 1.7.1)
-    rails-assets-jquery (2.1.1)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -213,6 +208,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bootstrap-datepicker-rails
   bootstrap-sass
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
@@ -223,7 +219,6 @@ DEPENDENCIES
   omniauth-google-oauth2
   pg
   rails (= 4.1.1)
-  rails-assets-bootstrap-datepicker
   rails_12factor
   rspec-rails
   sass-rails (~> 4.0.3)

@@ -1,6 +1,7 @@
-@import 'bootstrap';
-@import 'bootstrap-datepicker3';
-@import 'home';
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "bootstrap-datepicker3";
+@import "home";
 
 body {
   padding-top: 60px;

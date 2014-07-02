@@ -1,6 +1,7 @@
 class ParticipantsController < ApplicationController
   def index
-    @participants = Participant.all
+    @participants = ParticipantPresenter.build Participant.all
+    @participants_count = Participant.count
   end
 
   def show

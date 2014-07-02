@@ -1,5 +1,5 @@
 .row#participants
-  h4 Participants count is "#{@participants.count}"
+  h4 Participants count is "#{@participants_count}"
   table.table.table-hover
     thead
       th Photo
@@ -12,8 +12,8 @@
       - @participants.each do |participant|
         tr
           td
-            = link_to participant do
-              = image_tag Avatar.new(participant.email).url(50),height: 50, width: 50
+            = link_to participant_path(participant.id) do
+              = image_tag participant.photo(50),height: 50, width: 50
           td= participant.email
           td= participant.name
           td= participant.surname

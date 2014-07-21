@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 gem 'rails', '4.1.1'
 gem 'thin'
@@ -22,6 +23,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 gem 'bootstrap-datepicker-rails'
+gem 'rails-assets-wookmark-jquery'
 
 gem 'spring', group: :development
 

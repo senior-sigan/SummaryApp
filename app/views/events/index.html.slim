@@ -5,9 +5,9 @@ h1
   small=link_to "create",new_event_path, class: 'btn btn-success'
 
 .row
-  - @events.each do |event|
-    .col-sm-3
-      .thumbnail
+  ul#events
+    - @events.each do |event|
+      li data={date: event.date}
         - if event.photo_url.blank?
           = image_tag "blank.jpg", class: "img-responsive"
         - else

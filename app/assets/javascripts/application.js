@@ -15,4 +15,5 @@
 //= require turbolinks
 //= require bootstrap/collapse
 //= require bootstrap-datepicker
+//= require wookmark-jquery
 //= require_tree .

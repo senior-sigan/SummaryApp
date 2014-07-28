@@ -17,3 +17,6 @@
 //= require bootstrap-datepicker
 //= require wookmark-jquery
 //= require_tree .
+
+var App = App || {};
+window.App = App;

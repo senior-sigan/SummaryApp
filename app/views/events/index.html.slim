@@ -17,3 +17,8 @@ h1
           h3= link_to event.name, event
           p= event.date.strftime("%Y-%m-%d")
           p= event.records.size
+
+javascript:
+  (function($){
+    App.runWookmark($('#events li'));
+  })(jQuery);

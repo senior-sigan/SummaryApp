@@ -24,7 +24,7 @@
         tbody
           - @records.each do |record|
             tr
-              td= link_to toggle_record_path(record), method: :post, class: "#{record.klass} btn" do
+              td= link_to '', class: "js-toggle #{record.klass} btn", data: {url: toggle_record_path(record)} do
                 - if record.presence
                   span.glyphicon.glyphicon-ok
                 - else

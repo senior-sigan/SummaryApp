@@ -16,7 +16,7 @@ class RecordsController < ApplicationController
   def toggle_presence
     @record = Record.find params[:id]
     @record.toggle_presence
-    redirect_to @record.event
+    render json: {status: @record.presence}
   end
 
   def destroy

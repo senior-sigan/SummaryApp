@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   
   def show
     @event = Event.find(params[:id])
-    @records = @event.records
+    @records = StatisticsFactory.newcomers_at_event(@event)
   end
 
   def new

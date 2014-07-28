@@ -15,6 +15,7 @@
         thead
           tr
             th was?
+            th new?
             th email
             th name
             th surname
@@ -24,15 +25,16 @@
         tbody
           - @records.each do |record|
             tr
-              td= link_to '', class: "js-toggle #{record.klass} btn", data: {url: toggle_record_path(record)} do
+              td= link_to '', class: "js-toggle #{record_klass(record)} btn", data: {url: toggle_record_path(record.id)} do
                 - if record.presence
                   span.glyphicon.glyphicon-ok
                 - else
                   span.glyphicon.glyphicon-remove
+              td= record.newcomer
               td= link_to record.email, participant_path(EmailHandler.new(record.email).escape), class: 'no-color'
               td= record.name
               td= record.surname
-              td= link_to edit_record_path(record) do
+              td= link_to edit_record_path(record.id) do
                 span.glyphicon.glyphicon-pencil
-              td= link_to record, method: :delete, data: { confirm: "You sure? Information about #{record.email} will be deleted from #{@event.name} event" } do
+              td= link_to record_path(record.id), method: :delete, data: { confirm: "You sure? Information about #{record.email} will be deleted from #{@event.name} event" } do
                 span.glyphicon.glyphicon-trash

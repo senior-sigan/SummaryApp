@@ -2,6 +2,7 @@ class StatisticsFactory
   NewcomersStatistics = Struct.new(:event_id, :newcomers_count)
   RecordsPerEventStatistics = Struct.new(:event_id, :name, :date, :records_count)
   ParticipationStatistics = Struct.new(:event_id, :name, :date, :participation_count)
+  RecordsStatisctics = Struct.new(:id, :email, :name, :surname, :presence, :newcomer)
 
   def self.newcomers
     #TODO - this sql is wrong - min event date not correspond to min event id
@@ -31,6 +32,24 @@ class StatisticsFactory
     end
 
     events.map {|k,v| NewcomersStatistics.new(k, v)}
+  end
+
+  def self.newcomers_at_event(event)
+    ActiveRecord::Base.connection.execute(
+      Arel::Nodes::SqlLiteral.new <<-SQL
+        SELECT r.id, r.email, r.surname, r.name, r.presence, COALESCE(c.count,0) as counter
+        FROM (
+          SELECT records.id, records.email, count(*) 
+          FROM records 
+          INNER JOIN events 
+          ON records.event_id = events.id 
+          WHERE events.date < '#{event.date}'
+          GROUP BY records.email, records.id) as c 
+        RIGHT OUTER JOIN records as r 
+        ON r.id = c.id
+        WHERE r.event_id = #{event.id}
+      SQL
+    ).map {|record| RecordsStatisctics.new(record['id'], record['email'], record['name'], record['surname'], record['presence'], record['counter'].to_i.zero? ? true : false) }
   end
 
   def self.records_per_event

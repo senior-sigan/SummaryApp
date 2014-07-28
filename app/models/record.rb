@@ -21,8 +21,4 @@ class Record < ActiveRecord::Base
       update_attribute :presence, true
     end
   end
-
-  def klass
-    presence? ? 'btn-success' : 'btn-danger'
-  end
 end

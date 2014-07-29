@@ -4,6 +4,6 @@ module ApplicationHelper
   end
 
   def record_newcomer_klass(record)
-    'success' unless record.newcomer
+    'success' if record.newcomer
   end
 end

@@ -37,19 +37,20 @@ class StatisticsFactory
   def self.newcomers_at_event(event)
     ActiveRecord::Base.connection.execute(
       Arel::Nodes::SqlLiteral.new <<-SQL
-        SELECT r.id, r.email, r.surname, r.name, r.presence, COALESCE(c.count,0) as counter
+        SELECT r.id, r.email, r.name, r.surname, r.presence, COALESCE(c.count,0) as counter
         FROM (
-          SELECT records.id, records.email, count(*) 
+          SELECT records.email, count(*) 
           FROM records 
           INNER JOIN events 
           ON records.event_id = events.id 
-          WHERE events.date < '#{event.date}'
-          GROUP BY records.email, records.id) as c 
+          WHERE events.date < (SELECT date FROM events WHERE id = #{event.id})
+          GROUP BY records.email) as c 
         RIGHT OUTER JOIN records as r 
-        ON r.id = c.id
+        ON r.email = c.email
         WHERE r.event_id = #{event.id}
+        ORDER BY r.surname ASC
       SQL
-    ).map {|record| RecordsStatisctics.new(record['id'], record['email'], record['name'], record['surname'], record['presence'], record['counter'].to_i.zero? ? true : false) }
+    ).map {|record| RecordsStatisctics.new(record['id'], record['email'], record['name'], record['surname'], record['presence'] == 't', record['counter'].to_i.zero? ? true : false) }
   end
 
   def self.records_per_event

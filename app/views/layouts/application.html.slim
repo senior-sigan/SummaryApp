@@ -19,5 +19,12 @@ html
         - key = :success if key == :notice
         = content_tag(:div, value, class: "alert alert-#{key}")
 
+      .loading-indicator
+        ul.bokeh
+          li
+          li
+          li
+          li
+
       == yield
       

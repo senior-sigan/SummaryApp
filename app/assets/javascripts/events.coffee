@@ -14,7 +14,6 @@ $(document).ready ()->
 
 $(document).on 'click', 'a.js-toggle', (ev) ->
   ev.preventDefault()
-  console.log ev
   $that = $(this)
   url = $that.data 'url'
   $.ajax

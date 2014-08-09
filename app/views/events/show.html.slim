@@ -8,7 +8,8 @@
       ul.nav.navbar-nav
         li.active= link_to 'Log', @event
       
-      = link_to 'Import',import_event_path(@event), class: 'btn navbar-btn pull-right'
+      = link_to 'Import', import_event_path(@event), class: 'btn navbar-btn pull-right'
+      = link_to 'Add participant', new_event_record_path(@event), class: 'btn navbar-btn pull-right'
     
     div
       table.table.table-hover

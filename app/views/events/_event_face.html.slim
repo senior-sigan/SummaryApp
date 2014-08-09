@@ -6,9 +6,10 @@
       = image_tag event.photo_url, class: "img-responsive"
 
   .event_name
-    = event.name
-    = link_to edit_event_path(event) do
-      span.glyphicon.glyphicon-cog
+    h2 
+      = event.name
+      span.pull-right = link_to edit_event_path(event) do
+        span.glyphicon.glyphicon-cog
 
   table.table
     tbody

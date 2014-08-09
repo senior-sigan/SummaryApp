@@ -1,4 +1,21 @@
 class RecordsController < ApplicationController
+  before_action :find_event, only: [:new, :create]
+
+  def new
+    @record = @event.records.build
+  end
+
+  def create
+    @record = @event.records.build new_record_params
+
+    if @record.save
+      flash[:success] = "Record for #{@record.email} created"
+      redirect_to @event
+    else
+      render :new
+    end
+  end
+
   def edit
     @record = Record.find params[:id]
   end
@@ -32,9 +49,16 @@ class RecordsController < ApplicationController
   end
 
   private
+  def find_event
+    @event = Event.find params[:event_id]
+  end
 
   def record_params
     params.require(:record).permit(:email, :name, :surname, :meta)
+  end
+
+  def new_record_params
+    params.require(:record).permit(:email, :name, :surname)
   end
 
   def toggle_params

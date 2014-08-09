@@ -8,10 +8,11 @@ h1
   ul#events
     - @events.each do |event|
       li data={date: event.date}
-        - if event.photo_url.blank?
-          = image_tag "blank.jpg", class: "img-responsive"
-        - else
-          = image_tag event.photo_url, class: "img-responsive"
+        = link_to event do
+          - if event.photo_url.blank?
+            = image_tag "blank.jpg", class: "img-responsive"
+          - else
+            = image_tag event.photo_url, class: "img-responsive"
 
         .caption
           h3= link_to event.name, event

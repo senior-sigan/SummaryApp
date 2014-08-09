@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   resources :events do
     get 'import' => 'imports#new', on: :member
     post 'import' => 'imports#create', on: :member
+    resources :records, only: [:new, :create]
   end
   resources :participants
-  resources :records, only: [:new, :create, :edit, :update, :destroy] do
+  resources :records, only: [:edit, :update, :destroy] do
     post 'toggle' => 'records#toggle_presence', on: :member
   end
   get 'statistics' => 'statistics#index'

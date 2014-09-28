@@ -118,6 +118,7 @@ GEM
       railties (= 4.1.1)
       sprockets-rails (~> 2.0)
     rails-assets-jquery (2.1.1)
+    rails-assets-phorque--bootstrap-material-design (0.1.0)
     rails-assets-wookmark-jquery (1.4.8)
       rails-assets-jquery (>= 1.5.3)
     rails_12factor (0.0.2)
@@ -227,6 +228,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   pg
   rails (= 4.1.1)
+  rails-assets-phorque--bootstrap-material-design
   rails-assets-wookmark-jquery
   rails_12factor
   rspec-rails

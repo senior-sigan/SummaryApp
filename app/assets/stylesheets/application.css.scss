@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-material-design/css-compiled/material";
 @import "bootstrap-datepicker3";
 @import "bokeh";
 @import "home";
@@ -8,4 +9,8 @@
 
 body {
   padding-top: 60px;
+}
+
+.jumbotron {
+  margin-top: 10px;
 }

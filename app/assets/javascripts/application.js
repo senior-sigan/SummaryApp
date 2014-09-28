@@ -16,6 +16,8 @@
 //= require turbolinks
 //= require bootstrap/collapse
 //= require bootstrap-datepicker
+// require bootstrap-material-design/scripts/ripples
+// require bootstrap-material-design/scripts/material
 //= require wookmark-jquery
 //= require_tree .
 

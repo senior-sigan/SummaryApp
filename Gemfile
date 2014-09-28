@@ -25,6 +25,7 @@ gem 'jquery-turbolinks'
 
 gem 'bootstrap-datepicker-rails'
 gem 'rails-assets-wookmark-jquery'
+gem 'rails-assets-phorque--bootstrap-material-design'
 
 gem 'spring', group: :development
 

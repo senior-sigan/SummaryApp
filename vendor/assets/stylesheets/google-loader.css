@@ -1,0 +1,119 @@
+/**
+ * Google/Gmail's 3D Loader in Pure CSS
+ * https://github.com/rgthree/google-loader-css
+ * Regis Gaughan, III <http://regisgaughan.com>
+ * MIT License
+ *
+ * Version: Current
+ * Browser Support: https://github.com/rgthree/google-loader-css/blob/master/README.md
+ * Demo: http://jsfiddle.net/gh/get/library/pure/rgthree/google-loader-css/tree/master/jsfiddle-current
+ * Usage:
+ *  - Add this file to the <head> of your webpage
+ *  - Within the <body>, add this snippet:
+ *
+ *    <span class="gloader"><span></span><span></span></span>
+ *
+ *  - The gloader uses font-size and text-align to align itself.
+ *    For instance, if you place it within a `.container` element
+ *    with a `font-size:48px; text-align:center;` the gloader would
+ *    be 48px in diameter and aligned in the middle of you container
+ *    along with other inline/inline-block elements
+ * 
+ */
+
+
+.gloader {
+  display:inline-block; width:1em; height:1em;
+  position:relative; overflow:hidden; border-radius:0.5em; 
+  -webkit-animation:base 3s steps(1) 0s infinite;
+  animation:base 3s steps(1) 0s infinite; 
+}
+
+.gloader > * {
+  display:block; width:50%; height:100%; overflow:hidden;
+  position:absolute; top:0%; left:50%; z-index:1;
+  border-radius:0em 0.5em 0.5em 0em;
+  -webkit-transform-origin:0px 50%;
+  transform-origin:0px 50%;
+}
+
+.gloader > *:first-child {
+  z-index:2;
+  -webkit-transform-style:preserve-3d;
+  -webkit-animation:flip 3s linear 0s infinite;
+  transform-style:preserve-3d;
+  animation:flip 3s linear 0s infinite;
+}
+
+.gloader > *:last-child {
+  -webkit-animation:reveal 3s steps(1) 0s infinite;
+  animation:reveal 3s steps(1) 0s infinite;
+}
+
+/* Webkit Animations; Copy from standard animations below and add "-webkit-" prefix to keyframes and transforms */
+@-webkit-keyframes base {
+  0%   {-webkit-transform:rotate(0deg);   background-color:#21aa29;}
+  25%  {-webkit-transform:rotate(90deg);  background-color:#2159d6;}
+  50%  {-webkit-transform:rotate(180deg); background-color:#d62408;}
+  75%  {-webkit-transform:rotate(270deg); background-color:#ffcf00;}
+  100% {-webkit-transform:rotate(360deg); background-color:#21aa29;}
+}
+
+@-webkit-keyframes reveal {
+  0%   {background-color:#2159d6; -webkit-transform:rotate(0deg);}
+  25%  {background-color:#d62408; -webkit-transform:rotate(180deg);}
+  50%  {background-color:#ffcf00; -webkit-transform:rotate(0deg);}
+  75%  {background-color:#21aa29; -webkit-transform:rotate(180deg);}
+  100% {background-color:#2159d6; -webkit-transform:rotate(0deg);}
+}
+
+@-webkit-keyframes flip {
+  0%        {background-color:#21aa29; -webkit-transform:rotateY(0deg);}
+  12.5%,
+  87.56%    {background-color:#105514;}
+  12.51%,
+  37.5%     {background-color:#102c6b;}
+  25%       {background-color:#2159d6;}
+  37.51%,
+  62.5%     {background-color:#6b1204;}
+  50%       {background-color:#d62408;}
+  62.51%,
+  87.5%     {background-color:#7f6700;}
+  75%, 78%  {background-color:#ffcf00;}
+  100%      {background-color:#21aa29; -webkit-transform:rotateY(-720deg);}
+}
+
+
+/* Standard Animations */
+@keyframes base {
+  0%   {transform:rotate(0deg);   background-color:#21aa29;}
+  25%  {transform:rotate(90deg);  background-color:#2159d6;}
+  50%  {transform:rotate(180deg); background-color:#d62408;}
+  75%  {transform:rotate(270deg); background-color:#ffcf00;}
+  100% {transform:rotate(360deg); background-color:#21aa29;}
+}
+
+@keyframes reveal {
+  0%   {background-color:#2159d6; transform:rotate(0deg);}
+  25%  {background-color:#d62408; transform:rotate(180deg);}
+  50%  {background-color:#ffcf00; transform:rotate(0deg);}
+  75%  {background-color:#21aa29; transform:rotate(180deg);}
+  100% {background-color:#2159d6; transform:rotate(0deg);}
+}
+
+/* Green >> DarkGreen | DarkBlue >> Blue >> DarkBlue | DarkRed >> Red >> DarkRed | DarkYellow >> Yellow >> DarkYellow | DarkGreen >> Green */
+@keyframes flip {
+  0%        {background-color:#21aa29; transform:rotateY(0deg);}
+  12.5%,
+  87.56%    {background-color:#105514;}
+  12.51%,
+  37.5%     {background-color:#102c6b;}
+  25%       {background-color:#2159d6;}
+  37.51%,
+  62.5%     {background-color:#6b1204;}
+  50%       {background-color:#d62408;}
+  62.51%,
+  87.5%     {background-color:#7f6700;}
+  75%, 78%  {background-color:#ffcf00;}
+  100%      {background-color:#21aa29; transform:rotateY(-720deg);}
+}

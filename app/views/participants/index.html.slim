@@ -13,7 +13,7 @@
         tr
           td
             = link_to participant_path(participant.id) do
-              = image_tag participant.photo(50),height: 50, width: 50
+              = image_tag participant.photo(50),height: 50, width: 50, alt: participant.email
           td= participant.email
           td= participant.name
           td= participant.surname

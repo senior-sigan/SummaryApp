@@ -1,6 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootstrap-material-design/css-compiled/material";
+@import "bootstrap-material-design/icons/icons-material-design";
 @import "bootstrap-datepicker3";
 @import "google-loader";
 @import "home";
@@ -26,4 +27,9 @@ body {
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
+}
+
+.material-action-btn {
+  position: absolute;
+  z-index: 1;
 }

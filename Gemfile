@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
+#ruby=ruby-2.1.3
+#ruby-gemset=summaryapp
+
 gem 'rails', '4.1.1'
 gem 'thin'
 gem 'pg'

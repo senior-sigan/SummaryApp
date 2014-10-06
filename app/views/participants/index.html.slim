@@ -1,20 +1,12 @@
 .row#participants
-  h4 Participants count is "#{@participants_count}"
-  table.table.table-hover
-    thead
-      th Photo
-      th email
-      th name
-      th surname
-      th
-    
-    tbody
+  .col-lg-4
+    .list-group
       - @participants.each do |participant|
-        tr
-          td
+        .list-group-item
+          .row-picture
             = link_to participant_path(participant.id) do
-              = image_tag participant.photo(50),height: 50, width: 50, alt: participant.email
-          td= participant.email
-          td= participant.name
-          td= participant.surname
-          td= participant.participations
+              = image_tag participant.photo(50),height: 50, width: 50, alt: participant.email, class: 'circle'
+          .row-content
+            .least-content= participant.participations
+            h4.list-group-item-heading= participant.full_name
+            p.list-group-item-text= participant.email
